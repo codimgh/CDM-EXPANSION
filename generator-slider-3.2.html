@@ -1389,6 +1389,26 @@ color: #e0e0e0;
 .cdm-master.dark-theme i[class*='ph-'] {
 color: inherit;
 }
+/* Единый размер всех иконок в области настроек конфигуратора — 16px.
+   Применяется к инлайн-SVG любой иконки (i[class*='ph-'] svg) в колонке настроек
+   независимо от font-size предка, которым до этого задавался разный размер
+   (кнопки «Добавить/Удалить слайд», заголовки разделов, палитра, стрелки, вопрос).
+   CSS-ширина побеждает width/height-атрибуты SVG, которые cdmReplaceIcons ставит
+   из font-size, поэтому размер становится единообразным. */
+.cdm-controls-col i[class*='ph-'] svg {
+width: 16px !important;
+height: 16px !important;
+flex-shrink: 0;
+display: inline-block;
+vertical-align: middle;
+}
+.cdm-controls-col button svg.cdm-add-slide-icon {
+width: 16px !important;
+height: 16px !important;
+flex-shrink: 0;
+display: inline-block;
+vertical-align: middle;
+}
 </style>
 <script>
 /* Автономные иконки конфигуратора (без Phosphor CDN) */

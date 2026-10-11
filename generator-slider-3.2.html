@@ -179,7 +179,7 @@ filter: invert(1) brightness(1.5);
 </p>
 </div>
 <div id="cdmLivePreviewWrapper" style="display: flex; justify-content: center; min-height: 450px; background: transparent; border-radius: 12px;">
-<div id="cdmLivePreview" style="width: 100%; padding: 20px; display: flex; align-items: flex-start; justify-content: center;"></div>
+<div id="cdmLivePreview" style="width: 100%; padding: 5px; display: flex; align-items: flex-start; justify-content: center;"></div>
 </div>
 </div>
 <div class="cdm-controls-col">
@@ -710,8 +710,10 @@ transition: background-color 0.3s ease;
 body.cdm-generator-active.dark-theme-body {
 background-color: #1a1a1a;
 }
-.cdm-controls-col, .cdm-textarea, .cdm-input { overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; }
-.cdm-controls-col::-webkit-scrollbar, .cdm-textarea::-webkit-scrollbar, .cdm-input::-webkit-scrollbar { display: none; }
+.cdm-controls-col, .cdm-textarea, .cdm-input { overflow-y: auto; scrollbar-width: thin; -ms-overflow-style: auto; }
+.cdm-controls-col::-webkit-scrollbar, .cdm-textarea::-webkit-scrollbar, .cdm-input::-webkit-scrollbar { width: 5px; height: 5px; }
+.cdm-controls-col::-webkit-scrollbar-thumb, .cdm-textarea::-webkit-scrollbar-thumb, .cdm-input::-webkit-scrollbar-thumb { background: #999; border-radius: 3px; }
+.cdm-controls-col::-webkit-scrollbar-track, .cdm-textarea::-webkit-scrollbar-track, .cdm-input::-webkit-scrollbar-track { background: transparent; }
 .cdm-color-palette { background: transparent; border-radius: 6px; padding: 12px 12px 6px 15px; border: 1px solid #3333331c; }
 .cdm-palette-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 .cdm-color-swatch { width: 19px; height: 19px; border-radius: 6px; cursor: pointer; transition: 0.1s; flex-shrink: 0; }
@@ -839,11 +841,12 @@ color: #333;
 border: 1px solid #3333331c;
 border-radius: 6px;
 position: relative;
-/* [1.72] Выравнивание с превью: блок настроек опущен ниже (margin-top:65px), чтобы его верх
+/* [1.72] Выравнивание с превью: блок настроек опущен ниже (margin-top:50px), чтобы его верх
    совпадал с верхом превью; прокрутка возвращена через overflow + ограничение высоты. */
 align-self: flex-start;
-margin-top: 65px;
-max-height: calc(100vh - 65px - 48px);
+margin-top: 50px;
+margin-right: 20px;
+max-height: calc(100vh - 50px - 48px);
 overflow-y: auto;
 }
 @media (min-width: 901px) {

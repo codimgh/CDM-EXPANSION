@@ -685,7 +685,7 @@ filter: invert(1) brightness(1.5);
 </div>
 </div>
 </div>
-<div id="cdmCustomColorPopup" style="display: none; position: fixed; z-index: 10000;">
+<div id="cdmCustomColorPopup" style="display: none; position: fixed; z-index: 10000; left: 920px; font-family: 'Inter', system-ui, sans-serif;">
 <div style="background: #fff; border-radius: 12px; padding: 24px; width: 285px; border: 1px solid #ccccccab;">
 <h4 style="font-weight: 300; font-size: 14px; margin: 0 0 16px 0; color: #333;">Выбери свой цвет</h4>
 <input type="color" id="cdmCustomColorPicker" value="#333333" style="width: 100%; height: 50px; border: 1px solid #ccccccab; border-radius: 6px; cursor: pointer; background: #fff;">
@@ -2553,9 +2553,8 @@ colorHexInput.val(hexColor);
 var paletteEl = element.closest ? element.closest('.cdm-color-palette') : null;
 var paletteRect = paletteEl ? paletteEl.getBoundingClientRect() : element.getBoundingClientRect();
 var topPos = paletteRect.top;
-let leftPos = paletteRect.left - 25;
-if (leftPos < 10) leftPos = paletteRect.right + 10;
-popupColorPicker.css({ left: leftPos + 'px', top: topPos + 'px', display: 'block' });
+// left фиксирован (920px) в разметке попапа; здесь задаём только top и display
+popupColorPicker.css({ top: topPos + 'px', display: 'block' });
 }
 
 function hideColorPopup() { popupColorPicker.hide(); activeColorCallback = null; }

@@ -188,6 +188,11 @@ filter: invert(1) brightness(1.5);
 Вставь прямую ссылку на нужную картинку, которая будет использована для слайда. Как рекомендация: использовать лучше картинки с соотношением сторон 16:9 и в размере не менее 1920×1080, это на всякий случай, чтобы сервис не «шакалил» качество картинки.
 </p>
 </div>
+<div id="cdmWidthHelpPopup" style="display:none; position:absolute; z-index:1000; padding:18px 24px; border-radius:6px; width:480px; font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word;">
+<p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
+Ширина блока рассчитывается в соответствии со стандартными настройками ширины страницы Таплинка, которые установлены для сайта. Если в настройках конфигуратора задать ширину 100%, блок займёт всю доступную ширину страницы. Если задать значение меньше 100% (например, 90%, 65% или 50%), блок займёт указанную в настройках ширину относительно стандартной ширины страницы и будет расположен по центру.
+</p>
+</div>
 <div id="cdmLivePreviewWrapper" style="display: flex; justify-content: center; min-height: 450px; background: transparent; border-radius: 12px;">
 <div id="cdmLivePreview" style="width: 100%; padding: 5px; display: flex; align-items: flex-start; justify-content: center;"></div>
 </div>
@@ -386,7 +391,7 @@ filter: invert(1) brightness(1.5);
 <div style="margin-bottom:24px;">
 <h3 style="font-size:14px; font-weight:300; margin:0 0 16px; color:#333;"><i class="ph ph-faders" style="font-size:14px; color:#333; margin-right:6px;"></i>Настройки (десктоп)</h3>
 <div class="cdm-control-group">
-<label class="cdm-label">Ширина блока слайдера <span id="desktopWidthVal">90</span>%</label>
+<label class="cdm-label">Ширина блока слайдера <span id="desktopWidthVal">90</span>% <i class="ph ph-question cdm-width-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
 <div class="cdm-range-wrapper">
 <input type="range" id="cdmDesktopWidth" class="cdm-range" min="20" max="100" value="90" step="1">
 <div class="cdm-range-values"><span>20%</span><span>60%</span><span>100%</span></div>
@@ -540,7 +545,7 @@ filter: invert(1) brightness(1.5);
 <div style="margin-bottom:24px;">
 <h3 style="font-size:14px; font-weight:300; margin:0 0 16px; color:#333;"><i class="ph ph-faders" style="font-size:14px; color:#333; margin-right:6px;"></i>Настройки (мобильные)</h3>
 <div class="cdm-control-group">
-<label class="cdm-label">Ширина блока слайдера <span id="mobileWidthVal">95</span>%</label>
+<label class="cdm-label">Ширина блока слайдера <span id="mobileWidthVal">95</span>% <i class="ph ph-question cdm-width-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
 <div class="cdm-range-wrapper">
 <input type="range" id="cdmMobileWidth" class="cdm-range" min="20" max="100" value="95" step="1">
 <div class="cdm-range-values"><span>20%</span><span>60%</span><span>100%</span></div>
@@ -1254,22 +1259,26 @@ color: #999;
 color: #ddd;
 }
 #cdmFontHelpPopup,
-#cdmImgHelpPopup {
+#cdmImgHelpPopup,
+#cdmWidthHelpPopup {
 background: #fff;
 border: 1px solid #ccccccab;
 box-shadow: none;
 }
 #cdmFontHelpPopup p,
-#cdmImgHelpPopup p {
+#cdmImgHelpPopup p,
+#cdmWidthHelpPopup p {
 color: #333;
 }
 .cdm-master.dark-theme #cdmFontHelpPopup,
-.cdm-master.dark-theme #cdmImgHelpPopup {
+.cdm-master.dark-theme #cdmImgHelpPopup,
+.cdm-master.dark-theme #cdmWidthHelpPopup {
 background: #1a1a1a !important;
 border-color: #555 !important;
 }
 .cdm-master.dark-theme #cdmFontHelpPopup p,
-.cdm-master.dark-theme #cdmImgHelpPopup p {
+.cdm-master.dark-theme #cdmImgHelpPopup p,
+.cdm-master.dark-theme #cdmWidthHelpPopup p {
 color: #e0e0e0 !important;
 }
 #cdmCustomColorPopup {
@@ -2576,6 +2585,27 @@ imgHelpPopup.hide();
 $(document).on('click', function(e) {
 if (!$(e.target).closest('#cdmImgHelpPopup').length && !$(e.target).hasClass('cdm-img-help-icon')) {
 imgHelpPopup.hide();
+}
+});
+
+// Width help popup
+var widthHelpPopup = $('#cdmWidthHelpPopup');
+$(document).on('mouseenter', '.cdm-width-help-icon', function(e) {
+var rect = this.getBoundingClientRect();
+widthHelpPopup.css({
+position: 'fixed',
+left: (rect.left - 10) + 'px',
+top: (rect.top + rect.height / 2) + 'px',
+transform: 'translate(-100%, -50%)',
+display: 'block'
+});
+});
+$(document).on('mouseleave', '.cdm-width-help-icon', function() {
+widthHelpPopup.hide();
+});
+$(document).on('click', function(e) {
+if (!$(e.target).closest('#cdmWidthHelpPopup').length && !$(e.target).hasClass('cdm-width-help-icon')) {
+widthHelpPopup.hide();
 }
 });
 

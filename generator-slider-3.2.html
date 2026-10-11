@@ -1389,19 +1389,16 @@ color: #e0e0e0;
 .cdm-master.dark-theme i[class*='ph-'] {
 color: inherit !important;
 }
-/* Иконка палитры «Свой цвет»: принудительно перекрашиваем сам SVG (stroke/fill) под тему.
-   Прямое воздействие на stroke/fill (а не только на color предка) гарантированно перекрашивает
-   иконку, независимо от того, как наследуется currentColor. Светлая тема — тёмная иконка (#333);
+/* Иконка палитры «Свой цвет»: перекрашиваем через color на SVG (currentColor).
+   Так и заливной контур палитры (fill="currentColor"), и контурные точки (fill=none,
+   обводка stroke="currentColor") перекрашиваются КАЖДЫЙ в своём виде — иконка не
+   превращается в сплошную заливку. Светлая тема — тёмная иконка (#333);
    тёмная тема — светлая иконка (#e0e0e0). */
-.cdm-custom-color-row i[class*='ph-'] svg,
-.cdm-custom-color-row i[class*='ph-'] svg path {
-stroke: #333;
-fill: #333;
+.cdm-custom-color-row i[class*='ph-'] svg {
+color: #333;
 }
-.cdm-master.dark-theme .cdm-custom-color-row i[class*='ph-'] svg,
-.cdm-master.dark-theme .cdm-custom-color-row i[class*='ph-'] svg path {
-stroke: #e0e0e0;
-fill: #e0e0e0;
+.cdm-master.dark-theme .cdm-custom-color-row i[class*='ph-'] svg {
+color: #e0e0e0;
 }
 </style>
 <script>

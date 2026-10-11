@@ -2550,11 +2550,11 @@ hexColor = '#333333';
 }
 colorPickerInput.val(hexColor);
 colorHexInput.val(hexColor);
-const rect = element.getBoundingClientRect();
-let leftPos = rect.left - 310;
-if (leftPos < 10) leftPos = rect.right + 10;
-var paletteRect = $('.cdm-color-palette')[0].getBoundingClientRect();
-var topPos = paletteRect.top + window.scrollY;
+var paletteEl = element.closest ? element.closest('.cdm-color-palette') : null;
+var paletteRect = paletteEl ? paletteEl.getBoundingClientRect() : element.getBoundingClientRect();
+var topPos = paletteRect.top;
+let leftPos = paletteRect.left - 25;
+if (leftPos < 10) leftPos = paletteRect.right + 10;
 popupColorPicker.css({ left: leftPos + 'px', top: topPos + 'px', display: 'block' });
 }
 

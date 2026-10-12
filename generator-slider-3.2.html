@@ -383,14 +383,6 @@ filter: invert(1) brightness(1.5);
 </div>
 </div>
 <div class="cdm-control-group">
-<label class="cdm-label" style="font-size:14px; font-weight:300; color:#333; margin-bottom:12px;">Управление слайдами</label>
-<div id="cdmSlidesContainer"></div>
-<button id="cdmAddSlideBtn" class="cdm-add-slide-btn"><svg class="cdm-add-slide-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 2V8M2 5H8" stroke-linejoin="round"></path><path d="M12 5H15M12 22H15M18 5H18.5C20.433 5 22 6.567 22 8.5V9M22 18V18.5C22 20.433 20.433 22 18.5 22H18M9 22H8.5C6.567 22 5 20.433 5 18.5L5 18M22 12V15M5 12L5 15"></path></svg> Добавить слайд</button>
-</div>
-</div>
-<div style="margin-bottom:24px;">
-<h3 style="font-size:14px; font-weight:300; margin:0 0 16px; color:#333;"><i class="ph ph-faders" style="font-size:14px; color:#333; margin-right:6px;"></i>Настройки (десктоп)</h3>
-<div class="cdm-control-group">
 <label class="cdm-label">Ширина блока слайдера <span id="desktopWidthVal">820</span>px <i class="ph ph-question cdm-width-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
 <div class="cdm-width-btns cdm-control-group-inner" id="cdmDesktopWidthBtns">
 <button type="button" class="cdm-width-btn" data-width="620">620</button>
@@ -399,6 +391,14 @@ filter: invert(1) brightness(1.5);
 <button type="button" class="cdm-width-btn" data-width="1020">1020</button>
 </div>
 </div>
+<div class="cdm-control-group">
+<label class="cdm-label" style="font-size:14px; font-weight:300; color:#333; margin-bottom:12px;">Управление слайдами</label>
+<div id="cdmSlidesContainer"></div>
+<button id="cdmAddSlideBtn" class="cdm-add-slide-btn"><svg class="cdm-add-slide-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 2V8M2 5H8" stroke-linejoin="round"></path><path d="M12 5H15M12 22H15M18 5H18.5C20.433 5 22 6.567 22 8.5V9M22 18V18.5C22 20.433 20.433 22 18.5 22H18M9 22H8.5C6.567 22 5 20.433 5 18.5L5 18M22 12V15M5 12L5 15"></path></svg> Добавить слайд</button>
+</div>
+</div>
+<div style="margin-bottom:24px;">
+<h3 style="font-size:14px; font-weight:300; margin:0 0 16px; color:#333;"><i class="ph ph-faders" style="font-size:14px; color:#333; margin-right:6px;"></i>Настройки (десктоп)</h3>
 <div class="cdm-control-group">
 <label class="cdm-label">Высота блока слайдера <span id="desktopHeightVal">600</span>px</label>
 <div class="cdm-range-wrapper">
@@ -746,7 +746,7 @@ padding: 8px 0;
 flex: 1 1 0;
 min-width: 0;
 text-align: center;
-background: #f3f4f6;
+background: transparent;
 color: #333;
 border: 1px solid #d9dce1;
 border-radius: 6px;
@@ -754,10 +754,8 @@ cursor: pointer;
 transition: background .15s ease, border-color .15s ease, color .15s ease;
 box-sizing: border-box;
 }
-.cdm-controls-col .cdm-width-btn:hover { background: #e6e8ec; border-color: #c4c9d1; }
 .cdm-controls-col .cdm-width-btn.active { background: #4DB5FF; border-color: #4DB5FF; color: #fff; }
-.cdm-master.dark-theme .cdm-controls-col .cdm-width-btn { background: #2a2d31; color: #ddd; border-color: #41454a; }
-.cdm-master.dark-theme .cdm-controls-col .cdm-width-btn:hover { background: #33373c; border-color: #51565c; }
+.cdm-master.dark-theme .cdm-controls-col .cdm-width-btn { background: transparent; color: #ddd; border-color: #41454a; }
 .cdm-master.dark-theme .cdm-controls-col .cdm-width-btn.active { background: #4DB5FF; border-color: #4DB5FF; color: #fff; }
 .cdm-custom-color-row { cursor: pointer; }
 .cdm-custom-color-row:hover { opacity: 0.8; }
@@ -887,7 +885,7 @@ position: relative;
 align-self: flex-start;
 margin-top: 30px;
 margin-right: 20px;
-max-height: calc(100vh - 10px - 48px);
+max-height: calc(100vh - 5px - 48px);
 overflow-y: auto;
 }
 @media (min-width: 901px) {

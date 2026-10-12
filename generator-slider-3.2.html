@@ -190,7 +190,7 @@ filter: invert(1) brightness(1.5);
 </div>
 <div id="cdmWidthHelpPopup" style="display:none; position:absolute; z-index:1000; padding:18px 24px; border-radius:6px; width:500px; font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
-Ширина блока рассчитывается исходя из стандартных настроек ширины страницы Таплинка установленных в настройках сайта. Если в настройках конфигуратора задать ширину 100%, блок займёт всю доступную ширину страницы. Если задать значение меньше 100% (например 90%, 80%, 65% или 50%), блок займёт указанную ширину относительно стандартной ширины страницы от её центра.
+Ширина блока задаётся дискретно: выберите один из стандартных размеров страницы Таплинка — 620, 720, 820 или 1020 px. Блок всегда занимает всю доступную ширину страницы, но не становится шире выбранного значения. Например, при выборе 820 блок будет 100% ширины, если страница уже 820, и не шире 820, если она больше. На мобильных устройствах блок всегда на всю ширину экрана.
 </p>
 </div>
 <div id="cdmLivePreviewWrapper" style="display: flex; justify-content: center; min-height: 450px; background: transparent; border-radius: 12px;">
@@ -391,10 +391,12 @@ filter: invert(1) brightness(1.5);
 <div style="margin-bottom:24px;">
 <h3 style="font-size:14px; font-weight:300; margin:0 0 16px; color:#333;"><i class="ph ph-faders" style="font-size:14px; color:#333; margin-right:6px;"></i>Настройки (десктоп)</h3>
 <div class="cdm-control-group">
-<label class="cdm-label">Ширина блока слайдера <span id="desktopWidthVal">90</span>% <i class="ph ph-question cdm-width-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
-<div class="cdm-range-wrapper">
-<input type="range" id="cdmDesktopWidth" class="cdm-range" min="20" max="100" value="90" step="1">
-<div class="cdm-range-values"><span>20%</span><span>60%</span><span>100%</span></div>
+<label class="cdm-label">Ширина блока слайдера <span id="desktopWidthVal">820</span>px <i class="ph ph-question cdm-width-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
+<div class="cdm-width-btns cdm-control-group-inner" id="cdmDesktopWidthBtns">
+<button type="button" class="cdm-width-btn" data-width="620">620</button>
+<button type="button" class="cdm-width-btn" data-width="720">720</button>
+<button type="button" class="cdm-width-btn" data-width="820">820</button>
+<button type="button" class="cdm-width-btn" data-width="1020">1020</button>
 </div>
 </div>
 <div class="cdm-control-group">
@@ -545,11 +547,6 @@ filter: invert(1) brightness(1.5);
 <div style="margin-bottom:24px;">
 <h3 style="font-size:14px; font-weight:300; margin:0 0 16px; color:#333;"><i class="ph ph-faders" style="font-size:14px; color:#333; margin-right:6px;"></i>Настройки (мобильные)</h3>
 <div class="cdm-control-group">
-<label class="cdm-label">Ширина блока слайдера <span id="mobileWidthVal">95</span>% <i class="ph ph-question cdm-width-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
-<div class="cdm-range-wrapper">
-<input type="range" id="cdmMobileWidth" class="cdm-range" min="20" max="100" value="95" step="1">
-<div class="cdm-range-values"><span>20%</span><span>60%</span><span>100%</span></div>
-</div>
 </div>
 <div class="cdm-control-group">
 <label class="cdm-label">Высота блока слайдера <span id="mobileHeightVal">400</span>px</label>
@@ -738,6 +735,30 @@ background-color: #1a1a1a;
 .cdm-palette-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 .cdm-color-swatch { width: 15px; height: 15px; border-radius: 6px; cursor: pointer; transition: 0.1s; flex-shrink: 0; }
 .cdm-color-swatch:hover { transform: scale(1.05); }
+/* [1.75] Кнопки выбора ширины блока (620/720/820/1020) */
+.cdm-controls-col .cdm-width-btns { display: flex; gap: 6px; flex-wrap: nowrap; }
+.cdm-controls-col .cdm-width-btn {
+font-family: 'Inter', sans-serif;
+font-size: 13px;
+font-weight: 400;
+line-height: 1;
+padding: 8px 0;
+flex: 1 1 0;
+min-width: 0;
+text-align: center;
+background: #f3f4f6;
+color: #333;
+border: 1px solid #d9dce1;
+border-radius: 6px;
+cursor: pointer;
+transition: background .15s ease, border-color .15s ease, color .15s ease;
+box-sizing: border-box;
+}
+.cdm-controls-col .cdm-width-btn:hover { background: #e6e8ec; border-color: #c4c9d1; }
+.cdm-controls-col .cdm-width-btn.active { background: #4DB5FF; border-color: #4DB5FF; color: #fff; }
+.cdm-master.dark-theme .cdm-controls-col .cdm-width-btn { background: #2a2d31; color: #ddd; border-color: #41454a; }
+.cdm-master.dark-theme .cdm-controls-col .cdm-width-btn:hover { background: #33373c; border-color: #51565c; }
+.cdm-master.dark-theme .cdm-controls-col .cdm-width-btn.active { background: #4DB5FF; border-color: #4DB5FF; color: #fff; }
 .cdm-custom-color-row { cursor: pointer; }
 .cdm-custom-color-row:hover { opacity: 0.8; }
 .cdm-opacity-row {
@@ -1450,8 +1471,38 @@ const titleOpacityVal = $('#titleOpacityVal');
 const textOpacity = $('#cdmTextOpacity');
 const textOpacityVal = $('#textOpacityVal');
 
-const desktopWidth = $('#cdmDesktopWidth');
+let desktopWidth = 820;
 const desktopWidthVal = $('#desktopWidthVal');
+// [1.75] Дискретный выбор ширины блока по брейкпоинтам (620/720/820/1020)
+function desktopWidthToPx(w) {
+if (w === 'full') return 0; // "на всю ширину" — 0 = без ограничения max-width
+var n = parseInt(w, 10);
+if (!isNaN(n) && n > 0) return n;
+return 820;
+}
+function isAllowedDesktopWidth(n) {
+return n === 620 || n === 720 || n === 820 || n === 1020;
+}
+function setDesktopWidth(val) {
+var n = desktopWidthToPx(val);
+desktopWidth = n;
+desktopWidthVal.text(n > 0 ? n : 'полная');
+$('.cdm-width-btn').removeClass('active');
+if (n > 0) {
+$('.cdm-width-btn[data-width="' + n + '"]').addClass('active');
+}
+updateAll();
+}
+// Инициализация кнопок выбора ширины (active по текущему desktopWidth без перерисовки)
+(function initWidthButtons() {
+$('#cdmDesktopWidthBtns .cdm-width-btn').on('click', function() {
+setDesktopWidth($(this).data('width'));
+});
+if (desktopWidth > 0) {
+$('.cdm-width-btn[data-width="' + desktopWidth + '"]').addClass('active');
+}
+desktopWidthVal.text(desktopWidth > 0 ? desktopWidth : 'полная');
+})();
 const desktopHeight = $('#cdmDesktopHeight');
 const desktopHeightVal = $('#desktopHeightVal');
 const desktopTitleSize = $('#cdmDesktopTitleSize');
@@ -1479,8 +1530,6 @@ const desktopPanelRadiusVal = $('#desktopPanelRadiusVal');
 const desktopBorderOpacity = $('#cdmDesktopBorderOpacity');
 const desktopBorderOpacityVal = $('#desktopBorderOpacityVal');
 
-const mobileWidth = $('#cdmMobileWidth');
-const mobileWidthVal = $('#mobileWidthVal');
 const mobileHeight = $('#cdmMobileHeight');
 const mobileHeightVal = $('#mobileHeightVal');
 const mobileTitleSize = $('#cdmMobileTitleSize');
@@ -1672,7 +1721,7 @@ totalTimeVal.text(totalTime.val());
 bgOpacityVal.text(bgOpacity.val() + '%');
 titleOpacityVal.text(titleOpacity.val() + '%');
 textOpacityVal.text(textOpacity.val() + '%');
-desktopWidthVal.text(desktopWidth.val());
+desktopWidthVal.text(desktopWidth);
 desktopHeightVal.text(desktopHeight.val());
 desktopTitleSizeVal.text(desktopTitleSize.val());
 desktopTextSizeVal.text(desktopTextSize.val());
@@ -1683,7 +1732,6 @@ desktopBorderWidthVal.text(desktopBorderWidth.val());
 desktopBorderOpacityVal.text(desktopBorderOpacity.val() + '%');
 desktopPanelBottomVal.text(desktopPanelBottom.val());
 desktopPanelRadiusVal.text(desktopPanelRadius.val());
-mobileWidthVal.text(mobileWidth.val());
 mobileHeightVal.text(mobileHeight.val());
 mobileTitleSizeVal.text(mobileTitleSize.val());
 mobileTextSizeVal.text(mobileTextSize.val());
@@ -1718,7 +1766,7 @@ var slides = getSlideData();
 var slideCount = slides.length;
 if (slideCount < 1) slideCount = 1;
 
-var sWidth = useMobile ? mobileWidth.val() + '%' : desktopWidth.val() + '%';
+var sWidth = useMobile ? '100%' : '100%';
 var sHeight = useMobile ? mobileHeight.val() + 'px' : desktopHeight.val() + 'px';
 var tSize = useMobile ? mobileTitleSize.val() + 'px' : desktopTitleSize.val() + 'px';
 var txSize = useMobile ? mobileTextSize.val() + 'px' : desktopTextSize.val() + 'px';
@@ -1765,9 +1813,9 @@ var contentHtml = '<div class="cdm-slider-preview" style="width:100%; height:' +
 
 var finalHtml = '';
 if (previewMode === 'desktop') {
-finalHtml = '<div class="desktop-mock"><div class="desktop-screen"><div class="cdm-content-wrapper" style="width:' + sWidth + '; margin:0 auto;">' + contentHtml + '</div></div></div>';
+finalHtml = '<div class="desktop-mock"><div class="desktop-screen"><div class="cdm-content-wrapper" style="width:100%; max-width:' + desktopWidth + 'px; margin:0 auto;">' + contentHtml + '</div></div></div>';
 } else {
-finalHtml = '<div class="phone-mock"><div class="display-mock"><div class="cdm-content-wrapper" style="width:' + mobileWidth.val() + '%; margin:0 auto;">' + contentHtml + '</div></div></div>';
+finalHtml = '<div class="phone-mock"><div class="display-mock"><div class="cdm-content-wrapper" style="width:100%; margin:0 auto;">' + contentHtml + '</div></div></div>';
 }
 container.html(finalHtml);
 
@@ -1868,7 +1916,7 @@ var delay = i * delayStep;
 animDelaysCss += '.cdm-' + suffix + '-2:nth-child(' + (i+1) + '),\n.cdm-' + suffix + '-2:nth-child(' + (i+1) + ') img {\n-webkit-animation-delay: ' + delay + 's;\nanimation-delay: ' + delay + 's;\n}\n';
 }
 
-var deskW = desktopWidth.val();
+var deskW = desktopWidth;
 var deskH = desktopHeight.val();
 var deskTSize = desktopTitleSize.val();
 var deskTxSize = desktopTextSize.val();
@@ -1887,7 +1935,6 @@ var deskPanelBottom = desktopPanelBottom.val();
 var deskPanelRadius = desktopPanelRadius.val();
 var deskBorderRgba = hexToRgba(desktopBorderColor, desktopBorderOpacity.val());
 
-var mobW = mobileWidth.val();
 var mobH = mobileHeight.val();
 var mobTSize = mobileTitleSize.val();
 var mobTxSize = mobileTextSize.val();
@@ -1914,7 +1961,7 @@ slidesHtml +
 '</div>\n' +
 '<style>\n' +
 ':root {\n' +
-'--cdm-' + suffix + '-1: ' + deskW + '%;\n' +
+'--cdm-' + suffix + '-1: ' + deskW + 'px;\n' +
 '--cdm-' + suffix + '-2: ' + deskH + 'px;\n' +
 '--cdm-' + suffix + '-5: ' + deskPanelBottom + 'px;\n' +
 '--cdm-' + suffix + '-6: ' + bgRgba + ';\n' +
@@ -1941,8 +1988,9 @@ slidesHtml +
 '--cdm-' + suffix + '-27: ' + desktopTextAlign + ';\n' +
 '}\n' +
 '.cdm-' + suffix + '-1 {\n' +
-'width: var(--cdm-' + suffix + '-1);\n' +
+'width: 100%;\n' +
 'height: var(--cdm-' + suffix + '-2);\n' +
+'max-width: var(--cdm-' + suffix + '-1);\n' +
 'position: relative;\n' +
 'overflow: hidden;\n' +
 'background: #fff;\n' +
@@ -2019,7 +2067,8 @@ animDelaysCss +
 '}\n' +
 '@media screen and (max-width: 440px) {\n' +
 '.cdm-' + suffix + '-1 {\n' +
-'width: ' + mobW + '% !important;\n' +
+'width: 100% !important;\n' +
+'max-width: 100% !important;\n' +
 'height: ' + mobH + 'px !important;\n' +
 'border-width: ' + mobBW + 'px;\n' +
 'border-color: ' + mobBorderRgba + ';\n' +
@@ -2046,7 +2095,8 @@ animDelaysCss +
 '}\n' +
 '@media (max-width: 400px) {\n' +
 '.cdm-' + suffix + '-1 {\n' +
-'width: ' + mobW + '% !important;\n' +
+'width: 100% !important;\n' +
+'max-width: 100% !important;\n' +
 'height: ' + mobH + 'px !important;\n' +
 'margin-top: 8%;\n' +
 '}\n' +
@@ -2084,7 +2134,7 @@ titleOpacity: titleOpacity.val(),
 textOpacity: textOpacity.val(),
 selectedFont: selectedFont,
 desktop: {
-width: desktopWidth.val(), height: desktopHeight.val(),
+blockWidthDesktop: desktopWidth, height: desktopHeight.val(),
 titleSize: desktopTitleSize.val(), textSize: desktopTextSize.val(),
 titleWeight: desktopTitleWeight.val(), textWeight: desktopTextWeight.val(),
 textMargin: desktopTextMargin.val(),
@@ -2096,7 +2146,7 @@ panelPaddingBottom: desktopPanelPaddingBottom.val(), panelPaddingLeft: desktopPa
 panelBottom: desktopPanelBottom.val(), panelRadius: desktopPanelRadius.val()
 },
 mobile: {
-width: mobileWidth.val(), height: mobileHeight.val(),
+height: mobileHeight.val(),
 titleSize: mobileTitleSize.val(), textSize: mobileTextSize.val(),
 titleWeight: mobileTitleWeight.val(), textWeight: mobileTextWeight.val(),
 textMargin: mobileTextMargin.val(),
@@ -2134,7 +2184,17 @@ selectedFont = 'none';
 }
 }
 var d = s.desktop || {}, m = s.mobile || {};
-if (d.width !== undefined) desktopWidth.val(d.width);
+// [1.75] Мягкий C (задача №9): если в TMB:cfg не сохранена ширина блока (blockWidthDesktop),
+// подставляем дефолт-эталон из реальной настройки ширины страницы Taplink (pageMaxWidth),
+// переданной расширением через cdm-init. Не поймали/нет маппинга — дефолт lg (820).
+if (d.blockWidthDesktop === undefined) {
+  var _pmw = s.pageMaxWidth || 'lg';
+  var _map = { xs: 620, sm: 620, md: 720, lg: 820, xl: 1020 };
+  var _pw = _map[_pmw] || 820;
+  setDesktopWidth(_pw);
+} else {
+  setDesktopWidth(d.blockWidthDesktop);
+}
 if (d.height !== undefined) desktopHeight.val(d.height);
 if (d.titleSize !== undefined) desktopTitleSize.val(d.titleSize);
 if (d.textSize !== undefined) desktopTextSize.val(d.textSize);
@@ -2144,7 +2204,6 @@ if (d.textMargin !== undefined) desktopTextMargin.val(d.textMargin);
 if (d.borderWidth !== undefined) desktopBorderWidth.val(d.borderWidth);
 if (d.borderOpacity !== undefined) desktopBorderOpacity.val(d.borderOpacity);
 if (d.borderColor !== undefined) { desktopBorderColor = d.borderColor; $('.customColorHexDesktopBorderColor').text(desktopBorderColor); $('.customColorPreviewDesktopBorderColor').css('background', desktopBorderColor); }
-if (m.width !== undefined) mobileWidth.val(m.width);
 if (m.height !== undefined) mobileHeight.val(m.height);
 if (m.titleSize !== undefined) mobileTitleSize.val(m.titleSize);
 if (m.textSize !== undefined) mobileTextSize.val(m.textSize);
@@ -2236,7 +2295,7 @@ bgColor: '#ffffff',
 titleColor: '#333333',
 textColor: '#333333',
 selectedFont: 'none',
-desktopWidth: 90,
+desktopWidth: 820,
 desktopHeight: 600,
 desktopTitleSize: 22,
 desktopTextSize: 15,
@@ -2257,7 +2316,6 @@ desktopPanelPaddingBottom: 30,
 desktopPanelPaddingLeft: 30,
 desktopPanelBottom: 0,
 desktopPanelRadius: 0,
-mobileWidth: 95,
 mobileHeight: 400,
 mobileTitleSize: 16,
 mobileTextSize: 13,
@@ -2303,7 +2361,7 @@ desktopTextAlign = defaultValues.desktopTextAlign;
 mobileTitleAlign = defaultValues.mobileTitleAlign;
 mobileTextAlign = defaultValues.mobileTextAlign;
 
-desktopWidth.val(defaultValues.desktopWidth);
+setDesktopWidth(defaultValues.desktopWidth);
 desktopHeight.val(defaultValues.desktopHeight);
 desktopTitleSize.val(defaultValues.desktopTitleSize);
 desktopTextSize.val(defaultValues.desktopTextSize);
@@ -2321,7 +2379,6 @@ desktopPanelPaddingLeft.val(defaultValues.desktopPanelPaddingLeft);
 desktopPanelBottom.val(defaultValues.desktopPanelBottom);
 desktopPanelRadius.val(defaultValues.desktopPanelRadius);
 
-mobileWidth.val(defaultValues.mobileWidth);
 mobileHeight.val(defaultValues.mobileHeight);
 mobileTitleSize.val(defaultValues.mobileTitleSize);
 mobileTextSize.val(defaultValues.mobileTextSize);
@@ -2377,12 +2434,12 @@ updateAll();
 
 const allInputs = [
 sliderRadius, zoomScale, totalTime, bgOpacity, titleOpacity, textOpacity,
-desktopWidth, desktopHeight, desktopTitleSize, desktopTextSize,
+desktopHeight, desktopTitleSize, desktopTextSize,
 desktopTitleWeight, desktopTextWeight, desktopTextMargin,
 desktopBorderWidth, desktopBorderOpacity, desktopPanelMarginRight, desktopPanelMarginLeft,
 desktopPanelPaddingTop, desktopPanelPaddingRight, desktopPanelPaddingBottom, desktopPanelPaddingLeft,
 desktopPanelBottom, desktopPanelRadius,
-mobileWidth, mobileHeight, mobileTitleSize, mobileTextSize,
+mobileHeight, mobileTitleSize, mobileTextSize,
 mobileTitleWeight, mobileTextWeight, mobileTextMargin,
 mobileBorderWidth, mobileBorderOpacity, mobilePanelMarginRight, mobilePanelMarginLeft,
 mobilePanelPaddingTop, mobilePanelPaddingRight, mobilePanelPaddingBottom, mobilePanelPaddingLeft,

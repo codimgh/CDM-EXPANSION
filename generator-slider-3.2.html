@@ -163,6 +163,10 @@ filter: invert(1) brightness(1.5);
 }
 </style>
 <div class="cdm-master" style="max-width:1750px; margin:0 auto; font-family:'Inter',system-ui,sans-serif;">
+<!-- [1.80/задача№11] «Язычок»-ручка плавающей панели настроек: показ/скрытие панели
+     (CSS .cdm-panel-toggle, логика — #cdmPanelToggle в конце скрипта). Иконка автономная
+     (CDM_ICONS: faders), как остальные иконки конфигуратора. -->
+<div class="cdm-panel-toggle" id="cdmPanelToggle" title="Показать/скрыть настройки"><i class="ph ph-faders"></i></div>
 <div class="cdm-two-columns">
 <div class="cdm-preview-col">
 <div style="display: flex; align-items: center; justify-content: flex-end; margin-bottom: 20px;" class="cdm-preview-top">
@@ -203,7 +207,7 @@ filter: invert(1) brightness(1.5);
 <div id="cdmLivePreview" style="width: 100%; padding: 5px; display: flex; align-items: flex-start; justify-content: center;"></div>
 </div>
 </div>
-<div class="cdm-controls-col">
+<div class="cdm-controls-col cdm-floating">
 <div class="cdm-controls-inner">
 <div style="margin-bottom:24px;">
 <h3 style="font-size:14px; font-weight:300; margin:0 0 16px; color:#333;"><i class="ph ph-faders" style="font-size:14px; color:#333; margin-right:6px;"></i>Общие настройки</h3>
@@ -867,6 +871,70 @@ border-top-left-radius: 6px;
 border-bottom-left-radius: 6px;
 border-left: 1px solid #3333331c;
 }
+}
+/* [1.80/задача№11] ПЛАВАЮЩАЯ ПАНЕЛЬ НАСТРОЕК (тип «перекрывает», НЕ сдвигает).
+   Панель выходит из flex-потока (.cdm-floating): превью занимает ВСЮ ширину фрейма,
+   поэтому блок виден 1:1 и размеры 620/720/820/1020 различимы даже на окне 1366×768.
+   Цена компромисса: панель лежит ПОВЕРХ правой части блока — чтобы досмотреть блок
+   целиком, панель прячут «язычком» (#cdmPanelToggle). Состояние — на сессию, в блок
+   и в настройки НЕ сохраняется. Ни панель, ни превью НЕ делают блок шире контейнера
+   страницы (это отдельная задача №10). */
+.cdm-controls-col.cdm-floating {
+position: fixed;
+top: 20px;
+right: 25px;
+width: 340px;
+max-width: none;
+max-height: calc(100vh - 40px);
+margin: 0;
+background: #ffffff !important;
+border: 1px solid #3333331c;
+border-radius: 6px;
+box-shadow: -10px 2px 28px rgba(0, 0, 0, 0.10);
+z-index: 30;
+transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.cdm-controls-col.cdm-floating.cdm-panel-hidden {
+transform: translateX(calc(100% + 25px));
+opacity: 0;
+pointer-events: none;
+}
+.cdm-master.dark-theme .cdm-controls-col.cdm-floating {
+background: #1a1a1a !important;
+border-color: #4444446e !important;
+}
+/* «Язычок»-ручка панели: по правому краю фрейма, отступ от верха 50px.
+   Порядок слоёв: ручка (40) > панель (30) > превью (по умолчанию). */
+.cdm-panel-toggle {
+position: fixed;
+top: 50px;
+right: 0;
+width: 30px;
+height: 46px;
+display: flex;
+align-items: center;
+justify-content: center;
+background: #ffffff;
+border: 1px solid #3333331c;
+border-right: none;
+border-radius: 6px 0 0 6px;
+color: #333;
+cursor: pointer;
+user-select: none;
+z-index: 40;
+transition: background 0.15s ease, color 0.15s ease;
+}
+.cdm-panel-toggle:hover {
+color: #4DB5FF;
+}
+.cdm-panel-toggle i {
+font-size: 17px;
+line-height: 1;
+}
+.cdm-master.dark-theme .cdm-panel-toggle {
+background: #1a1a1a;
+border-color: #4444446e;
+color: #e0e0e0;
 }
 .cdm-controls-inner { padding: 24px; }
 /* [1.72] Заголовки разделов: иконка на 1px больше шрифта и вертикально по центру текста */
@@ -2670,6 +2738,28 @@ $('#cdm-preview-anim-style').text(css);
 updatePreviewAnimStyle();
 totalTime.on('input', updatePreviewAnimStyle);
 zoomScale.on('input', updatePreviewAnimStyle);
+
+// [1.80/задача№11] Плавающая панель настроек: СТАРТОВОЕ состояние задаётся при открытии
+// блока по ширине фрейма (окна) — на узких окнах (< 1500px) панель по умолчанию СКРЫТА,
+// чтобы превью сразу было на всю ширину и блок читался 1:1; на широких — ОТКРЫТА.
+// Порог 1500 выведен из расчёта: 1020 (максимальная ширина блока) + 340 (панель) = 1360px
+// ≈ 0.92 от ширины расширенной модалки, т.е. 1020-й блок помещается левее панели.
+// Ручной переключатель «язычком» (#cdmPanelToggle) работает в любой момент; состояние
+// живёт в рамках сессии (в блок/настройки НЕ пишется) и НЕ сбрасывается обновлением
+// превью: класс висит на статичном .cdm-controls-col, а updatePreview перерисовывает
+// только содержимое #cdmLivePreview.
+(function(){
+var PANEL_HIDE_BREAKPOINT = 1500;
+var $controlsCol = $('.cdm-controls-col');
+if (!$controlsCol.length) return;
+function cdmSetPanelHidden(hidden) {
+$controlsCol.toggleClass('cdm-panel-hidden', !!hidden);
+}
+cdmSetPanelHidden(window.innerWidth < PANEL_HIDE_BREAKPOINT);
+$('#cdmPanelToggle').on('click', function() {
+cdmSetPanelHidden(!$controlsCol.hasClass('cdm-panel-hidden'));
+});
+})();
 
 renderSlides();
 bindSlideInputs();

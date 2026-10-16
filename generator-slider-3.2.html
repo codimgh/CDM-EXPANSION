@@ -398,6 +398,48 @@ filter: invert(1) brightness(1.5);
 </div>
 </div>
 <div class="cdm-control-group">
+<label class="cdm-label">Цвет рамки слайдера</label>
+<div class="cdm-color-palette">
+<div class="cdm-palette-row">
+<div class="cdm-color-swatch" data-color="#ffffff" style="background:#ffffff; border:1px solid #ccc;"></div>
+<div class="cdm-color-swatch" data-color="#f5f5f5" style="background:#f5f5f5;"></div>
+<div class="cdm-color-swatch" data-color="#e8e8e8" style="background:#e8e8e8;"></div>
+<div class="cdm-color-swatch" data-color="#d9d9d9" style="background:#d9d9d9;"></div>
+<div class="cdm-color-swatch" data-color="#cccccc" style="background:#cccccc;"></div>
+<div class="cdm-color-swatch" data-color="#b3b3b3" style="background:#b3b3b3;"></div>
+<div class="cdm-color-swatch" data-color="#999999" style="background:#999999;"></div>
+<div class="cdm-color-swatch" data-color="#808080" style="background:#808080;"></div>
+<div class="cdm-color-swatch" data-color="#666666" style="background:#666666;"></div>
+<div class="cdm-color-swatch" data-color="#4d4d4d" style="background:#4d4d4d;"></div>
+<div class="cdm-color-swatch" data-color="#333333" style="background:#333333;"></div>
+<div class="cdm-color-swatch" data-color="#1a1a1a" style="background:#1a1a1a;"></div>
+</div>
+<div class="cdm-palette-row">
+<div class="cdm-color-swatch" data-color="#A47864" style="background:#A47864;"></div>
+<div class="cdm-color-swatch" data-color="#101585" style="background:#101585;"></div>
+<div class="cdm-color-swatch" data-color="#A78BFA" style="background:#A78BFA;"></div>
+<div class="cdm-color-swatch" data-color="#4CAF50" style="background:#4CAF50;"></div>
+<div class="cdm-color-swatch" data-color="#FFDD44" style="background:#FFDD44;"></div>
+<div class="cdm-color-swatch" data-color="#E2725B" style="background:#E2725B;"></div>
+<div class="cdm-color-swatch" data-color="#D58D8D" style="background:#D58D8D;"></div>
+<div class="cdm-color-swatch" data-color="#316263" style="background:#316263;"></div>
+<div class="cdm-color-swatch" data-color="#C27A5A" style="background:#C27A5A;"></div>
+<div class="cdm-color-swatch" data-color="#FF6F61" style="background:#FF6F61;"></div>
+<div class="cdm-color-swatch" data-color="#1E3A8A" style="background:#1E3A8A;"></div>
+<div class="cdm-color-swatch" data-color="#A8E6CF" style="background:#A8E6CF;"></div>
+</div>
+<div class="cdm-opacity-row">
+<span class="cdm-opacity-label-text">Прозрачность</span>
+<input type="range" id="cdmBorderOpacity" class="cdm-range cdm-opacity-range" min="0" max="100" value="0" step="1">
+<span class="cdm-opacity-value" id="borderOpacityVal">0%</span>
+</div>
+<div class="cdm-custom-color-row" data-target="borderColor" style="display: flex; align-items: center; justify-content: space-between; padding-top: 8px; cursor: pointer;">
+<div style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-palette" style="font-size: 15px; display:inline-flex; align-items:center; justify-content:center;"></i><span style="font-size: 14px; font-weight: 300; color: #333;">Свой цвет</span></div>
+<div style="display: flex; align-items: center; gap: 8px;"><span class="customColorHexBorderColor" style="font-size: 12px; color: #666; font-weight: 300;">#cccccc</span><div class="customColorPreviewBorderColor" style="width: 15px; height: 15px; border-radius: 6px; background-color: #cccccc; margin-right: 5px;"></div></div>
+</div>
+</div>
+</div>
+<div class="cdm-control-group">
 <label class="cdm-label" style="font-size:14px; font-weight:300; color:#333; margin-bottom:12px;">Управление слайдами</label>
 <div id="cdmSlidesContainer"></div>
 <button id="cdmAddSlideBtn" class="cdm-add-slide-btn"><svg class="cdm-add-slide-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 2V8M2 5H8" stroke-linejoin="round"></path><path d="M12 5H15M12 22H15M18 5H18.5C20.433 5 22 6.567 22 8.5V9M22 18V18.5C22 20.433 20.433 22 18.5 22H18M9 22H8.5C6.567 22 5 20.433 5 18.5L5 18M22 12V15M5 12L5 15"></path></svg> Добавить слайд</button>
@@ -452,48 +494,6 @@ filter: invert(1) brightness(1.5);
 <div class="cdm-range-wrapper">
 <input type="range" id="cdmDesktopBorderWidth" class="cdm-range" min="0" max="10" value="0" step="1">
 <div class="cdm-range-values"><span>0px</span><span>5px</span><span>10px</span></div>
-</div>
-</div>
-<div class="cdm-control-group">
-<label class="cdm-label">Цвет рамки слайдера</label>
-<div class="cdm-color-palette">
-<div class="cdm-palette-row">
-<div class="cdm-color-swatch" data-color="#ffffff" style="background:#ffffff; border:1px solid #ccc;"></div>
-<div class="cdm-color-swatch" data-color="#f5f5f5" style="background:#f5f5f5;"></div>
-<div class="cdm-color-swatch" data-color="#e8e8e8" style="background:#e8e8e8;"></div>
-<div class="cdm-color-swatch" data-color="#d9d9d9" style="background:#d9d9d9;"></div>
-<div class="cdm-color-swatch" data-color="#cccccc" style="background:#cccccc;"></div>
-<div class="cdm-color-swatch" data-color="#b3b3b3" style="background:#b3b3b3;"></div>
-<div class="cdm-color-swatch" data-color="#999999" style="background:#999999;"></div>
-<div class="cdm-color-swatch" data-color="#808080" style="background:#808080;"></div>
-<div class="cdm-color-swatch" data-color="#666666" style="background:#666666;"></div>
-<div class="cdm-color-swatch" data-color="#4d4d4d" style="background:#4d4d4d;"></div>
-<div class="cdm-color-swatch" data-color="#333333" style="background:#333333;"></div>
-<div class="cdm-color-swatch" data-color="#1a1a1a" style="background:#1a1a1a;"></div>
-</div>
-<div class="cdm-palette-row">
-<div class="cdm-color-swatch" data-color="#A47864" style="background:#A47864;"></div>
-<div class="cdm-color-swatch" data-color="#101585" style="background:#101585;"></div>
-<div class="cdm-color-swatch" data-color="#A78BFA" style="background:#A78BFA;"></div>
-<div class="cdm-color-swatch" data-color="#4CAF50" style="background:#4CAF50;"></div>
-<div class="cdm-color-swatch" data-color="#FFDD44" style="background:#FFDD44;"></div>
-<div class="cdm-color-swatch" data-color="#E2725B" style="background:#E2725B;"></div>
-<div class="cdm-color-swatch" data-color="#D58D8D" style="background:#D58D8D;"></div>
-<div class="cdm-color-swatch" data-color="#316263" style="background:#316263;"></div>
-<div class="cdm-color-swatch" data-color="#C27A5A" style="background:#C27A5A;"></div>
-<div class="cdm-color-swatch" data-color="#FF6F61" style="background:#FF6F61;"></div>
-<div class="cdm-color-swatch" data-color="#1E3A8A" style="background:#1E3A8A;"></div>
-<div class="cdm-color-swatch" data-color="#A8E6CF" style="background:#A8E6CF;"></div>
-</div>
-<div class="cdm-opacity-row">
-<span class="cdm-opacity-label-text">Прозрачность</span>
-<input type="range" id="cdmDesktopBorderOpacity" class="cdm-range cdm-opacity-range" min="0" max="100" value="0" step="1">
-<span class="cdm-opacity-value" id="desktopBorderOpacityVal">0%</span>
-</div>
-<div class="cdm-custom-color-row" data-target="desktopBorderColor" style="display: flex; align-items: center; justify-content: space-between; padding-top: 8px; cursor: pointer;">
-<div style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-palette" style="font-size: 15px; display:inline-flex; align-items:center; justify-content:center;"></i><span style="font-size: 14px; font-weight: 300; color: #333;">Свой цвет</span></div>
-<div style="display: flex; align-items: center; gap: 8px;"><span class="customColorHexDesktopBorderColor" style="font-size: 12px; color: #666; font-weight: 300;">#cccccc</span><div class="customColorPreviewDesktopBorderColor" style="width: 15px; height: 15px; border-radius: 6px; background-color: #cccccc; margin-right: 5px;"></div></div>
-</div>
 </div>
 </div>
 <div class="cdm-control-group">
@@ -601,48 +601,6 @@ filter: invert(1) brightness(1.5);
 <div class="cdm-range-wrapper">
 <input type="range" id="cdmMobileBorderWidth" class="cdm-range" min="0" max="10" value="0" step="1">
 <div class="cdm-range-values"><span>0px</span><span>5px</span><span>10px</span></div>
-</div>
-</div>
-<div class="cdm-control-group">
-<label class="cdm-label">Цвет рамки слайдера</label>
-<div class="cdm-color-palette">
-<div class="cdm-palette-row">
-<div class="cdm-color-swatch" data-color="#ffffff" style="background:#ffffff; border:1px solid #ccc;"></div>
-<div class="cdm-color-swatch" data-color="#f5f5f5" style="background:#f5f5f5;"></div>
-<div class="cdm-color-swatch" data-color="#e8e8e8" style="background:#e8e8e8;"></div>
-<div class="cdm-color-swatch" data-color="#d9d9d9" style="background:#d9d9d9;"></div>
-<div class="cdm-color-swatch" data-color="#cccccc" style="background:#cccccc;"></div>
-<div class="cdm-color-swatch" data-color="#b3b3b3" style="background:#b3b3b3;"></div>
-<div class="cdm-color-swatch" data-color="#999999" style="background:#999999;"></div>
-<div class="cdm-color-swatch" data-color="#808080" style="background:#808080;"></div>
-<div class="cdm-color-swatch" data-color="#666666" style="background:#666666;"></div>
-<div class="cdm-color-swatch" data-color="#4d4d4d" style="background:#4d4d4d;"></div>
-<div class="cdm-color-swatch" data-color="#333333" style="background:#333333;"></div>
-<div class="cdm-color-swatch" data-color="#1a1a1a" style="background:#1a1a1a;"></div>
-</div>
-<div class="cdm-palette-row">
-<div class="cdm-color-swatch" data-color="#A47864" style="background:#A47864;"></div>
-<div class="cdm-color-swatch" data-color="#101585" style="background:#101585;"></div>
-<div class="cdm-color-swatch" data-color="#A78BFA" style="background:#A78BFA;"></div>
-<div class="cdm-color-swatch" data-color="#4CAF50" style="background:#4CAF50;"></div>
-<div class="cdm-color-swatch" data-color="#FFDD44" style="background:#FFDD44;"></div>
-<div class="cdm-color-swatch" data-color="#E2725B" style="background:#E2725B;"></div>
-<div class="cdm-color-swatch" data-color="#D58D8D" style="background:#D58D8D;"></div>
-<div class="cdm-color-swatch" data-color="#316263" style="background:#316263;"></div>
-<div class="cdm-color-swatch" data-color="#C27A5A" style="background:#C27A5A;"></div>
-<div class="cdm-color-swatch" data-color="#FF6F61" style="background:#FF6F61;"></div>
-<div class="cdm-color-swatch" data-color="#1E3A8A" style="background:#1E3A8A;"></div>
-<div class="cdm-color-swatch" data-color="#A8E6CF" style="background:#A8E6CF;"></div>
-</div>
-<div class="cdm-opacity-row">
-<span class="cdm-opacity-label-text">Прозрачность</span>
-<input type="range" id="cdmMobileBorderOpacity" class="cdm-range cdm-opacity-range" min="0" max="100" value="0" step="1">
-<span class="cdm-opacity-value" id="mobileBorderOpacityVal">0%</span>
-</div>
-<div class="cdm-custom-color-row" data-target="mobileBorderColor" style="display: flex; align-items: center; justify-content: space-between; padding-top: 8px; cursor: pointer;">
-<div style="display: flex; align-items: center; gap: 8px;"><i class="ph ph-palette" style="font-size: 15px; display:inline-flex; align-items:center; justify-content:center;"></i><span style="font-size: 14px; font-weight: 300; color: #333;">Свой цвет</span></div>
-<div style="display: flex; align-items: center; gap: 8px;"><span class="customColorHexMobileBorderColor" style="font-size: 12px; color: #666; font-weight: 300;">#cccccc</span><div class="customColorPreviewMobileBorderColor" style="width: 15px; height: 15px; border-radius: 6px; background-color: #cccccc; margin-right: 5px;"></div></div>
-</div>
 </div>
 </div>
 <div class="cdm-control-group">
@@ -768,8 +726,7 @@ box-sizing: border-box;
 .cdm-custom-color-row .customColorPreviewBgColor,
 .cdm-custom-color-row .customColorPreviewTitleColor,
 .cdm-custom-color-row .customColorPreviewTextColor,
-.cdm-custom-color-row .customColorPreviewDesktopBorderColor,
-.cdm-custom-color-row .customColorPreviewMobileBorderColor { border: 1px solid #cccccc47; }
+.cdm-custom-color-row .customColorPreviewBorderColor { border: 1px solid #cccccc47; }
 .cdm-opacity-row {
 display: flex;
 align-items: center;
@@ -1170,15 +1127,13 @@ border: 1px solid #55555540 !important;
 .cdm-master.dark-theme .cdm-custom-color-row .customColorHexTextColor,
 .cdm-master.dark-theme .cdm-custom-color-row .customColorHexBgColor,
 .cdm-master.dark-theme .cdm-custom-color-row .customColorHexTitleColor,
-.cdm-master.dark-theme .cdm-custom-color-row .customColorHexDesktopBorderColor,
-.cdm-master.dark-theme .cdm-custom-color-row .customColorHexMobileBorderColor {
+.cdm-master.dark-theme .cdm-custom-color-row .customColorHexBorderColor {
 color: #ddd !important;
 }
 .cdm-master.dark-theme .cdm-custom-color-row .customColorPreviewTextColor,
 .cdm-master.dark-theme .cdm-custom-color-row .customColorPreviewBgColor,
 .cdm-master.dark-theme .cdm-custom-color-row .customColorPreviewTitleColor,
-.cdm-master.dark-theme .cdm-custom-color-row .customColorPreviewDesktopBorderColor,
-.cdm-master.dark-theme .cdm-custom-color-row .customColorPreviewMobileBorderColor {
+.cdm-master.dark-theme .cdm-custom-color-row .customColorPreviewBorderColor {
 border: 1px solid #55555552;
 }
 .cdm-master.dark-theme .cdm-opacity-row .cdm-opacity-range {
@@ -1479,6 +1434,8 @@ const titleOpacity = $('#cdmTitleOpacity');
 const titleOpacityVal = $('#titleOpacityVal');
 const textOpacity = $('#cdmTextOpacity');
 const textOpacityVal = $('#textOpacityVal');
+const borderOpacity = $('#cdmBorderOpacity');
+const borderOpacityVal = $('#borderOpacityVal');
 
 let desktopWidth = 820;
 const desktopWidthVal = $('#desktopWidthVal');
@@ -1536,8 +1493,6 @@ const desktopPanelBottom = $('#cdmDesktopPanelBottom');
 const desktopPanelBottomVal = $('#desktopPanelBottomVal');
 const desktopPanelRadius = $('#cdmDesktopPanelRadius');
 const desktopPanelRadiusVal = $('#desktopPanelRadiusVal');
-const desktopBorderOpacity = $('#cdmDesktopBorderOpacity');
-const desktopBorderOpacityVal = $('#desktopBorderOpacityVal');
 
 const mobileHeight = $('#cdmMobileHeight');
 const mobileHeightVal = $('#mobileHeightVal');
@@ -1563,14 +1518,11 @@ const mobilePanelBottom = $('#cdmMobilePanelBottom');
 const mobilePanelBottomVal = $('#mobilePanelBottomVal');
 const mobilePanelRadius = $('#cdmMobilePanelRadius');
 const mobilePanelRadiusVal = $('#mobilePanelRadiusVal');
-const mobileBorderOpacity = $('#cdmMobileBorderOpacity');
-const mobileBorderOpacityVal = $('#mobileBorderOpacityVal');
 
 let bgColor = '#ffffff';
 let titleColor = '#333333';
 let textColor = '#333333';
-let desktopBorderColor = '#cccccc';
-let mobileBorderColor = '#cccccc';
+let borderColor = '#cccccc';
 let previewMode = 'desktop';
 let selectedFont = 'none';
 let desktopTitleAlign = 'left';
@@ -1738,7 +1690,7 @@ desktopTitleWeightVal.text(desktopTitleWeight.val());
 desktopTextWeightVal.text(desktopTextWeight.val());
 desktopTextMarginVal.text(desktopTextMargin.val());
 desktopBorderWidthVal.text(desktopBorderWidth.val());
-desktopBorderOpacityVal.text(desktopBorderOpacity.val() + '%');
+borderOpacityVal.text(borderOpacity.val() + '%');
 desktopPanelBottomVal.text(desktopPanelBottom.val());
 desktopPanelRadiusVal.text(desktopPanelRadius.val());
 mobileHeightVal.text(mobileHeight.val());
@@ -1748,7 +1700,6 @@ mobileTitleWeightVal.text(mobileTitleWeight.val());
 mobileTextWeightVal.text(mobileTextWeight.val());
 mobileTextMarginVal.text(mobileTextMargin.val());
 mobileBorderWidthVal.text(mobileBorderWidth.val());
-mobileBorderOpacityVal.text(mobileBorderOpacity.val() + '%');
 mobilePanelBottomVal.text(mobilePanelBottom.val());
 mobilePanelRadiusVal.text(mobilePanelRadius.val());
 }
@@ -1787,8 +1738,8 @@ var bgRgba = hexToRgba(bgColor, bgOpacity.val());
 var titleRgba = hexToRgba(titleColor, titleOpacity.val());
 var textRgba = hexToRgba(textColor, textOpacity.val());
 var bWidth = useMobile ? mobileBorderWidth.val() + 'px' : desktopBorderWidth.val() + 'px';
-var bOpacity = useMobile ? mobileBorderOpacity.val() : desktopBorderOpacity.val();
-var bColor = hexToRgba(useMobile ? mobileBorderColor : desktopBorderColor, bOpacity);
+var bOpacity = borderOpacity.val();
+var bColor = hexToRgba(borderColor, bOpacity);
 var tAlign = useMobile ? mobileTitleAlign : desktopTitleAlign;
 var txAlign = useMobile ? mobileTextAlign : desktopTextAlign;
 var panelMR = useMobile ? mobilePanelMarginRight.val() + 'px' : desktopPanelMarginRight.val() + 'px';
@@ -1942,7 +1893,7 @@ var deskPanelPB = desktopPanelPaddingBottom.val();
 var deskPanelPL = desktopPanelPaddingLeft.val();
 var deskPanelBottom = desktopPanelBottom.val();
 var deskPanelRadius = desktopPanelRadius.val();
-var deskBorderRgba = hexToRgba(desktopBorderColor, desktopBorderOpacity.val());
+var borderRgba = hexToRgba(borderColor, borderOpacity.val());
 
 var mobH = mobileHeight.val();
 var mobTSize = mobileTitleSize.val();
@@ -1960,7 +1911,6 @@ var mobPanelPB = mobilePanelPaddingBottom.val();
 var mobPanelPL = mobilePanelPaddingLeft.val();
 var mobPanelBottom = mobilePanelBottom.val();
 var mobPanelRadius = mobilePanelRadius.val();
-var mobBorderRgba = hexToRgba(mobileBorderColor, mobileBorderOpacity.val());
 
 var panelPadding = deskPanelPT + 'px ' + deskPanelPR + 'px ' + deskPanelPB + 'px ' + deskPanelPL + 'px';
 var panelMargin = '0 ' + deskPanelMR + 'px ' + deskPanelMB + 'px ' + deskPanelML + 'px';
@@ -1984,7 +1934,7 @@ slidesHtml +
 '--cdm-' + suffix + '-14: ' + radius + 'px;\n' +
 '--cdm-' + suffix + '-15: ' + deskTxMargin + 'px;\n' +
 '--cdm-' + suffix + '-16: ' + deskBW + 'px;\n' +
-'--cdm-' + suffix + '-17: ' + deskBorderRgba + ';\n' +
+'--cdm-' + suffix + '-17: ' + borderRgba + ';\n' +
 '--cdm-' + suffix + '-18: ' + deskPanelRadius + 'px;\n' +
 '--cdm-' + suffix + '-19: ' + deskPanelML + 'px;\n' +
 '--cdm-' + suffix + '-20: ' + deskPanelMR + 'px;\n' +
@@ -2080,7 +2030,7 @@ animDelaysCss +
 'max-width: 100% !important;\n' +
 'height: ' + mobH + 'px !important;\n' +
 'border-width: ' + mobBW + 'px;\n' +
-'border-color: ' + mobBorderRgba + ';\n' +
+'border-color: ' + borderRgba + ';\n' +
 '}\n' +
 '.cdm-' + suffix + '-3 {\n' +
 'padding: ' + mobPanelPT + 'px ' + mobPanelPR + 'px ' + mobPanelPB + 'px ' + mobPanelPL + 'px;\n' +
@@ -2139,6 +2089,8 @@ bgOpacity: bgOpacity.val(),
 bgColor: bgColor,
 titleColor: titleColor,
 textColor: textColor,
+borderColor: borderColor,
+borderOpacity: borderOpacity.val(),
 titleOpacity: titleOpacity.val(),
 textOpacity: textOpacity.val(),
 selectedFont: selectedFont,
@@ -2147,7 +2099,7 @@ blockWidthDesktop: desktopWidth, height: desktopHeight.val(),
 titleSize: desktopTitleSize.val(), textSize: desktopTextSize.val(),
 titleWeight: desktopTitleWeight.val(), textWeight: desktopTextWeight.val(),
 textMargin: desktopTextMargin.val(),
-borderWidth: desktopBorderWidth.val(), borderColor: desktopBorderColor, borderOpacity: desktopBorderOpacity.val(),
+borderWidth: desktopBorderWidth.val(),
 titleAlign: desktopTitleAlign, textAlign: desktopTextAlign,
 panelMarginRight: desktopPanelMarginRight.val(), panelMarginLeft: desktopPanelMarginLeft.val(), panelMarginBottom: 0,
 panelPaddingTop: desktopPanelPaddingTop.val(), panelPaddingRight: desktopPanelPaddingRight.val(),
@@ -2159,7 +2111,7 @@ height: mobileHeight.val(),
 titleSize: mobileTitleSize.val(), textSize: mobileTextSize.val(),
 titleWeight: mobileTitleWeight.val(), textWeight: mobileTextWeight.val(),
 textMargin: mobileTextMargin.val(),
-borderWidth: mobileBorderWidth.val(), borderColor: mobileBorderColor, borderOpacity: mobileBorderOpacity.val(),
+borderWidth: mobileBorderWidth.val(),
 titleAlign: mobileTitleAlign, textAlign: mobileTextAlign,
 panelMarginRight: mobilePanelMarginRight.val(), panelMarginLeft: mobilePanelMarginLeft.val(), panelMarginBottom: 0,
 panelPaddingTop: mobilePanelPaddingTop.val(), panelPaddingRight: mobilePanelPaddingRight.val(),
@@ -2193,6 +2145,10 @@ selectedFont = 'none';
 }
 }
 var d = s.desktop || {}, m = s.mobile || {};
+var bc = (s.borderColor !== undefined) ? s.borderColor : ((d.borderColor !== undefined) ? d.borderColor : m.borderColor);
+if (bc !== undefined) { borderColor = bc; $('.customColorHexBorderColor').text(borderColor); $('.customColorPreviewBorderColor').css('background', borderColor); }
+var bo = (s.borderOpacity !== undefined) ? s.borderOpacity : ((d.borderOpacity !== undefined) ? d.borderOpacity : m.borderOpacity);
+if (bo !== undefined) borderOpacity.val(bo);
 // [1.75] Мягкий C (задача №9): если в TMB:cfg не сохранена ширина блока (blockWidthDesktop),
 // подставляем дефолт-эталон из реальной настройки ширины страницы Taplink (pageMaxWidth),
 // переданной расширением через cdm-init. Не поймали/нет маппинга — дефолт lg (820).
@@ -2211,8 +2167,6 @@ if (d.titleWeight !== undefined) desktopTitleWeight.val(d.titleWeight);
 if (d.textWeight !== undefined) desktopTextWeight.val(d.textWeight);
 if (d.textMargin !== undefined) desktopTextMargin.val(d.textMargin);
 if (d.borderWidth !== undefined) desktopBorderWidth.val(d.borderWidth);
-if (d.borderOpacity !== undefined) desktopBorderOpacity.val(d.borderOpacity);
-if (d.borderColor !== undefined) { desktopBorderColor = d.borderColor; $('.customColorHexDesktopBorderColor').text(desktopBorderColor); $('.customColorPreviewDesktopBorderColor').css('background', desktopBorderColor); }
 if (m.height !== undefined) mobileHeight.val(m.height);
 if (m.titleSize !== undefined) mobileTitleSize.val(m.titleSize);
 if (m.textSize !== undefined) mobileTextSize.val(m.textSize);
@@ -2220,8 +2174,6 @@ if (m.titleWeight !== undefined) mobileTitleWeight.val(m.titleWeight);
 if (m.textWeight !== undefined) mobileTextWeight.val(m.textWeight);
 if (m.textMargin !== undefined) mobileTextMargin.val(m.textMargin);
 if (m.borderWidth !== undefined) mobileBorderWidth.val(m.borderWidth);
-if (m.borderOpacity !== undefined) mobileBorderOpacity.val(m.borderOpacity);
-if (m.borderColor !== undefined) { mobileBorderColor = m.borderColor; $('.customColorHexMobileBorderColor').text(mobileBorderColor); $('.customColorPreviewMobileBorderColor').css('background', mobileBorderColor); }
 
 // align selects
 function applyAlign(selId, val) {
@@ -2303,6 +2255,8 @@ bgOpacity: 28,
 bgColor: '#ffffff',
 titleColor: '#333333',
 textColor: '#333333',
+borderColor: '#cccccc',
+borderOpacity: 0,
 selectedFont: 'none',
 desktopWidth: 820,
 desktopHeight: 600,
@@ -2312,8 +2266,6 @@ desktopTitleWeight: 700,
 desktopTextWeight: 300,
 desktopTextMargin: 10,
 desktopBorderWidth: 0,
-desktopBorderColor: '#cccccc',
-desktopBorderOpacity: 0,
 desktopTitleAlign: 'left',
 desktopTextAlign: 'left',
 desktopPanelMarginRight: 0,
@@ -2332,8 +2284,6 @@ mobileTitleWeight: 700,
 mobileTextWeight: 300,
 mobileTextMargin: 8,
 mobileBorderWidth: 0,
-mobileBorderColor: '#cccccc',
-mobileBorderOpacity: 0,
 mobileTitleAlign: 'left',
 mobileTextAlign: 'left',
 mobilePanelMarginRight: 0,
@@ -2362,9 +2312,8 @@ bgOpacity.val(defaultValues.bgOpacity);
 bgColor = defaultValues.bgColor;
 titleColor = defaultValues.titleColor;
 textColor = defaultValues.textColor;
+borderColor = defaultValues.borderColor;
 selectedFont = defaultValues.selectedFont;
-desktopBorderColor = defaultValues.desktopBorderColor;
-mobileBorderColor = defaultValues.mobileBorderColor;
 desktopTitleAlign = defaultValues.desktopTitleAlign;
 desktopTextAlign = defaultValues.desktopTextAlign;
 mobileTitleAlign = defaultValues.mobileTitleAlign;
@@ -2378,7 +2327,7 @@ desktopTitleWeight.val(defaultValues.desktopTitleWeight);
 desktopTextWeight.val(defaultValues.desktopTextWeight);
 desktopTextMargin.val(defaultValues.desktopTextMargin);
 desktopBorderWidth.val(defaultValues.desktopBorderWidth);
-desktopBorderOpacity.val(defaultValues.desktopBorderOpacity);
+borderOpacity.val(defaultValues.borderOpacity);
 desktopPanelMarginRight.val(defaultValues.desktopPanelMarginRight);
 desktopPanelMarginLeft.val(defaultValues.desktopPanelMarginLeft);
 desktopPanelPaddingTop.val(defaultValues.desktopPanelPaddingTop);
@@ -2395,8 +2344,6 @@ mobileTitleWeight.val(defaultValues.mobileTitleWeight);
 mobileTextWeight.val(defaultValues.mobileTextWeight);
 mobileTextMargin.val(defaultValues.mobileTextMargin);
 mobileBorderWidth.val(defaultValues.mobileBorderWidth);
-desktopBorderOpacity.val(defaultValues.desktopBorderOpacity);
-mobileBorderOpacity.val(defaultValues.mobileBorderOpacity);
 mobilePanelMarginRight.val(defaultValues.mobilePanelMarginRight);
 mobilePanelMarginLeft.val(defaultValues.mobilePanelMarginLeft);
 mobilePanelPaddingTop.val(defaultValues.mobilePanelPaddingTop);
@@ -2412,10 +2359,8 @@ $('.customColorHexTitleColor').text(titleColor);
 $('.customColorPreviewTitleColor').css('background', titleColor);
 $('.customColorHexTextColor').text(textColor);
 $('.customColorPreviewTextColor').css('background', textColor);
-$('.customColorHexDesktopBorderColor').text(desktopBorderColor);
-$('.customColorPreviewDesktopBorderColor').css('background', desktopBorderColor);
-$('.customColorHexMobileBorderColor').text(mobileBorderColor);
-$('.customColorPreviewMobileBorderColor').css('background', mobileBorderColor);
+$('.customColorHexBorderColor').text(borderColor);
+$('.customColorPreviewBorderColor').css('background', borderColor);
 
 slidesData = JSON.parse(JSON.stringify(defaultValues.slides));
 renderSlides();
@@ -2442,15 +2387,15 @@ updateAll();
 // Старых #cdmResetBtn/#cdmApplyBtn больше нет в разметке — обработчики кликов удалены.
 
 const allInputs = [
-sliderRadius, zoomScale, totalTime, bgOpacity, titleOpacity, textOpacity,
+sliderRadius, zoomScale, totalTime, bgOpacity, titleOpacity, textOpacity, borderOpacity,
 desktopHeight, desktopTitleSize, desktopTextSize,
 desktopTitleWeight, desktopTextWeight, desktopTextMargin,
-desktopBorderWidth, desktopBorderOpacity, desktopPanelMarginRight, desktopPanelMarginLeft,
+desktopBorderWidth, desktopPanelMarginRight, desktopPanelMarginLeft,
 desktopPanelPaddingTop, desktopPanelPaddingRight, desktopPanelPaddingBottom, desktopPanelPaddingLeft,
 desktopPanelBottom, desktopPanelRadius,
 mobileHeight, mobileTitleSize, mobileTextSize,
 mobileTitleWeight, mobileTextWeight, mobileTextMargin,
-mobileBorderWidth, mobileBorderOpacity, mobilePanelMarginRight, mobilePanelMarginLeft,
+mobileBorderWidth, mobilePanelMarginRight, mobilePanelMarginLeft,
 mobilePanelPaddingTop, mobilePanelPaddingRight, mobilePanelPaddingBottom, mobilePanelPaddingLeft,
 mobilePanelBottom, mobilePanelRadius
 ];
@@ -2519,18 +2464,10 @@ $('.customColorHexTextColor').text(textColor);
 $('.customColorPreviewTextColor').css('background', textColor);
 updateAll();
 });
-// Desktop border color palette
 $('.cdm-color-palette').eq(3).find('.cdm-color-swatch').off('click').on('click', function() {
-desktopBorderColor = $(this).data('color');
-$('.customColorHexDesktopBorderColor').text(desktopBorderColor);
-$('.customColorPreviewDesktopBorderColor').css('background', desktopBorderColor);
-updateAll();
-});
-// Mobile border color palette
-$('.cdm-color-palette').eq(4).find('.cdm-color-swatch').off('click').on('click', function() {
-mobileBorderColor = $(this).data('color');
-$('.customColorHexMobileBorderColor').text(mobileBorderColor);
-$('.customColorPreviewMobileBorderColor').css('background', mobileBorderColor);
+borderColor = $(this).data('color');
+$('.customColorHexBorderColor').text(borderColor);
+$('.customColorPreviewBorderColor').css('background', borderColor);
 updateAll();
 });
 
@@ -2680,21 +2617,12 @@ $('.customColorPreviewTextColor').css('background', c);
 updateAll();
 });
 });
-$('.cdm-custom-color-row[data-target="desktopBorderColor"]').on('click', function(e) {
+$('.cdm-custom-color-row[data-target="borderColor"]').on('click', function(e) {
 e.stopPropagation();
-showColorPopup(this, desktopBorderColor, function(c) {
-desktopBorderColor = c;
-$('.customColorHexDesktopBorderColor').text(c);
-$('.customColorPreviewDesktopBorderColor').css('background', c);
-updateAll();
-});
-});
-$('.cdm-custom-color-row[data-target="mobileBorderColor"]').on('click', function(e) {
-e.stopPropagation();
-showColorPopup(this, mobileBorderColor, function(c) {
-mobileBorderColor = c;
-$('.customColorHexMobileBorderColor').text(c);
-$('.customColorPreviewMobileBorderColor').css('background', c);
+showColorPopup(this, borderColor, function(c) {
+borderColor = c;
+$('.customColorHexBorderColor').text(c);
+$('.customColorPreviewBorderColor').css('background', c);
 updateAll();
 });
 });

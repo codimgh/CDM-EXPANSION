@@ -693,8 +693,8 @@ display: none;
 body.cdm-generator-active.dark-theme-body {
 background-color: #1a1a1a;
 }
-.cdm-controls-col, .cdm-textarea, .cdm-input { overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; }
-.cdm-controls-col::-webkit-scrollbar, .cdm-textarea::-webkit-scrollbar, .cdm-input::-webkit-scrollbar { display: none; }
+.cdm-textarea, .cdm-input { overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; }
+.cdm-textarea::-webkit-scrollbar, .cdm-input::-webkit-scrollbar { display: none; }
 .cdm-color-palette { background: transparent; border-radius: 6px; padding: 12px 12px 12px 15px; border: 1px solid #3333331c; }
 .cdm-palette-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 .cdm-color-swatch { width: 15px; height: 15px; border-radius: 6px; cursor: pointer; transition: 0.1s; flex-shrink: 0; }
@@ -838,23 +838,50 @@ display: inline-block;
 }
 
 .cdm-master * { box-sizing: border-box; }
-.cdm-two-columns { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0; }
-.cdm-preview-col { flex: 2; min-width: 280px; background: transparent; padding: 5px 5px 5px 15px; border: 0px solid #333; border-radius: 1px; margin-right: 0; }
+/* [19.10.2026, задача «колонка как у UC Motion»] РАСКЛАДКА ВСЕЙ РАМКИ ГЕНЕРАТОРА:
+   .cdm-master натягивается на высоту iframe (100vh внутри iframe = высота фрейма),
+   двухколоночный грид — превью слева, колонка настроек справа на ВСЮ высоту фрейма.
+   Колонка отделена вертикальной линией (border-left) и прокручивается сама
+   (min-height:0 + overflow-y:auto); превью при переполнении скроллится внутри своей
+   области и не двигает колонку. Правка только генератора (raw + deploy). */
+.cdm-master {
+height: 100vh;
+min-height: 440px;
+display: flex;
+flex-direction: column;
+overflow: hidden;
+}
+.cdm-two-columns {
+display: grid;
+grid-template-columns: minmax(0, 1fr) 350px;
+grid-template-rows: minmax(0, 1fr);
+height: 100%;
+overflow: hidden;
+gap: 0;
+}
+.cdm-preview-col {
+min-width: 0;
+min-height: 0;
+overflow: auto;
+background: transparent;
+padding: 5px 5px 5px 15px;
+border: 0px solid #333;
+border-radius: 1px;
+margin-right: 0;
+}
 .cdm-controls-col {
-flex: 1;
-max-width: 350px;
+min-width: 0;
+min-height: 0;
 background: transparent !important;
 color: #333;
-border: 1px solid #3333331c;
-border-radius: 6px;
+border: 0;
+border-left: 1px solid #3333331c;
+border-radius: 0;
 position: relative;
-/* [1.75] Выравнивание с превью: блок настроек опущен ниже (margin-top:30px), чтобы его верх
-   совпадал с верхом превью; прокрутка возвращена через overflow + ограничение высоты. */
-align-self: flex-start;
-margin-top: 30px;
-margin-right: 20px;
-max-height: calc(100vh - 5px - 48px);
 overflow-y: auto;
+overscroll-behavior-y: contain;
+scrollbar-width: thin;
+scrollbar-color: #b3b3b3cc transparent;
 }
 @media (min-width: 901px) {
 .cdm-preview-col {
@@ -863,10 +890,21 @@ border-bottom-right-radius: 0;
 border-right: none;
 }
 .cdm-controls-col {
-border-top-left-radius: 6px;
-border-bottom-left-radius: 6px;
 border-left: 1px solid #3333331c;
 }
+}
+/* Тонкий скроллбар колонки (вместо полного скрытия — как у UC Motion) */
+.cdm-controls-col::-webkit-scrollbar {
+display: block;
+width: 6px;
+height: 6px;
+}
+.cdm-controls-col::-webkit-scrollbar-thumb {
+background: #b3b3b3cc;
+border-radius: 6px;
+}
+.cdm-controls-col::-webkit-scrollbar-track {
+background: transparent;
 }
 /* [19.10.2026, вариант B] УЗКОЕ ОКНО (iframe < 1480px): колонка настроек не встаёт рядом
    с превью (350 панель + 1020 блок + отступы = 1480), поэтому становится ПЛАВАЮЩЕЙ и
@@ -875,21 +913,26 @@ border-left: 1px solid #3333331c;
    Решение о режиме — чистый CSS по ширине iframe: при развороте модалки фрейм меняет ширину
    и медиа-запрос срабатывает сам, без пересчётов и сообщений. */
 @media (max-width: 1479px) {
+.cdm-two-columns { grid-template-columns: minmax(0, 1fr); }
 .cdm-preview-col { flex: 1 1 100%; max-width: 100%; margin-right: 0; }
 .cdm-controls-col {
 position: fixed;
-top: 20px;
-right: 20px;
+top: 0;
+right: 0;
 width: 350px;
 max-width: 350px;
 flex: none;
 margin: 0;
 z-index: 30;
 background: #ffffff !important;
-border: 1px solid #3333331c;
-border-radius: 6px;
-max-height: calc(100vh - 40px);
-transform: translateX(calc(100% + 20px));
+border: 0;
+border-left: 1px solid #3333331c;
+border-radius: 0;
+height: 100vh;
+max-height: 100vh;
+overflow-y: auto;
+overscroll-behavior-y: contain;
+transform: translateX(100%);
 opacity: 0;
 pointer-events: none;
 transition: transform 0.25s ease, opacity 0.25s ease;
@@ -1079,6 +1122,7 @@ color: #e0e0e0;
 }
 .cdm-master.dark-theme .cdm-controls-col {
 border-color: #4444446e;
+scrollbar-color: #555555a0 transparent;
 }
 .cdm-master.dark-theme .cdm-controls-inner {
 background: transparent !important;

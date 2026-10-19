@@ -868,6 +868,39 @@ border-bottom-left-radius: 6px;
 border-left: 1px solid #3333331c;
 }
 }
+/* [19.10.2026, вариант B] УЗКОЕ ОКНО (iframe < 1480px): колонка настроек не встаёт рядом
+   с превью (350 панель + 1020 блок + отступы = 1480), поэтому становится ПЛАВАЮЩЕЙ и
+   по умолчанию СКРЫТА; превью занимает всю ширину и показывает блок 1:1. Показывает её
+   иконка вызова панели в шапке модалки (postMessage cdm-panel-toggle → класс cdm-panel-open).
+   Решение о режиме — чистый CSS по ширине iframe: при развороте модалки фрейм меняет ширину
+   и медиа-запрос срабатывает сам, без пересчётов и сообщений. */
+@media (max-width: 1479px) {
+.cdm-preview-col { flex: 1 1 100%; max-width: 100%; margin-right: 0; }
+.cdm-controls-col {
+position: fixed;
+top: 20px;
+right: 20px;
+width: 350px;
+max-width: 350px;
+flex: none;
+margin: 0;
+z-index: 30;
+background: #ffffff !important;
+border: 1px solid #3333331c;
+border-radius: 6px;
+max-height: calc(100vh - 40px);
+transform: translateX(calc(100% + 20px));
+opacity: 0;
+pointer-events: none;
+transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.cdm-master.cdm-panel-open .cdm-controls-col {
+transform: none;
+opacity: 1;
+pointer-events: auto;
+}
+.cdm-master.dark-theme .cdm-controls-col { background: #1a1a1a !important; }
+}
 .cdm-controls-inner { padding: 24px; }
 /* [1.72] Заголовки разделов: иконка на 1px больше шрифта и вертикально по центру текста */
 .cdm-controls-inner h3 {
@@ -2224,7 +2257,9 @@ return JSON.parse(JSON.stringify(defaultValues));
 //   cdm-theme-toggle     — переключить светлую/тёмную тему;
 //   cdm-device           — переключить превью десктоп/мобильный (data.payload = 'desktop'|'mobile');
 //   cdm-reset            — сбросить настройки к дефолту (кнопка «Сбросить настройки» в модалке);
-//   cdm-apply-request    — собрать код и вернуть cdm-apply (кнопка «Применить» в модалке).
+//   cdm-apply-request    — собрать код и вернуть cdm-apply (кнопка «Применить» в модалке);
+//   cdm-panel-toggle     — показать/скрыть колонку настроек в узком окне (иконка вызова панели
+//                          в шапке модалки; актуальна только при iframe < 1480px, см. CSS выше).
 window.addEventListener('message', function(e) {
 try {
 var data = e.data;
@@ -2243,6 +2278,10 @@ resetSettings();
 }
 if (data.action === 'cdm-apply-request') {
 cdmApply();
+}
+if (data.action === 'cdm-panel-toggle') {
+var master = document.querySelector('.cdm-master');
+if (master) master.classList.toggle('cdm-panel-open');
 }
 } catch (err) {}
 });

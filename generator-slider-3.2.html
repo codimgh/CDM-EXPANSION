@@ -7,7 +7,7 @@
 
 
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Montserrat:wght@100..900&family=Oswald:wght@200..700&family=Raleway:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:wght@100..900&family=Lobster&family=Pacifico&family=Caveat:wght@400..700&family=Montserrat+Alternates:wght@100;200;300;400;500;600;700;800;900&family=Kelly+Slab&family=Pangolin&family=Open+Sans+Condensed:wght@300;700&family=Amatic+SC:wght@400;700&family=Merriweather:wght@300..900&family=Comfortaa:wght@300..700&family=PT+Mono&family=Open+Sans:wght@300..800&family=Alice&family=IBM+Plex+Sans:wght@100..700&family=Manrope:wght@200..800&family=Roboto+Slab:wght@100..900&family=Cormorant+Garamond:wght@300..700&family=Russo+One&family=Source+Sans+Pro:wght@200;300;400;600;700;900&family=Exo+2:wght@100..900&family=LXGW+WenKai+Mono+TC&display=swap" rel="stylesheet" media="print" onload="this.media=&quot;all&quot;">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Montserrat:wght@100..900&family=Oswald:wght@200..700&family=Raleway:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:wght@100..900&family=Lobster&family=Pacifico&family=Caveat:wght@400..700&family=Montserrat+Alternates:wght@100;200;300;400;500;600;700;800;900&family=Kelly+Slab&family=Pangolin&family=Open+Sans+Condensed:wght@300;700&family=Amatic+SC:wght@400;700&family=Merriweather:wght@300..900&family=Comfortaa:wght@300..700&family=PT+Mono&family=Open+Sans:wght@300..800&family=Alice&family=IBM+Plex+Sans:wght@100..700&family=Manrope:wght@200..800&family=Roboto+Slab:wght@100..900&family=Cormorant+Garamond:wght@300..700&family=Russo+One&family=Source+Sans+Pro:wght@200;300;400;600;700;900&family=Exo+2:wght@100..900&display=swap" rel="stylesheet" media="print" onload="this.media=&quot;all&quot;">
 <style>
 /* Скрыть скроллбар ВСЕГО фрейма (html + body), сохранив прокрутку */
 html {
@@ -163,19 +163,6 @@ filter: invert(1) brightness(1.5);
 }
 </style>
 <div class="cdm-master" style="max-width:1750px; margin:0 auto; font-family:'Inter',system-ui,sans-serif;">
-<!-- [задача №12, 19.10.2026] «ЗАТВОР»: подсказка-заглушка поверх конфигуратора на УЗКОМ окне.
-     Показывается в плавающем режиме (окно < 1480px), пока пользователь не кликнул по ней.
-     Текст — LXGW WenKai Mono TC; стрелка — путь из пена jh3y (wBaKoVa). Управление панелью
-     переехало в шапку модалки (иконка вызова, postMessage cdm-panel-toggle/cdm-panel-mode);
-     «язычок»-#cdmPanelToggle УДАЛЁН. Логика — в блоке «умной раскладки» в конце скрипта. -->
-<div class="cdm-shutter-overlay" id="cdmShutter" aria-hidden="true">
-  <div class="cdm-shutter-content">
-    <span class="cdm-shutter-line">Выше на панели, нажми на&nbsp;<span class="cdm-shutter-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:21px;height:21px"><path d="M5.06107 20.0451C6.3754 21 8.25027 21 12 21C15.7497 21 17.6246 21 18.9389 20.0451C19.3634 19.7367 19.7367 19.3634 20.0451 18.9389C21 17.6246 21 15.7497 21 12C21 8.25027 21 6.3754 20.0451 5.06107C19.7367 4.6366 19.3634 4.26331 18.9389 3.95491C17.6246 3 15.7497 3 12 3C8.25027 3 6.3754 3 5.06107 3.95491C4.6366 4.26331 4.26331 4.6366 3.95491 5.06107C3 6.3754 3 8.25027 3 12C3 15.7497 3 17.6246 3 3.95491 18.9389C4.26331 19.3634 4.6366 19.7367 5.06107 20.0451Z"/><path d="M17 18.0002L18 17.0002M13 18.0002L18 13.0002M9 18L18 9"/></svg></span></span>
-    <span class="cdm-shutter-line">чтобы расширить окно настроек</span>
-    <span class="cdm-shutter-line">для комфортной настройки блока</span>
-    <span class="cdm-shutter-arrow" aria-hidden="true"><svg viewBox="0 0 97 52" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" fill="currentColor" d="M74.568 0.553803C74.0753 0.881909 73.6295 1.4678 73.3713 2.12401C73.1367 2.70991 72.3858 4.67856 71.6584 6.50658C70.9544 8.35803 69.4526 11.8031 68.3498 14.1936C66.1441 19.0214 65.839 20.2167 66.543 21.576C67.4581 23.3337 69.4527 23.9196 71.3064 22.9821C72.4797 22.3728 74.8965 19.5839 76.9615 16.4435C78.8387 13.5843 78.8387 13.6077 78.1113 18.3418C77.3369 23.4275 76.4687 26.2866 74.5915 30.0364C73.254 32.7316 71.8461 34.6299 69.218 37.3485C65.9563 40.6999 62.2254 42.9732 57.4385 44.4965C53.8718 45.6449 52.3935 45.8324 47.2546 45.8324C43.3594 45.8324 42.1158 45.7386 39.9805 45.2933C32.2604 43.7466 25.3382 40.9577 19.4015 36.9735C15.0839 34.0909 12.5028 31.7004 9.80427 27.9975C6.80073 23.9196 4.36038 17.2403 3.72682 11.475C3.37485 8.1471 3.1402 7.32683 2.43624 7.13934C0.770217 6.71749 0.183578 7.77211 0.0193217 11.5219C-0.26226 18.5996 2.55356 27.1304 7.17619 33.1066C13.8403 41.7545 25.432 48.4103 38.901 51.2696C41.6465 51.8555 42.2566 51.9023 47.4893 51.9023C52.3935 51.9023 53.426 51.832 55.5144 51.3867C62.2723 49.9337 68.5375 46.6292 72.949 42.1998C76.0464 39.1296 78.1113 36.2939 79.8946 32.7081C82.1942 28.0912 83.5317 23.3103 84.2591 17.17C84.3999 15.8576 84.6111 14.7795 84.7284 14.7795C84.8223 14.7795 85.4559 15.1311 86.1364 15.5763C88.037 16.7716 90.3835 17.8965 93.5748 19.0918C96.813 20.3339 97.3996 20.287 96.4141 18.9512C94.9123 16.9122 90.055 11.5219 87.1219 8.63926C84.0949 5.66288 83.8368 5.33477 83.5552 4.1864C83.3909 3.48332 83.0155 2.68649 82.6401 2.31151C82.0065 1.6553 80.4109 1.04595 79.9885 1.30375C79.8712 1.37406 79.2845 1.11626 78.6744 0.717845C77.2431 -0.172727 75.7413 -0.243024 74.568 0.553803Z"/></svg></span>
-  </div>
-</div>
 <div class="cdm-two-columns">
 <div class="cdm-preview-col">
 <div style="display: flex; align-items: center; justify-content: flex-end; margin-bottom: 20px;" class="cdm-preview-top">
@@ -881,181 +868,6 @@ border-bottom-left-radius: 6px;
 border-left: 1px solid #3333331c;
 }
 }
-/* [1.81.0/задача№11] ПАНЕЛЬ НАСТРОЕК — ДВА РЕЖИМА («умная раскладка»).
-   Режим выбирается по ШИРИНЕ ОКНА КОНФИГУРАТОРА (window.innerWidth внутри iframe — это
-   ширина модалки Taplink: ~950px в обычном режиме и ~1650px в развёрнутом), а НЕ по
-   ширине монитора: иначе на большом экране панель ошибочно пряталась.
-   * ШИРОКОЕ окно (≥ 1480px): класс cdm-floating НЕ ставится — панель стоит РЯДОМ с
-     превью обычным flex-потоком (классическая раскладка, как до задачи №11): ничего не
-     скрыто и ничего не перекрывается, «язычок» скрыт (см. .cdm-panel-inline ниже).
-   * УЗКОЕ окно (< 1480px): панель становится ПЛАВАЮЩЕЙ (.cdm-floating) и по умолчанию
-     СКРЫТА (.cdm-panel-hidden) — превью занимает всю ширину окна и блок виден 1:1
-     (620/720/820/1020 различимы даже на 1366×768), а панель выдвигается «язычком».
-   Режим пересчитывается при каждом resize окна, поэтому кнопка «развернуть» (модалка
-   1000 → 1700) сразу ставит панель РЯДОМ, а сворачивание возвращает плавающий режим.
-   Состояние — на сессию, в блок и настройки НЕ пишется; если пользователь сам трогал
-   «язычок», автопересчёт больше не меняет его выбор. Ни панель, ни превью НЕ делают
-   блок шире контейнера страницы (это отдельная задача №10). */
-/* [1.81.0/задача№11, доработка 16.10.2026] Геометрия плавающей панели вынесена в ПЕРЕМЕННЫЕ,
-   потому что от неё зависит положение «язычка»: right язычка = ширина панели + её отступ
-   от правого края (иначе ручка «отклеится» от левого края панели). Меняя ширину/отступ
-   панели, достаточно поправить эти две переменные. */
-.cdm-master {
---cdm-panel-w: 350px;
---cdm-panel-gap: 20px;
-}
-.cdm-controls-col.cdm-floating {
-position: fixed;
-top: 20px;
-right: var(--cdm-panel-gap);
-width: var(--cdm-panel-w);
-max-width: none;
-max-height: calc(100vh - 40px);
-margin: 0;
-background: #ffffff !important;
-border: 1px solid #3333331c;
-border-radius: 6px;
-z-index: 30;
-transition: transform 0.25s ease, opacity 0.25s ease;
-}
-/* Скрытое состояние: панель уезжает за правый край фрейма РОВНО на свою ширину + отступ,
-   поэтому её левый край встаёт вплотную к краю фрейма — ровно там, где остаётся «язычок»
-   (он держится за левый край панели, см. .cdm-panel-toggle ниже). */
-.cdm-controls-col.cdm-floating.cdm-panel-hidden {
-transform: translateX(calc(100% + var(--cdm-panel-gap)));
-opacity: 0;
-pointer-events: none;
-}
-.cdm-master.dark-theme .cdm-controls-col.cdm-floating {
-background: #1a1a1a !important;
-border-color: #4444446e !important;
-}
-/* «Язычок»-ручка панели: ЧАСТЬ ПАНЕЛИ — прижат к её ЛЕВОМУ краю и двигается ВМЕСТЕ с ней
-   (right = ширина панели + отступ), поэтому он «вытягивает» панель за собой и остаётся
-   видимым, когда панель скрыта: в скрытом состоянии панель уезжает ровно на свою ширину +
-   отступ, её левый край встаёт к краю фрейма — и ручка остаётся у этого края.
-   Порядок слоёв: ручка (40) > панель (30) > превью (по умолчанию).
-   Иконка: закрытая панель — «вытащить» (ph-panel-out), открытая — «убрать» (ph-panel-in);
-   подмена — CSS-классом cdm-panel-open на .cdm-master (ставит скрипт). */
-.cdm-panel-toggle {
-position: fixed;
-top: 50px;
-right: 0;
-width: 30px;
-height: 46px;
-display: flex;
-align-items: center;
-justify-content: center;
-background: #ffffff;
-border: 1px solid #3333331c;
-border-right: none;
-border-radius: 6px 0 0 6px;
-color: #333;
-cursor: pointer;
-user-select: none;
-z-index: 40;
-transition: right 0.25s ease, background 0.15s ease, color 0.15s ease;
-}
-/* Панель открыта → ручка едет вместе с ней к её левому краю. */
-.cdm-master.cdm-panel-open .cdm-panel-toggle {
-right: calc(var(--cdm-panel-w) + var(--cdm-panel-gap));
-}
-.cdm-panel-toggle:hover {
-color: #4DB5FF;
-}
-.cdm-panel-toggle i {
-font-size: 17px;
-line-height: 1;
-}
-/* Две иконки в ручке: показывается та, что соответствует состоянию панели
-   (в разметке — <i class="ph ph-panel-out cdm-panel-icon-show"> и <i class="ph ph-panel-in cdm-panel-icon-hide">). */
-.cdm-panel-toggle .cdm-panel-icon-hide {
-display: none;
-}
-.cdm-master.cdm-panel-open .cdm-panel-toggle .cdm-panel-icon-show {
-display: none;
-}
-.cdm-master.cdm-panel-open .cdm-panel-toggle .cdm-panel-icon-hide {
-display: inline-flex;
-}
-.cdm-master.dark-theme .cdm-panel-toggle {
-background: #1a1a1a;
-border-color: #4444446e;
-color: #e0e0e0;
-}
-/* «Язычок» нужен только в плавающем режиме. Когда окно широкое и панель стоит рядом
-   с превью (класс cdm-panel-inline на .cdm-master, ставится скриптом) — ручка скрыта. */
-.cdm-master.cdm-panel-inline .cdm-panel-toggle {
-display: none;
-}
-/* ===== [задача №12] «ЗАТВОР»: заглушка поверх конфигуратора на УЗКОМ окне =====
-   Показывается ТОЛЬКО в плавающем режиме (окно < 1480px, класса cdm-panel-inline нет):
-   вместо рабочей области — подсказка «нажми на [иконку] Развернуть» + рукописная стрелка
-   к шапке. Исчезает по клику в любой точке (пользователь понял подсказку) и не мешает
-   работе. На широком окне (панель рядом) затвор скрыт — сразу рабочий конфигуратор.
-   Шрифт — LXGW WenKai Mono TC (Google Fonts), подключён тем же ленивым <link>. */
-.cdm-shutter-overlay {
-position: fixed;
-top: 0; left: 0; right: 0; bottom: 0;
-z-index: 60;
-background: #ffffff;
-display: flex;
-align-items: center;
-justify-content: center;
-cursor: pointer;
-}
-.cdm-master.dark-theme .cdm-shutter-overlay {
-background: #1a1a1a;
-}
-/* Виден только в плавающем режиме; в inline (широкое окно) — скрыт */
-.cdm-master.cdm-panel-inline .cdm-shutter-overlay {
-display: none;
-}
-.cdm-shutter-content {
-position: relative;
-max-width: 560px;
-text-align: left;
-font-family: 'LXGW WenKai Mono TC', 'Segoe Print', 'Comic Sans MS', cursive;
-font-size: 20px;
-line-height: 1.7;
-color: #7a7f87;
-}
-.cdm-master.dark-theme .cdm-shutter-content {
-color: #a2a7af;
-}
-.cdm-shutter-line {
-display: block;
-}
-.cdm-shutter-icon {
-display: inline-block;
-vertical-align: -6px;
-margin: 0 4px;
-color: #4a4f58;
-}
-.cdm-master.dark-theme .cdm-shutter-icon {
-color: #d0d3d8;
-}
-/* Стрелка-дуга из пена jh3y (wBaKoVa): начинается из-под последней строки текста
-   и идёт вверх-вправо к шапке модалки. Лежит внутри .cdm-shutter-content, поэтому
-   двигается вместе с текстом при любом переносе строк. */
-.cdm-shutter-arrow {
-position: absolute;
-right: 0;
-bottom: -26px;
-rotate: -28deg;
-transform-origin: right center;
-opacity: 0.9;
-color: #9aa0a8;
-pointer-events: none;
-}
-.cdm-master.dark-theme .cdm-shutter-arrow {
-color: #a8adb5;
-}
-.cdm-shutter-arrow svg {
-display: block;
-width: 165px;
-height: auto;
-}
 .cdm-controls-inner { padding: 24px; }
 /* [1.72] Заголовки разделов: иконка на 1px больше шрифта и вертикально по центру текста */
 .cdm-controls-inner h3 {
@@ -1557,7 +1369,7 @@ vertical-align: middle;
 </style>
 <script>
 /* Автономные иконки конфигуратора (без Phosphor CDN) */
-var CDM_ICONS = {"panel-out":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M22 6C22 4.59987 22 3.8998 21.7275 3.36502C21.4878 2.89462 21.1054 2.51217 20.635 2.27248C20.1002 2 19.4001 2 18 2C16.5999 2 15.8998 2 15.365 2.27248C14.8946 2.51217 14.5122 2.89462 14.2725 3.36502C14 3.8998 14 4.59987 14 6V18C14 19.4001 14 20.1002 14.2725 20.635C14.5122 21.1054 14.8946 21.4878 15.365 21.7275C15.8998 22 16.5999 22 18 22C19.4001 22 20.1002 22 20.635 21.7275C21.1054 21.4878 21.4878 21.1054 21.7275 20.635C22 20.1002 22 19.4001 22 18V6Z\"></path><path d=\"M6 12H14M6 12C6 11.2998 7.9943 9.99153 8.5 9.5M6 12C6 12.7002 7.9943 14.0085 8.5 14.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M8 22C5.66111 22 4.49167 22 3.63789 21.4635C3.19267 21.1838 2.81621 20.8073 2.53647 20.3621C2 19.5083 2 18.3389 2 16V8C2 5.66111 2 4.49167 2.53647 3.63789C2.81621 3.19267 3.19267 2.81621 3.63789 2.53647C4.49167 2 5.66111 2 8 2\" stroke-linecap=\"round\"></path></svg>","panel-in":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M2 6C2 4.59987 2 3.8998 2.27248 3.36502C2.51217 2.89462 2.89462 2.51217 3.36502 2.27248C3.8998 2 4.59987 2 6 2C7.40013 2 8.1002 2 8.63498 2.27248C9.10538 2.51217 9.48783 2.89462 9.72752 3.36502C10 3.8998 10 4.59987 10 6V18C10 19.4001 10 20.1002 9.72752 20.635C9.48783 21.1054 9.10538 21.4878 8.63498 21.7275C8.1002 22 7.40013 22 6 22C4.59987 22 3.8998 22 3.36502 21.7275C2.89462 21.4878 2.51217 21.1054 2.27248 20.635C2 20.1002 2 19.4001 2 18V6Z\"></path><path d=\"M16 22C18.3389 22 19.5083 22 20.3621 21.4635C20.8073 21.1838 21.1838 20.8073 21.4635 20.3621C22 19.5083 22 18.3389 22 16V8C22 5.66111 22 4.49167 21.4635 3.63789C21.1838 3.19267 20.8073 2.81621 20.3621 2.53647C19.5083 2 18.3389 2 16 2\" stroke-linecap=\"round\"></path><path d=\"M18 12H10M18 12C18 11.2998 16.0057 9.99153 15.5 9.5M18 12C18 12.7002 16.0057 14.0085 15.5 14.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>","caret-down":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9\"></path></svg>","text-aa":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M3 11C3 7.25027 3 5.3754 3.95491 4.06107C4.26331 3.6366 4.6366 3.26331 5.06107 2.95491C6.3754 2 8.25027 2 12 2C15.7497 2 17.6246 2 18.9389 2.95491C19.3634 3.26331 19.7367 3.6366 20.0451 4.06107C21 5.3754 21 7.25027 21 11V13C21 16.7497 21 18.6246 20.0451 19.9389C19.7367 20.3634 19.3634 20.7367 18.9389 21.0451C17.6246 22 15.7497 22 12 22C8.25027 22 6.3754 22 5.06107 21.0451C4.6366 20.7367 4.26331 20.3634 3.95491 19.9389C3 18.6246 3 16.7497 3 13V11Z\"></path><path d=\"M15 13L14.1429 11M9 13L9.85714 11M9.85714 11L11.4076 7.38235C11.5067 7.15092 11.7406 7 12 7C12.2594 7 12.4933 7.15092 12.5924 7.38235L14.1429 11M9.85714 11H14.1429\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M8 17L16 17\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>","palette":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linejoin=\"round\"><path fill=\"none\" fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M21.8205 10.4127C22.062 11.8519 22.1827 12.5715 21.2423 13.9326C21.1459 14.0722 20.8966 14.3713 20.777 14.4911C19.6103 15.6586 18.4308 15.6586 16.0716 15.6586H14.1392C13.5085 15.6586 13.1931 15.6586 12.9639 15.7142C11.9586 15.9581 11.3031 16.9391 11.453 17.9755C11.4872 18.2118 11.6043 18.5085 11.8386 19.102C11.9345 19.3449 11.9824 19.4664 12.0136 19.7304C12.1292 20.7084 11.0869 21.9508 10.1158 21.9926C9.85358 22.0039 9.83681 22.0002 9.80326 21.9926C7.66174 21.51 5.66204 20.3123 4.18389 18.4421C0.736789 14.0808 1.43146 7.71364 5.73548 4.22064C10.0395 0.727643 16.323 1.43156 19.7701 5.79289C20.868 7.1819 21.5457 8.77438 21.8205 10.4127Z\"></path><path d=\"M7.36719 7.74976H7.24219M7.49219 7.74976C7.49219 7.88783 7.38026 7.99976 7.24219 7.99976C7.10412 7.99976 6.99219 7.88783 6.99219 7.74976C6.99219 7.61169 7.10412 7.49976 7.24219 7.49976C7.38026 7.49976 7.49219 7.61169 7.49219 7.74976Z\" stroke-linecap=\"round\"></path><path d=\"M7.36719 15.7498H7.24219M7.49219 15.7498C7.49219 15.8878 7.38026 15.9998 7.24219 15.9998C7.10412 15.9998 6.99219 15.8878 6.99219 15.7498C6.99219 15.6117 7.10412 15.4998 7.24219 15.4998C7.38026 15.4998 7.49219 15.6117 7.49219 15.7498Z\" stroke-linecap=\"round\"></path><path d=\"M11.8672 5.74976H11.7422M11.9922 5.74976C11.9922 5.88783 11.8803 5.99976 11.7422 5.99976C11.6041 5.99976 11.4922 5.88783 11.4922 5.74976C11.4922 5.61169 11.6041 5.49976 11.7422 5.49976C11.8803 5.49976 11.9922 5.61169 11.9922 5.74976Z\" stroke-linecap=\"round\"></path><path d=\"M16.3672 7.74976H16.2422M16.4922 7.74976C16.4922 7.88783 16.3803 7.99976 16.2422 7.99976C16.1041 7.99976 15.9922 7.88783 15.9922 7.74976C15.9922 7.61169 16.1041 7.49976 16.2422 7.49976C16.3803 7.49976 16.4922 7.61169 16.4922 7.74976Z\" stroke-linecap=\"round\"></path><path d=\"M18.3672 11.7498H18.2422M18.4922 11.7498C18.4922 11.8878 18.3803 11.9998 18.2422 11.9998C18.1041 11.9998 17.9922 11.8878 17.9922 11.7498C17.9922 11.6117 18.1041 11.4998 18.2422 11.4998C18.3803 11.4998 18.4922 11.6117 18.4922 11.7498Z\" stroke-linecap=\"round\"></path><path d=\"M5.86719 11.7498H5.74219M5.99219 11.7498C5.99219 11.8878 5.88026 11.9998 5.74219 11.9998C5.60412 11.9998 5.49219 11.8878 5.49219 11.7498C5.49219 11.6117 5.60412 11.4998 5.74219 11.4998C5.88026 11.4998 5.99219 11.6117 5.99219 11.7498Z\" stroke-linecap=\"round\"></path></svg>","faders":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path d=\"M5.00018 20.0001L4.99994 14.0001\"/><path d=\"M4.99994 11.0001V4.00006\"/><path d=\"M8.99994 8.00006H14.9999\"/><path d=\"M1.99994 14.0001H7.99994\"/><path d=\"M15.9999 12.0001H21.9999\"/><path d=\"M11.9997 8.00006L11.9999 4.00006\"/><path d=\"M12.0002 20.0001L11.9999 11.0001\"/><path d=\"M18.9999 12.0001L18.9999 4.00006\"/><path d=\"M19.0002 20.0001L18.9999 15.0001\"/></svg>","question":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" color=\"currentColor\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14.3942 3.00083L14.1481 2.79115C12.9103 1.73628 11.0897 1.73628 9.85189 2.79115L9.60584 3.00083C8.96518 3.54679 8.16862 3.87674 7.32956 3.9437L7.00731 3.96941C5.38613 4.09878 4.09878 5.38613 3.96941 7.00731L3.9437 7.32956C3.87674 8.16862 3.54679 8.96518 3.00083 9.60584L2.79115 9.85189C1.73628 11.0897 1.73628 12.9103 2.79115 14.1481L3.00083 14.3942C3.54679 15.0348 3.87674 15.8314 3.9437 16.6704L3.96941 16.9927C4.09878 18.6139 5.38613 19.9012 7.00731 20.0306L7.32956 20.0563C8.16862 20.1233 8.96518 20.4532 9.60584 20.9992L9.85188 21.2089C11.0897 22.2637 12.9103 22.2637 14.1481 21.2089L14.3942 20.9992C15.0348 20.4532 15.8314 20.1233 16.6704 20.0563L16.9927 20.0306C18.6139 19.9012 19.9012 18.6139 20.0306 16.9927L20.0563 16.6704C20.1233 15.8314 20.4532 15.0348 20.9992 14.3942L21.2089 14.1481C22.2637 12.9103 22.2637 11.0897 21.2089 9.85188L20.9992 9.60584C20.4532 8.96518 20.1233 8.16862 20.0563 7.32956L20.0306 7.00731C19.9012 5.38613 18.6139 4.09878 16.9927 3.96941L16.6704 3.9437C15.8314 3.87674 15.0348 3.54679 14.3942 3.00083Z\"></path><path d=\"M12 8V12\"></path><path d=\"M12.125 15.75H12M12.25 15.75C12.25 15.8881 12.1381 16 12 16C11.8619 16 11.75 15.8881 11.75 15.75C11.75 15.6119 11.8619 15.5 12 15.5C12.1381 15.5 12.25 15.6119 12.25 15.75Z\"></path></svg>","text-align-left":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 3H21\"></path><path d=\"M3 9H11\"></path><path d=\"M3 15H21\"></path><path d=\"M3 21H11\"></path></svg>","text-align-center":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 3H21\"></path><path d=\"M8 9H16\"></path><path d=\"M3 15H21\"></path><path d=\"M8 21H16\"></path></svg>","text-align-right":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 3H21\"></path><path d=\"M13 9H21\"></path><path d=\"M3 15H21\"></path><path d=\"M13 21H21\"></path></svg>","text-align-justify":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 3H21\"></path><path d=\"M3 9H21\"></path><path d=\"M3 15H21\"></path><path d=\"M3 21H21\"></path></svg>","arrow-up":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 5.5V19\"></path><path d=\"M18 11C18 11 13.5811 5.00001 12 5C10.4188 4.99999 6 11 6 11\"></path></svg>","arrow-down":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 18.502V5.00195\"></path><path d=\"M18 13.002C18 13.002 13.5811 19.0019 12 19.002C10.4188 19.002 6 13.002 6 13.002\"></path></svg>","trash":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path d=\"M13.4922 12H15.4922\"></path><path d=\"M19.4922 12H21.4922\"></path><circle cx=\"4.49219\" cy=\"8\" r=\"2\" stroke-linejoin=\"round\"></circle><path d=\"M6.49219 10L8.49219 12M13.4922 17L10.9922 14.5M6.49219 14L8.49219 12M13.4922 7L8.49219 12\" stroke-linejoin=\"round\"></path><circle cx=\"4.49219\" cy=\"16\" r=\"2\" stroke-linejoin=\"round\"></circle></svg>","paint-brush-broad":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14.25 16L14.6279 19.0232C14.8255 20.6038 13.593 22 12 22C10.407 22 9.17452 20.6038 9.3721 19.0232L9.75 16C9.85134 15.1892 9.90202 14.7839 9.72689 14.4892C9.663 14.3816 9.57951 14.2871 9.48074 14.2103C9.21003 14 8.8015 14 7.98444 14H7.83046C6.10918 14 5.24854 14 4.68301 13.5052C4.61617 13.4467 4.55331 13.3838 4.49483 13.317C4 12.7515 4 11.8908 4 10.1695V10H20V10.1695C20 11.8908 20 12.7515 19.5052 13.317C19.4467 13.3838 19.3838 13.4467 19.317 13.5052C18.7515 14 17.8908 14 16.1695 14H16.0156C15.1985 14 14.79 14 14.5193 14.2103C14.4205 14.2871 14.337 14.3816 14.2731 14.4892C14.098 14.7839 14.1487 15.1892 14.25 16Z\"></path><path d=\"M4 10V5.51472C4 5.03662 4 4.79756 4.0272 4.59696C4.20846 3.25997 5.25997 2.20846 6.59696 2.0272C6.79756 2 7.03662 2 7.51472 2C7.58456 2 7.61949 2 7.65311 2.00227C7.87143 2.017 8.07889 2.10293 8.24368 2.24689C8.26906 2.26906 8.29376 2.29376 8.34315 2.34315L8.58579 2.58579C9.25245 3.25245 9.58579 3.58579 10 3.58579C10.4142 3.58579 10.7475 3.25245 11.4142 2.58579C11.7032 2.29676 11.8478 2.15224 12.0315 2.07612C12.2153 2 12.4197 2 12.8284 2H14C16.8284 2 18.2426 2 19.1213 2.87868C20 3.75736 20 5.17157 20 8V10\"></path></svg>","moon":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21.5 14.0784C20.3003 14.7189 18.9301 15.0821 17.4751 15.0821C12.7491 15.0821 8.91792 11.2509 8.91792 6.52485C8.91792 5.06986 9.28105 3.69968 9.92163 2.5C5.66765 3.49698 2.5 7.31513 2.5 11.8731C2.5 17.1899 6.8101 21.5 12.1269 21.5C16.6849 21.5 20.503 18.3324 21.5 14.0784Z\"></path></svg>","sun-dim":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z\"></path><path d=\"M12 2V3.5M12 20.5V22M19.0708 19.0713L18.0101 18.0106M5.98926 5.98926L4.9286 4.9286M22 12H20.5M3.5 12H2M19.0713 4.92871L18.0106 5.98937M5.98975 18.0107L4.92909 19.0714\" stroke-linecap=\"round\"></path></svg>","desktop":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 3H8C5.17157 3 3.75736 3 2.87868 3.87868C2 4.75736 2 6.17157 2 9V11C2 13.8284 2 15.2426 2.87868 16.1213C3.75736 17 5.17157 17 8 17H16C18.8284 17 20.2426 17 21.1213 16.1213C22 15.2426 22 13.8284 22 11V9C22 6.17157 22 4.75736 21.1213 3.87868C20.2426 3 18.8284 3 16 3Z\"></path><path d=\"M16 21C14.8233 20.364 13.4571 20 12 20C10.5429 20 9.17669 20.364 8 21\"></path></svg>","device-mobile":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13.5 2H10.5C8.14298 2 6.96447 2 6.23223 2.73223C5.5 3.46447 5.5 4.64298 5.5 7V17C5.5 19.357 5.5 20.5355 6.23223 21.2678C6.96447 22 8.14298 22 10.5 22H13.5C15.857 22 17.0355 22 17.7678 21.2678C18.5 20.5355 18.5 19.357 18.5 17V7C18.5 4.64298 18.5 3.46447 17.7678 2.73223C17.0355 2 15.857 2 13.5 2Z\"></path><path d=\"M12.125 19H12M12.25 19C12.25 19.1381 12.1381 19.25 12 19.25C11.8619 19.25 11.75 19.1381 11.75 19C11.75 18.8619 11.8619 18.75 12 18.75C12.1381 18.75 12.25 18.8619 12.25 19Z\"></path></svg>"};
+var CDM_ICONS = {"caret-down":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9\"></path></svg>","text-aa":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M3 11C3 7.25027 3 5.3754 3.95491 4.06107C4.26331 3.6366 4.6366 3.26331 5.06107 2.95491C6.3754 2 8.25027 2 12 2C15.7497 2 17.6246 2 18.9389 2.95491C19.3634 3.26331 19.7367 3.6366 20.0451 4.06107C21 5.3754 21 7.25027 21 11V13C21 16.7497 21 18.6246 20.0451 19.9389C19.7367 20.3634 19.3634 20.7367 18.9389 21.0451C17.6246 22 15.7497 22 12 22C8.25027 22 6.3754 22 5.06107 21.0451C4.6366 20.7367 4.26331 20.3634 3.95491 19.9389C3 18.6246 3 16.7497 3 13V11Z\"></path><path d=\"M15 13L14.1429 11M9 13L9.85714 11M9.85714 11L11.4076 7.38235C11.5067 7.15092 11.7406 7 12 7C12.2594 7 12.4933 7.15092 12.5924 7.38235L14.1429 11M9.85714 11H14.1429\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M8 17L16 17\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>","palette":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linejoin=\"round\"><path fill=\"none\" fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M21.8205 10.4127C22.062 11.8519 22.1827 12.5715 21.2423 13.9326C21.1459 14.0722 20.8966 14.3713 20.777 14.4911C19.6103 15.6586 18.4308 15.6586 16.0716 15.6586H14.1392C13.5085 15.6586 13.1931 15.6586 12.9639 15.7142C11.9586 15.9581 11.3031 16.9391 11.453 17.9755C11.4872 18.2118 11.6043 18.5085 11.8386 19.102C11.9345 19.3449 11.9824 19.4664 12.0136 19.7304C12.1292 20.7084 11.0869 21.9508 10.1158 21.9926C9.85358 22.0039 9.83681 22.0002 9.80326 21.9926C7.66174 21.51 5.66204 20.3123 4.18389 18.4421C0.736789 14.0808 1.43146 7.71364 5.73548 4.22064C10.0395 0.727643 16.323 1.43156 19.7701 5.79289C20.868 7.1819 21.5457 8.77438 21.8205 10.4127Z\"></path><path d=\"M7.36719 7.74976H7.24219M7.49219 7.74976C7.49219 7.88783 7.38026 7.99976 7.24219 7.99976C7.10412 7.99976 6.99219 7.88783 6.99219 7.74976C6.99219 7.61169 7.10412 7.49976 7.24219 7.49976C7.38026 7.49976 7.49219 7.61169 7.49219 7.74976Z\" stroke-linecap=\"round\"></path><path d=\"M7.36719 15.7498H7.24219M7.49219 15.7498C7.49219 15.8878 7.38026 15.9998 7.24219 15.9998C7.10412 15.9998 6.99219 15.8878 6.99219 15.7498C6.99219 15.6117 7.10412 15.4998 7.24219 15.4998C7.38026 15.4998 7.49219 15.6117 7.49219 15.7498Z\" stroke-linecap=\"round\"></path><path d=\"M11.8672 5.74976H11.7422M11.9922 5.74976C11.9922 5.88783 11.8803 5.99976 11.7422 5.99976C11.6041 5.99976 11.4922 5.88783 11.4922 5.74976C11.4922 5.61169 11.6041 5.49976 11.7422 5.49976C11.8803 5.49976 11.9922 5.61169 11.9922 5.74976Z\" stroke-linecap=\"round\"></path><path d=\"M16.3672 7.74976H16.2422M16.4922 7.74976C16.4922 7.88783 16.3803 7.99976 16.2422 7.99976C16.1041 7.99976 15.9922 7.88783 15.9922 7.74976C15.9922 7.61169 16.1041 7.49976 16.2422 7.49976C16.3803 7.49976 16.4922 7.61169 16.4922 7.74976Z\" stroke-linecap=\"round\"></path><path d=\"M18.3672 11.7498H18.2422M18.4922 11.7498C18.4922 11.8878 18.3803 11.9998 18.2422 11.9998C18.1041 11.9998 17.9922 11.8878 17.9922 11.7498C17.9922 11.6117 18.1041 11.4998 18.2422 11.4998C18.3803 11.4998 18.4922 11.6117 18.4922 11.7498Z\" stroke-linecap=\"round\"></path><path d=\"M5.86719 11.7498H5.74219M5.99219 11.7498C5.99219 11.8878 5.88026 11.9998 5.74219 11.9998C5.60412 11.9998 5.49219 11.8878 5.49219 11.7498C5.49219 11.6117 5.60412 11.4998 5.74219 11.4998C5.88026 11.4998 5.99219 11.6117 5.99219 11.7498Z\" stroke-linecap=\"round\"></path></svg>","faders":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path d=\"M5.00018 20.0001L4.99994 14.0001\"/><path d=\"M4.99994 11.0001V4.00006\"/><path d=\"M8.99994 8.00006H14.9999\"/><path d=\"M1.99994 14.0001H7.99994\"/><path d=\"M15.9999 12.0001H21.9999\"/><path d=\"M11.9997 8.00006L11.9999 4.00006\"/><path d=\"M12.0002 20.0001L11.9999 11.0001\"/><path d=\"M18.9999 12.0001L18.9999 4.00006\"/><path d=\"M19.0002 20.0001L18.9999 15.0001\"/></svg>","question":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" color=\"currentColor\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14.3942 3.00083L14.1481 2.79115C12.9103 1.73628 11.0897 1.73628 9.85189 2.79115L9.60584 3.00083C8.96518 3.54679 8.16862 3.87674 7.32956 3.9437L7.00731 3.96941C5.38613 4.09878 4.09878 5.38613 3.96941 7.00731L3.9437 7.32956C3.87674 8.16862 3.54679 8.96518 3.00083 9.60584L2.79115 9.85189C1.73628 11.0897 1.73628 12.9103 2.79115 14.1481L3.00083 14.3942C3.54679 15.0348 3.87674 15.8314 3.9437 16.6704L3.96941 16.9927C4.09878 18.6139 5.38613 19.9012 7.00731 20.0306L7.32956 20.0563C8.16862 20.1233 8.96518 20.4532 9.60584 20.9992L9.85188 21.2089C11.0897 22.2637 12.9103 22.2637 14.1481 21.2089L14.3942 20.9992C15.0348 20.4532 15.8314 20.1233 16.6704 20.0563L16.9927 20.0306C18.6139 19.9012 19.9012 18.6139 20.0306 16.9927L20.0563 16.6704C20.1233 15.8314 20.4532 15.0348 20.9992 14.3942L21.2089 14.1481C22.2637 12.9103 22.2637 11.0897 21.2089 9.85188L20.9992 9.60584C20.4532 8.96518 20.1233 8.16862 20.0563 7.32956L20.0306 7.00731C19.9012 5.38613 18.6139 4.09878 16.9927 3.96941L16.6704 3.9437C15.8314 3.87674 15.0348 3.54679 14.3942 3.00083Z\"></path><path d=\"M12 8V12\"></path><path d=\"M12.125 15.75H12M12.25 15.75C12.25 15.8881 12.1381 16 12 16C11.8619 16 11.75 15.8881 11.75 15.75C11.75 15.6119 11.8619 15.5 12 15.5C12.1381 15.5 12.25 15.6119 12.25 15.75Z\"></path></svg>","text-align-left":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 3H21\"></path><path d=\"M3 9H11\"></path><path d=\"M3 15H21\"></path><path d=\"M3 21H11\"></path></svg>","text-align-center":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 3H21\"></path><path d=\"M8 9H16\"></path><path d=\"M3 15H21\"></path><path d=\"M8 21H16\"></path></svg>","text-align-right":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 3H21\"></path><path d=\"M13 9H21\"></path><path d=\"M3 15H21\"></path><path d=\"M13 21H21\"></path></svg>","text-align-justify":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 3H21\"></path><path d=\"M3 9H21\"></path><path d=\"M3 15H21\"></path><path d=\"M3 21H21\"></path></svg>","arrow-up":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 5.5V19\"></path><path d=\"M18 11C18 11 13.5811 5.00001 12 5C10.4188 4.99999 6 11 6 11\"></path></svg>","arrow-down":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 18.502V5.00195\"></path><path d=\"M18 13.002C18 13.002 13.5811 19.0019 12 19.002C10.4188 19.002 6 13.002 6 13.002\"></path></svg>","trash":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path d=\"M13.4922 12H15.4922\"></path><path d=\"M19.4922 12H21.4922\"></path><circle cx=\"4.49219\" cy=\"8\" r=\"2\" stroke-linejoin=\"round\"></circle><path d=\"M6.49219 10L8.49219 12M13.4922 17L10.9922 14.5M6.49219 14L8.49219 12M13.4922 7L8.49219 12\" stroke-linejoin=\"round\"></path><circle cx=\"4.49219\" cy=\"16\" r=\"2\" stroke-linejoin=\"round\"></circle></svg>","paint-brush-broad":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14.25 16L14.6279 19.0232C14.8255 20.6038 13.593 22 12 22C10.407 22 9.17452 20.6038 9.3721 19.0232L9.75 16C9.85134 15.1892 9.90202 14.7839 9.72689 14.4892C9.663 14.3816 9.57951 14.2871 9.48074 14.2103C9.21003 14 8.8015 14 7.98444 14H7.83046C6.10918 14 5.24854 14 4.68301 13.5052C4.61617 13.4467 4.55331 13.3838 4.49483 13.317C4 12.7515 4 11.8908 4 10.1695V10H20V10.1695C20 11.8908 20 12.7515 19.5052 13.317C19.4467 13.3838 19.3838 13.4467 19.317 13.5052C18.7515 14 17.8908 14 16.1695 14H16.0156C15.1985 14 14.79 14 14.5193 14.2103C14.4205 14.2871 14.337 14.3816 14.2731 14.4892C14.098 14.7839 14.1487 15.1892 14.25 16Z\"></path><path d=\"M4 10V5.51472C4 5.03662 4 4.79756 4.0272 4.59696C4.20846 3.25997 5.25997 2.20846 6.59696 2.0272C6.79756 2 7.03662 2 7.51472 2C7.58456 2 7.61949 2 7.65311 2.00227C7.87143 2.017 8.07889 2.10293 8.24368 2.24689C8.26906 2.26906 8.29376 2.29376 8.34315 2.34315L8.58579 2.58579C9.25245 3.25245 9.58579 3.58579 10 3.58579C10.4142 3.58579 10.7475 3.25245 11.4142 2.58579C11.7032 2.29676 11.8478 2.15224 12.0315 2.07612C12.2153 2 12.4197 2 12.8284 2H14C16.8284 2 18.2426 2 19.1213 2.87868C20 3.75736 20 5.17157 20 8V10\"></path></svg>","moon":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21.5 14.0784C20.3003 14.7189 18.9301 15.0821 17.4751 15.0821C12.7491 15.0821 8.91792 11.2509 8.91792 6.52485C8.91792 5.06986 9.28105 3.69968 9.92163 2.5C5.66765 3.49698 2.5 7.31513 2.5 11.8731C2.5 17.1899 6.8101 21.5 12.1269 21.5C16.6849 21.5 20.503 18.3324 21.5 14.0784Z\"></path></svg>","sun-dim":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z\"></path><path d=\"M12 2V3.5M12 20.5V22M19.0708 19.0713L18.0101 18.0106M5.98926 5.98926L4.9286 4.9286M22 12H20.5M3.5 12H2M19.0713 4.92871L18.0106 5.98937M5.98975 18.0107L4.92909 19.0714\" stroke-linecap=\"round\"></path></svg>","desktop":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 3H8C5.17157 3 3.75736 3 2.87868 3.87868C2 4.75736 2 6.17157 2 9V11C2 13.8284 2 15.2426 2.87868 16.1213C3.75736 17 5.17157 17 8 17H16C18.8284 17 20.2426 17 21.1213 16.1213C22 15.2426 22 13.8284 22 11V9C22 6.17157 22 4.75736 21.1213 3.87868C20.2426 3 18.8284 3 16 3Z\"></path><path d=\"M16 21C14.8233 20.364 13.4571 20 12 20C10.5429 20 9.17669 20.364 8 21\"></path></svg>","device-mobile":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13.5 2H10.5C8.14298 2 6.96447 2 6.23223 2.73223C5.5 3.46447 5.5 4.64298 5.5 7V17C5.5 19.357 5.5 20.5355 6.23223 21.2678C6.96447 22 8.14298 22 10.5 22H13.5C15.857 22 17.0355 22 17.7678 21.2678C18.5 20.5355 18.5 19.357 18.5 17V7C18.5 4.64298 18.5 3.46447 17.7678 2.73223C17.0355 2 15.857 2 13.5 2Z\"></path><path d=\"M12.125 19H12M12.25 19C12.25 19.1381 12.1381 19.25 12 19.25C11.8619 19.25 11.75 19.1381 11.75 19C11.75 18.8619 11.8619 18.75 12 18.75C12.1381 18.75 12.25 18.8619 12.25 19Z\"></path></svg>"};
 function cdmReplaceIcons(root){
   if(!root) root=document;
   var els = root.querySelectorAll ? root.querySelectorAll("i[class*='ph-']") : [];
@@ -2858,97 +2670,6 @@ $('#cdm-preview-anim-style').text(css);
 updatePreviewAnimStyle();
 totalTime.on('input', updatePreviewAnimStyle);
 zoomScale.on('input', updatePreviewAnimStyle);
-
-// [1.81.0/задача№11] ПАНЕЛЬ НАСТРОЕК — «УМНАЯ РАСКЛАДКА» ДВУМЯ РЕЖИМАМИ.
-// ВАЖНО (исправление логики 16.10.2026): window.innerWidth внутри генератора — это ширина
-// ОКНА КОНФИГУРАТОРА (iframe внутри модалки Taplink: ~950px в обычном режиме, ~1650px в
-// развёрнутом), а НЕ ширина монитора. Раньше порог 1500 сравнивался с этой шириной, и на
-// большом экране в обычном окне панель ошибочно стартовала скрытой.
-//  * ШИРОКОЕ окно (≥ 1480px): панель стоит РЯДОМ с превью в обычном потоке (как до
-//    задачи №11) — ничего не скрыто и не перекрыто, «язычок» скрыт.
-//  * УЗКОЕ окно (< 1480px): панель плавающая (.cdm-floating) и по умолчанию скрытая
-//    (.cdm-panel-hidden) — превью на всю ширину, блок 1:1, панель выдвигается «язычком».
-// Почему порог 1480: блок до 1020 + панель 350 с её отступом 20 + поля превью ≈ 84 = 1474,
-// округлили с запасом — при такой ширине 1020-й блок рисуется 1:1 РЯДОМ с панелью.
-// Режим пересчитывается при КАЖДОМ изменении размера окна, поэтому «развернуть»
-// (1000 → 1700) сразу ставит панель рядом, а сворачивание — обратно в плавающий режим.
-// Если пользователь сам трогал «язычок», его выбор больше не сбрасывается до конца сессии
-// (состояние в блок/настройки не пишется).
-// [доработка 16.10.2026] «Язычок» — часть панели: он прижат к её левому краю и едет вместе
-// с ней (right = ширина панели + отступ, см. .cdm-panel-toggle), поэтому при скрытой панели
-// остаётся видимым у правого края фрейма. Состояние панели дублируется классом cdm-panel-open
-// на .cdm-master — он и переключает иконку ручки (ph-panel-out ↔ ph-panel-in) и подсказку title.
-(function(){
-var PANEL_INLINE_BREAKPOINT = 1480;
-var $controlsCol = $('.cdm-controls-col');
-var $master = $('.cdm-master');
-var $shutter = $('#cdmShutter');
-if (!$controlsCol.length) return;
-var panelUserSet = false;
-var shutterDismissed = false;
-
-// [задача №12] Сообщить расширению текущий режим панели: inline=true — панель РЯДОМ
-// (широкое окно), inline=false — плавающая (узкое). По нему расширение добавляет/не
-// добавляет иконку вызова панели в шапку модалки. Шлём при каждом изменении режима.
-function cdmNotifyPanelMode() {
-  try {
-    window.parent.postMessage({ action: 'cdm-panel-mode', inline: $master.hasClass('cdm-panel-inline') }, '*');
-  } catch (e) {}
-}
-
-function cdmApplyPanelLayout() {
-var inline = window.innerWidth >= PANEL_INLINE_BREAKPOINT;
-$master.toggleClass('cdm-panel-inline', inline);
-if (inline) {
-// Широкое окно: панель в потоке рядом с превью — плавающий режим, скрытие и «затвор» не нужны.
-$controlsCol.removeClass('cdm-floating cdm-panel-hidden');
-$master.removeClass('cdm-panel-open');
-if ($shutter && $shutter.length) $shutter.css('display', 'none');
-} else {
-$controlsCol.addClass('cdm-floating');
-if (!panelUserSet) $controlsCol.addClass('cdm-panel-hidden');
-cdmSyncPanelState();
-// «Затвор» показываем в плавающем режиме, пока пользователь его не закрыл кликом.
-if ($shutter && $shutter.length && !shutterDismissed) $shutter.css('display', 'flex');
-}
-cdmNotifyPanelMode();
-}
-
-// Состояние панели → класс cdm-panel-open на .cdm-master (для иконок/стилей).
-function cdmSyncPanelState() {
-var open = !$controlsCol.hasClass('cdm-panel-hidden');
-$master.toggleClass('cdm-panel-open', open);
-}
-
-cdmApplyPanelLayout();
-$(window).on('resize', cdmApplyPanelLayout);
-
-// Клик по «затвору» — закрыть заглушку и показать рабочий конфигуратор.
-if ($shutter && $shutter.length) {
-$shutter.on('click', function() {
-shutterDismissed = true;
-$shutter.css('display', 'none');
-});
-}
-
-// [задача №12] Команда от расширения: кнопка вызова панели в шапке модалки.
-window.addEventListener('message', function(e) {
-try {
-var d = e.data;
-if (!d || typeof d !== 'object') return;
-if (d.action === 'cdm-panel-mode-request') {
-cdmNotifyPanelMode();
-}
-if (d.action === 'cdm-panel-toggle') {
-panelUserSet = true;
-shutterDismissed = true;
-if ($shutter && $shutter.length) $shutter.css('display', 'none');
-$controlsCol.toggleClass('cdm-panel-hidden');
-cdmSyncPanelState();
-}
-} catch (err) {}
-});
-})();
 
 renderSlides();
 bindSlideInputs();

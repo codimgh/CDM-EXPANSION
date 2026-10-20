@@ -199,7 +199,8 @@ filter: invert(1) brightness(1.5);
 <i class="ph ph-device-mobile cdm-device-icon" data-device="mobile" style="font-size:20px; cursor: pointer;"></i>
 </div>
 </div>
-<div id="cdmFontHelpPopup" style="display:none; position:absolute; z-index:1000; padding:18px 24px; border-radius:6px; width:480px; font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word;">
+<div id="cdmFontHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:480px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:0 8px 30px rgba(0,0,0,0.12);">
+<button type="button" class="cdm-help-close" data-close="cdmFontHelpPopup" style="position:absolute; top:8px; right:8px; border:none; background:transparent; cursor:pointer; color:inherit; padding:4px; display:inline-flex; align-items:center; justify-content:center;" title="Закрыть"><svg viewBox="0 0 24 24" width="20" height="20" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6.00081 17.9992M17.9992 18L6 6.00085"></path></svg></button>
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
 В случае, когда используется вариант «Шрифт не выбран», на публичной странице к шрифтам блока, будут применены настройки шрифта, которые установлены в разделе «Дизайн» в настройках «Таплинка».
 </p>
@@ -207,12 +208,14 @@ filter: invert(1) brightness(1.5);
 Некоторые из шрифтов доступны исключительно в диапазоне насыщенности (жирности) от 400, например шрифт Playfair Display, задаваемое в настройках значение «жирности» менее этого значения для таких шрифтов недоступно, в таком случае действует алгоритм: если в настройках задаётся значение менее 400 → будет применено 400 как максимально тонкое начертание, доступное для шрифта.
 </p>
 </div>
-<div id="cdmImgHelpPopup" style="display:none; position:absolute; z-index:1000; padding:18px 24px; border-radius:6px; width:370px; font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word;">
+<div id="cdmImgHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:370px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:0 8px 30px rgba(0,0,0,0.12);">
+<button type="button" class="cdm-help-close" data-close="cdmImgHelpPopup" style="position:absolute; top:8px; right:8px; border:none; background:transparent; cursor:pointer; color:inherit; padding:4px; display:inline-flex; align-items:center; justify-content:center;" title="Закрыть"><svg viewBox="0 0 24 24" width="20" height="20" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6.00081 17.9992M17.9992 18L6 6.00085"></path></svg></button>
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
 Вставь прямую ссылку на нужную картинку, которая будет использована для слайда. Как рекомендация: использовать лучше картинки с соотношением сторон 16:9 и в размере не менее 1920×1080, это на всякий случай, чтобы сервис не «шакалил» качество картинки.
 </p>
 </div>
-<div id="cdmWidthHelpPopup" style="display:none; position:absolute; z-index:1000; padding:18px 24px; border-radius:6px; width:630px; font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word;">
+<div id="cdmWidthHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:630px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:0 8px 30px rgba(0,0,0,0.12);">
+<button type="button" class="cdm-help-close" data-close="cdmWidthHelpPopup" style="position:absolute; top:8px; right:8px; border:none; background:transparent; cursor:pointer; color:inherit; padding:4px; display:inline-flex; align-items:center; justify-content:center;" title="Закрыть"><svg viewBox="0 0 24 24" width="20" height="20" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6.00081 17.9992M17.9992 18L6 6.00085"></path></svg></button>
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0 0 12px 0;">
 Ширина блока задаётся дискретно, согласно логике настроек ширины страницы «Таплинк» - выбери в настройке один из стандартных размеров страницы, которые ты предварительно установил в настройках сервиса: 620, 720, 820 или 1020.
 </p>
@@ -1318,14 +1321,23 @@ color: #ddd;
 #cdmFontHelpPopup,
 #cdmImgHelpPopup,
 #cdmWidthHelpPopup {
-background: #fff;
 border: 1px solid #ccccccab;
-box-shadow: none;
+box-shadow: 0 8px 30px rgba(0,0,0,0.12);
 }
 #cdmFontHelpPopup p,
 #cdmImgHelpPopup p,
 #cdmWidthHelpPopup p {
 color: #333;
+}
+#cdmFontHelpPopup .cdm-help-close,
+#cdmImgHelpPopup .cdm-help-close,
+#cdmWidthHelpPopup .cdm-help-close {
+color: #666 !important;
+}
+#cdmFontHelpPopup .cdm-help-close:hover,
+#cdmImgHelpPopup .cdm-help-close:hover,
+#cdmWidthHelpPopup .cdm-help-close:hover {
+color: #111 !important;
 }
 .cdm-master.dark-theme #cdmFontHelpPopup,
 .cdm-master.dark-theme #cdmImgHelpPopup,
@@ -1337,6 +1349,16 @@ border-color: #555 !important;
 .cdm-master.dark-theme #cdmImgHelpPopup p,
 .cdm-master.dark-theme #cdmWidthHelpPopup p {
 color: #e0e0e0 !important;
+}
+.cdm-master.dark-theme #cdmFontHelpPopup .cdm-help-close,
+.cdm-master.dark-theme #cdmImgHelpPopup .cdm-help-close,
+.cdm-master.dark-theme #cdmWidthHelpPopup .cdm-help-close {
+color: #bbb !important;
+}
+.cdm-master.dark-theme #cdmFontHelpPopup .cdm-help-close:hover,
+.cdm-master.dark-theme #cdmImgHelpPopup .cdm-help-close:hover,
+.cdm-master.dark-theme #cdmWidthHelpPopup .cdm-help-close:hover {
+color: #fff !important;
 }
 #cdmCustomColorPopup {
 border-radius: 12px !important;
@@ -2640,68 +2662,64 @@ updatePreview();
 }
 $('#cdmThemeToggle').on('click', cdmToggleTheme);
 
+// [20.10.2026, задача №6] Подсказки на иконках «?»: больше НЕ наведение — по КЛИКУ,
+// попап открывается ПО ЦЕНТРУ окна (не у иконки), закрывается крестиком (свой SVG)
+// или кликом вне; z-index выше панели настроек (5000 > 30), чтобы при узкой модалке
+// попап не перекрывался открытой панелью.
 var fontHelpPopup = $('#cdmFontHelpPopup');
 var fontHelpIcon = $('#cdmFontHelpIcon');
-fontHelpIcon.on('mouseenter', function(e) {
-var rect = this.getBoundingClientRect();
-var gap = 10;
-fontHelpPopup.css({
-position: 'fixed',
-left: (rect.left - gap) + 'px',
-top: (rect.top + rect.height / 2) + 'px',
-transform: 'translate(-100%, -50%)',
-display: 'block'
-});
-});
-fontHelpIcon.on('mouseleave', function() {
-fontHelpPopup.hide();
-});
-$(document).on('click', function(e) {
-if (!$(e.target).closest('#cdmFontHelpPopup').length && e.target.id !== 'cdmFontHelpIcon') {
-fontHelpPopup.hide();
-}
-});
-
-// Image URL help popup
 var imgHelpPopup = $('#cdmImgHelpPopup');
-$(document).on('mouseenter', '.cdm-img-help-icon', function(e) {
-var rect = this.getBoundingClientRect();
-imgHelpPopup.css({
-position: 'fixed',
-left: (rect.left - 10) + 'px',
-top: (rect.top + rect.height / 2) + 'px',
-transform: 'translate(-100%, -50%)',
-display: 'block'
-});
-});
-$(document).on('mouseleave', '.cdm-img-help-icon', function() {
-imgHelpPopup.hide();
-});
-$(document).on('click', function(e) {
-if (!$(e.target).closest('#cdmImgHelpPopup').length && !$(e.target).hasClass('cdm-img-help-icon')) {
-imgHelpPopup.hide();
-}
-});
-
-// Width help popup
 var widthHelpPopup = $('#cdmWidthHelpPopup');
-$(document).on('mouseenter', '.cdm-width-help-icon', function(e) {
-var rect = this.getBoundingClientRect();
-widthHelpPopup.css({
+
+function cdmCenterPopup($pop) {
+var w = $pop.outerWidth() || 480;
+var h = $pop.outerHeight() || 200;
+var vw = window.innerWidth;
+var vh = window.innerHeight;
+var left = Math.max(10, Math.min((vw - w) / 2, vw - w - 10));
+var top = Math.max(10, Math.min((vh - h) / 2, vh - h - 10));
+$pop.css({
 position: 'fixed',
-left: (rect.left - 10) + 'px',
-top: (rect.top + rect.height / 2) + 'px',
-transform: 'translate(-100%, -50%)',
+left: left + 'px',
+top: top + 'px',
+transform: 'none',
 display: 'block'
 });
+}
+
+function cdmHideAllHelp(exceptId) {
+$('#cdmFontHelpPopup, #cdmImgHelpPopup, #cdmWidthHelpPopup').each(function() {
+  if (this.id !== exceptId) { this.style.display = 'none'; }
 });
-$(document).on('mouseleave', '.cdm-width-help-icon', function() {
-widthHelpPopup.hide();
+}
+
+fontHelpIcon.on('click', function(e) {
+e.stopPropagation();
+if (fontHelpPopup.is(':visible')) { fontHelpPopup.hide(); return; }
+cdmHideAllHelp('cdmFontHelpPopup');
+cdmCenterPopup(fontHelpPopup);
+});
+imgHelpPopup = imgHelpPopup; // (привязка ниже делегирована)
+$(document).on('click', '.cdm-img-help-icon', function(e) {
+e.stopPropagation();
+if (imgHelpPopup.is(':visible')) { imgHelpPopup.hide(); return; }
+cdmHideAllHelp('cdmImgHelpPopup');
+cdmCenterPopup(imgHelpPopup);
+});
+$(document).on('click', '.cdm-width-help-icon', function(e) {
+e.stopPropagation();
+if (widthHelpPopup.is(':visible')) { widthHelpPopup.hide(); return; }
+cdmHideAllHelp('cdmWidthHelpPopup');
+cdmCenterPopup(widthHelpPopup);
+});
+$(document).on('click', '.cdm-help-close', function() {
+var id = $(this).attr('data-close');
+$('#' + id).hide();
 });
 $(document).on('click', function(e) {
-if (!$(e.target).closest('#cdmWidthHelpPopup').length && !$(e.target).hasClass('cdm-width-help-icon')) {
-widthHelpPopup.hide();
-}
+if ($(e.target).closest('#cdmFontHelpPopup').length || $(e.target).closest('#cdmImgHelpPopup').length || $(e.target).closest('#cdmWidthHelpPopup').length) return;
+if ($(e.target).closest('.cdm-img-help-icon, .cdm-width-help-icon, #cdmFontHelpIcon').length) return;
+cdmHideAllHelp();
 });
 
 let activeColorCallback = null;
@@ -2714,7 +2732,7 @@ const copyColorBtnPop = $('#cdmCopyColorBtn');
 
 function showColorPopup(element, currentColor, callback) {
 activeColorCallback = callback;
-let hexColor = currentColor;
+var hexColor = currentColor;
 if (!currentColor.startsWith('#')) {
 hexColor = '#333333';
 }
@@ -2723,8 +2741,22 @@ colorHexInput.val(hexColor);
 var paletteEl = element.closest ? element.closest('.cdm-color-palette') : null;
 var paletteRect = paletteEl ? paletteEl.getBoundingClientRect() : element.getBoundingClientRect();
 var topPos = paletteRect.top;
-// left фиксирован (920px) в разметке попапа; здесь задаём только top и display
-popupColorPicker.css({ top: topPos + 'px', display: 'block' });
+// [20.10.2026, задача №6] Адаптивное позиционирование окна «Свой цвет»: при УЗКОЙ модалке
+// (панель настроек плавающая, класс cdm-panel-open) окно ставим ЛЕВЕЕ панели (панель справа
+// 350px + отступ 20px), чтобы панель его не перекрывала и оно не уходило за правый край.
+// При широкой модалке — исходная позиция left:920px, но с защитой от выхода за экран.
+var popupW = 333; // 285 (внутр.) + 24×2 (padding) + рамка
+var vw = window.innerWidth;
+var masterEl = document.querySelector('.cdm-master.cdm-panel-open');
+var leftPos;
+if (masterEl && vw < 1480) {
+leftPos = vw - popupW - 370;
+if (leftPos < 10) leftPos = 10;
+} else {
+leftPos = Math.min(920, vw - popupW - 10);
+if (leftPos < 10) leftPos = 10;
+}
+popupColorPicker.css({ top: topPos + 'px', left: leftPos + 'px', display: 'block' });
 }
 
 function hideColorPopup() { popupColorPicker.hide(); activeColorCallback = null; }

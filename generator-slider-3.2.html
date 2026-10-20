@@ -1546,14 +1546,14 @@ document.body.classList.add('cdm-generator-active');
 
 let slideIdCounter = 6;
 let slidesData = [
-{ id: 1, title: 'Заголовок', text: 'Рыбатекст используется дизайнерами, проектировщиками и фронтендерами, когда нужно быстро заполнить макеты или прототипы содержимым.', img: 'https://s1.radikal.cloud/2026/09/02/2151867731a748e7072a6b80d1.jpg' },
-{ id: 2, title: 'Заголовок', text: 'Это тестовый контент, который не должен нести никакого смысла, лишь показать наличие самого текста или продемонстрировать типографику.', img: 'https://s2.radikal.cloud/2026/09/02/215186773441e6154a259f59da.jpg' },
-{ id: 3, title: 'Заголовок', text: 'Понимание сути ресурсосберегающих технологий позволяет выполнить важные задания по разработке экономической целесообразности решений.', img: 'https://s2.radikal.cloud/2026/09/02/21518811505cfda5e6d1a64223.jpg' },
-{ id: 4, title: 'Заголовок', text: 'В частности, перспективное планирование выявляет срочную потребность новых принципов формирования материально-технической и кадровой базы.', img: 'https://s1.radikal.cloud/2026/09/02/215202095642c1c4647b9fb8aa.jpg' },
-{ id: 5, title: 'Заголовок', text: 'Значимость проблем настолько очевидна, что постоянный количественный рост активности представляет собой интересный эксперимент проверки систем.', img: 'https://s1.radikal.cloud/2026/09/02/2151855194fee6527c8e548d47.jpg' }
+{ id: 1, title: 'Заголовок', text: 'Рыбатекст используется дизайнерами, проектировщиками и фронтендерами, когда нужно быстро заполнить макеты или прототипы содержимым.', img: 'img/1q.jpg' },
+{ id: 2, title: 'Заголовок', text: 'Это тестовый контент, который не должен нести никакого смысла, лишь показать наличие самого текста или продемонстрировать типографику.', img: 'img/2q.jpg' },
+{ id: 3, title: 'Заголовок', text: 'Понимание сути ресурсосберегающих технологий позволяет выполнить важные задания по разработке экономической целесообразности решений.', img: 'img/3q.jpg' },
+{ id: 4, title: 'Заголовок', text: 'В частности, перспективное планирование выявляет срочную потребность новых принципов формирования материально-технической и кадровой базы.', img: 'img/4q.jpg' },
+{ id: 5, title: 'Заголовок', text: 'Значимость проблем настолько очевидна, что постоянный количественный рост активности представляет собой интересный эксперимент проверки систем.', img: 'img/5q.jpg' }
 ];
 
-const NEW_SLIDE_DEFAULT_IMG = 'https://s2.radikal.cloud/2026/09/05/1441b805bf34eb3f33a0.jpg';
+const NEW_SLIDE_DEFAULT_IMG = 'img/6q.jpg';
 
 // DOM refs
 const sliderRadius = $('#cdmSliderRadius');
@@ -1894,8 +1894,12 @@ for (var i = 0; i < slideCount; i++) {
 var s = slides[i] || { title: 'Заголовок ' + (i+1), text: '', img: '' };
 var delay = i * delayStep;
 var animDur = totalSec + 's';
+// [20.10.2026, задача №14] Защита от висящих картинок: если хостинг недоступен,
+// слайд получает нейтральный фон-заглушку вместо долгого ожидания таймаута.
+var imgSrcP = s.img || '';
+var imgOnerr = 'this.onerror=null;this.style.display="none";this.closest(".cdm-sp-slide").style.background="#ececec";';
 slidesHtml += '<div class="cdm-sp-slide" style="animation: cdm-sp-slideanim ' + animDur + ' infinite; animation-delay: ' + delay + 's;">' +
-'<img src="' + escapeHtml(s.img) + '" alt="" style="animation: cdm-sp-zoom ' + animDur + ' infinite; animation-delay: ' + delay + 's;">' +
+'<img src="' + escapeHtml(imgSrcP) + '" alt="" onerror="' + imgOnerr + '" style="animation: cdm-sp-zoom ' + animDur + ' infinite; animation-delay: ' + delay + 's;">' +
 '<div class="cdm-sp-panel" style="background: ' + bgRgba + '; border-radius:' + panelRadius + '; bottom:' + panelBottom + '; left:' + panelML + '; right:' + panelMR + '; width:auto; padding:' + panelPT + ' ' + panelPR + ' ' + panelPB + ' ' + panelPL + ';">' +
 '<h5 style="font-size:' + tSize + '; color:' + titleRgba + '; font-weight:' + tWeight + '; margin-bottom:' + txMargin + '; text-align:' + tAlign + ';">' + escapeHtml(s.title) + '</h5>' +
 '<p style="font-size:' + txSize + '; color:' + textRgba + '; font-weight:' + txWeight + '; margin:0; text-align:' + txAlign + ';">' + escapeHtml(s.text) + '</p>' +
@@ -1994,6 +1998,16 @@ var slidesHtml = '';
 for (var i = 0; i < slideCount; i++) {
 var s = slides[i];
 var imgSrc = s.img || ('https://placehold.co/800x600?text=Slide+' + (i+1));
+// [20.10.2026, задача №14] Пресетные картинки хранятся относительно генератора
+// (img/1q.jpg…6q.jpg). В превью (iframe на codimgh.github.io) они резолвятся сами,
+// но в итоговом коде для публичной страницы относительный путь сломался бы —
+// превращаем его в абсолютный URL той же директории GitHub Pages.
+var loc = window.location;
+if (imgSrc.indexOf('http') !== 0 && imgSrc.indexOf('//') !== 0 && imgSrc.indexOf('data:') !== 0) {
+  if (loc.protocol === 'http:' || loc.protocol === 'https:') {
+    try { imgSrc = new URL(imgSrc, loc.href.substring(0, loc.href.lastIndexOf('/') + 1)).href; } catch (e2) {}
+  }
+}
 var imgAlt = 'Слайд ' + (i+1);
 // [1.72] Ускорение первой прогрузки: первый слайд загружается сразу с высоким приоритетом
 // (fetchpriority="high"), остальные — лениво (loading="lazy" + decoding="async"), чтобы блок
@@ -2436,11 +2450,11 @@ mobilePanelPaddingLeft: 20,
 mobilePanelBottom: 0,
 mobilePanelRadius: 0,
 slides: [
-{ id: 1, title: 'Заголовок', text: 'Рыбатекст используется дизайнерами, проектировщиками и фронтендерами, когда нужно быстро заполнить макеты или прототипы содержимым.', img: 'https://s1.radikal.cloud/2026/09/02/2151867731a748e7072a6b80d1.jpg' },
-{ id: 2, title: 'Заголовок', text: 'Это тестовый контент, который не должен нести никакого смысла, лишь показать наличие самого текста или продемонстрировать типографику.', img: 'https://s2.radikal.cloud/2026/09/02/215186773441e6154a259f59da.jpg' },
-{ id: 3, title: 'Заголовок', text: 'Понимание сути ресурсосберегающих технологий позволяет выполнить важные задания по разработке экономической целесообразности решений.', img: 'https://s2.radikal.cloud/2026/09/02/21518811505cfda5e6d1a64223.jpg' },
-{ id: 4, title: 'Заголовок', text: 'В частности, перспективное планирование выявляет срочную потребность новых принципов формирования материально-технической и кадровой базы.', img: 'https://s1.radikal.cloud/2026/09/02/215202095642c1c4647b9fb8aa.jpg' },
-{ id: 5, title: 'Заголовок', text: 'Значимость проблем настолько очевидна, что постоянный количественный рост активности представляет собой интересный эксперимент проверки систем.', img: 'https://s1.radikal.cloud/2026/09/02/2151855194fee6527c8e548d47.jpg' }
+{ id: 1, title: 'Заголовок', text: 'Рыбатекст используется дизайнерами, проектировщиками и фронтендерами, когда нужно быстро заполнить макеты или прототипы содержимым.', img: 'img/1q.jpg' },
+{ id: 2, title: 'Заголовок', text: 'Это тестовый контент, который не должен нести никакого смысла, лишь показать наличие самого текста или продемонстрировать типографику.', img: 'img/2q.jpg' },
+{ id: 3, title: 'Заголовок', text: 'Понимание сути ресурсосберегающих технологий позволяет выполнить важные задания по разработке экономической целесообразности решений.', img: 'img/3q.jpg' },
+{ id: 4, title: 'Заголовок', text: 'В частности, перспективное планирование выявляет срочную потребность новых принципов формирования материально-технической и кадровой базы.', img: 'img/4q.jpg' },
+{ id: 5, title: 'Заголовок', text: 'Значимость проблем настолько очевидна, что постоянный количественный рост активности представляет собой интересный эксперимент проверки систем.', img: 'img/5q.jpg' }
 ]
 };
 
@@ -2817,32 +2831,63 @@ updateAll();
 })();
 </script>
 <script>
-/* [19.10.2026, сессия 20] Кастомный скроллбар колонок через OverlayScrollbars (2.16.0, MIT).
-   Инициализация на .cdm-controls-col (настройки) и .cdm-preview-col (превью): нативный
-   скроллбар скрывается, поверх рисуется тонкий ползунок темы cdm-scrollbar-theme.
-   Тема, авто-скрытие и расширение по ховеру — см. CSS выше. */
+/* [19.10.2026, сессия 20; доработано 20.10.2026, задача №14] Кастомный скроллбар колонок
+   через OverlayScrollbars (2.16.0, MIT). Ядро остаётся инлайн (генератор автономен, без
+   внешних CDN-зависимостей — см. раздел 9). Инициализация ЛЕНИВАЯ: ползунки создаются
+   не на старте, а при первом реальном появлении/скролле колонки (задача №14-б) — на
+   старте не тратится время, а если ползунок не понадобился, он и не создаётся.
+   Отложенный запуск также даёт DOM отрисоваться раньше. */
 (function(){
-  if(!(window.OverlayScrollbarsGlobal && window.OverlayScrollbarsGlobal.OverlayScrollbars)) return;
-  var OS = window.OverlayScrollbarsGlobal.OverlayScrollbars;
-  var targets = [document.querySelector('.cdm-controls-col'), document.querySelector('.cdm-preview-col')];
-  for (var i = 0; i < targets.length; i++) {
-    var el = targets[i];
-    if (!el || el.getAttribute('data-overlayscrollbars')) continue;
-    try {
-      OS(el, {
-        overflow: { x: 'hidden', y: 'scroll' },
-        scrollbars: {
-          theme: 'cdm-scrollbar-theme',
-          visibility: 'auto',
-          autoHide: 'scroll',
-          autoHideDelay: 600,
-          dragScroll: true,
-          clickScroll: false,
-          pointers: ['mouse', 'pen']
-        }
-      });
-    } catch (e) {}
+  var initialized = false;
+  var targetsSel = '.cdm-controls-col, .cdm-preview-col';
+  function init() {
+    if (initialized) return;
+    if (!(window.OverlayScrollbarsGlobal && window.OverlayScrollbarsGlobal.OverlayScrollbars)) return;
+    initialized = true;
+    var OS = window.OverlayScrollbarsGlobal.OverlayScrollbars;
+    var targets = document.querySelectorAll(targetsSel);
+    for (var i = 0; i < targets.length; i++) {
+      var el = targets[i];
+      if (!el || el.getAttribute('data-overlayscrollbars')) continue;
+      try {
+        OS(el, {
+          overflow: { x: 'hidden', y: 'scroll' },
+          scrollbars: {
+            theme: 'cdm-scrollbar-theme',
+            visibility: 'auto',
+            autoHide: 'scroll',
+            autoHideDelay: 600,
+            dragScroll: true,
+            clickScroll: false,
+            pointers: ['mouse', 'pen']
+          }
+        });
+      } catch (e) {}
+    }
   }
+  function tryInitSoon() {
+    if (initialized) return;
+    setTimeout(function() {
+      var cols = document.querySelectorAll(targetsSel);
+      var anyScrollable = false;
+      for (var i = 0; i < cols.length; i++) {
+        if (cols[i] && cols[i].scrollHeight > cols[i].clientHeight + 4) { anyScrollable = true; break; }
+      }
+      if (anyScrollable) init();
+    }, 350);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryInitSoon);
+  } else {
+    tryInitSoon();
+  }
+  document.addEventListener('scroll', function() {
+    if (!initialized) { init(); }
+  }, true);
+  window.addEventListener('resize', function() {
+    if (!initialized) { tryInitSoon(); }
+  });
+  if (document.readyState !== 'loading') setTimeout(function() { init(); }, 2000);
 })();
 </script>
 <!-- ***************************

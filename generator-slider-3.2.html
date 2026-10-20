@@ -208,13 +208,13 @@ filter: invert(1) brightness(1.5);
 </p>
 <div class="cdm-help-progress"></div>
 </div>
-<div id="cdmImgHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:460px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
+<div id="cdmImgHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:400px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
 Вставь прямую ссылку на картинку, которая будет использована для слайда. Лучше использовать картинки с соотношением сторон 16:9 и в размере не менее 1920×1080, это на всякий случай, чтобы сервис не «шакалил» качество картинки.
 </p>
 <div class="cdm-help-progress"></div>
 </div>
-<div id="cdmWidthHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:500px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
+<div id="cdmWidthHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:490px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0 0 12px 0;">
 Ширина блока для превью задаётся дискретно, согласно логике стандартных настроек ширины страницы «Таплинк» - выбери один из стандартных размеров страницы, которые установлены у тебя: 620, 720, 820 или 1020.
 </p>
@@ -1336,7 +1336,7 @@ bottom: 0;
 height: 2px;
 width: 100%;
 background: #4cb5ff;
-animation: cdm-help-progress 15s linear forwards;
+animation: cdm-help-progress 25s linear forwards;
 }
 @keyframes cdm-help-progress {
 from { width: 100%; }
@@ -2714,7 +2714,7 @@ cdmScheduleHelpAutoClose(widthHelpPopup, 'width');
 });
 
 // [20.10.2026, задача №6] Закрытие подсказок: крестик убран — подсказка
-// закрывается САМА через 15 секунд (как тост), с линией прогресса внизу.
+// закрывается САМА через 25 секунд (как тост), с линией прогресса внизу.
 function cdmScheduleHelpAutoClose($pop, key) {
   if (helpAutoTimers[key]) clearTimeout(helpAutoTimers[key]);
   var $bar = $pop.find('.cdm-help-progress').first();
@@ -2726,7 +2726,7 @@ function cdmScheduleHelpAutoClose($pop, key) {
   helpAutoTimers[key] = setTimeout(function() {
     $pop.hide();
     helpAutoTimers[key] = null;
-  }, 15000);
+  }, 25000);
 }
 
 $(document).on('click', function(e) {

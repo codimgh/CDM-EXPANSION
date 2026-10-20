@@ -199,32 +199,32 @@ filter: invert(1) brightness(1.5);
 <i class="ph ph-device-mobile cdm-device-icon" data-device="mobile" style="font-size:20px; cursor: pointer;"></i>
 </div>
 </div>
-<div id="cdmFontHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:480px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:0 8px 30px rgba(0,0,0,0.12);">
-<button type="button" class="cdm-help-close" data-close="cdmFontHelpPopup" style="position:absolute; top:8px; right:8px; border:none; background:transparent; cursor:pointer; color:inherit; padding:4px; display:inline-flex; align-items:center; justify-content:center;" title="Закрыть"><svg viewBox="0 0 24 24" width="20" height="20" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6.00081 17.9992M17.9992 18L6 6.00085"></path></svg></button>
+<div id="cdmFontHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:460px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
-В случае, когда используется вариант «Шрифт не выбран», на публичной странице к шрифтам блока, будут применены настройки шрифта, которые установлены в разделе «Дизайн» в настройках «Таплинка».
+В случае, если в настройке используется вариант «Шрифт не выбран», на публичной странице сайта к шрифтам блока, будут применены те настройки шрифтов, которые установлены в разделе «Дизайн» в настройках «Таплинк».
 </p>
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0; margin-top:12px;">
-Некоторые из шрифтов доступны исключительно в диапазоне насыщенности (жирности) от 400, например шрифт Playfair Display, задаваемое в настройках значение «жирности» менее этого значения для таких шрифтов недоступно, в таком случае действует алгоритм: если в настройках задаётся значение менее 400 → будет применено 400 как максимально тонкое начертание, доступное для шрифта.
+Некоторые шрифты доступны исключительно в диапазоне насыщенности (жирности) от 400, например шрифт Playfair Display, поэтому задать в настройках значение «жирности» менее такого значения для таких шрифтов недоступно, в таком случае действует алгоритм: когда в настройках задаётся значение менее 400 → будет применено 400 как максимально тонкое начертание, доступное для шрифта.
 </p>
+<div class="cdm-help-progress"></div>
 </div>
-<div id="cdmImgHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:370px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:0 8px 30px rgba(0,0,0,0.12);">
-<button type="button" class="cdm-help-close" data-close="cdmImgHelpPopup" style="position:absolute; top:8px; right:8px; border:none; background:transparent; cursor:pointer; color:inherit; padding:4px; display:inline-flex; align-items:center; justify-content:center;" title="Закрыть"><svg viewBox="0 0 24 24" width="20" height="20" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6.00081 17.9992M17.9992 18L6 6.00085"></path></svg></button>
+<div id="cdmImgHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:460px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
-Вставь прямую ссылку на нужную картинку, которая будет использована для слайда. Как рекомендация: использовать лучше картинки с соотношением сторон 16:9 и в размере не менее 1920×1080, это на всякий случай, чтобы сервис не «шакалил» качество картинки.
+Вставь прямую ссылку на картинку, которая будет использована для слайда. Лучше использовать картинки с соотношением сторон 16:9 и в размере не менее 1920×1080, это на всякий случай, чтобы сервис не «шакалил» качество картинки.
 </p>
+<div class="cdm-help-progress"></div>
 </div>
-<div id="cdmWidthHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:630px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:0 8px 30px rgba(0,0,0,0.12);">
-<button type="button" class="cdm-help-close" data-close="cdmWidthHelpPopup" style="position:absolute; top:8px; right:8px; border:none; background:transparent; cursor:pointer; color:inherit; padding:4px; display:inline-flex; align-items:center; justify-content:center;" title="Закрыть"><svg viewBox="0 0 24 24" width="20" height="20" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6.00081 17.9992M17.9992 18L6 6.00085"></path></svg></button>
+<div id="cdmWidthHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:500px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0 0 12px 0;">
-Ширина блока задаётся дискретно, согласно логике настроек ширины страницы «Таплинк» - выбери в настройке один из стандартных размеров страницы, которые ты предварительно установил в настройках сервиса: 620, 720, 820 или 1020.
+Ширина блока для превью задаётся дискретно, согласно логике стандартных настроек ширины страницы «Таплинк» - выбери один из стандартных размеров страницы, которые установлены у тебя: 620, 720, 820 или 1020.
 </p>
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0 0 12px 0;">
-Как работает настройка ширины блока, например: ширина страницы установлена 820 и ширина блока выбрана 820 - блок будет занимать 100% ширины страницы, другой пример: ширина страницы 1020, а в настройках блока выбрана ширина 820, значит блок займет место на странице равное размеру 820.
+Как работает эта настройка, например: стандартная ширина страницы у тебя 820 и ширина блока выбрана 820 - блок будет занимать 100% ширины страницы, или другой пример: ширина страницы 1020, а в настройках выбрана 820, значит блок займет место на странице равное размеру 820.
 </p>
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
-Действует и обратное правило, если ширина страницы в настройках выбрана к примеру 620, а ширина блока установлена 1020 - блок займёт всю доступную ширину страницы. На мобильных устройствах блок всегда на всю ширину экрана.
+Есть и обратное правило, когда стандартная ширина страницы меньше чем установленная ширина блока - блок займёт всю доступную ширину страницы. На мобильных устройствах блок всегда на всю ширину экрана.
 </p>
+<div class="cdm-help-progress"></div>
 </div>
 <div id="cdmLivePreviewWrapper" style="display: flex; justify-content: center; min-height: 450px; background: transparent; border-radius: 12px;">
 <div id="cdmLivePreview" style="width: 100%; padding: 5px; display: flex; align-items: flex-start; justify-content: center;"></div>
@@ -1322,22 +1322,25 @@ color: #ddd;
 #cdmImgHelpPopup,
 #cdmWidthHelpPopup {
 border: 1px solid #ccccccab;
-box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+box-shadow: none;
 }
 #cdmFontHelpPopup p,
 #cdmImgHelpPopup p,
 #cdmWidthHelpPopup p {
 color: #333;
 }
-#cdmFontHelpPopup .cdm-help-close,
-#cdmImgHelpPopup .cdm-help-close,
-#cdmWidthHelpPopup .cdm-help-close {
-color: #666 !important;
+.cdm-help-progress {
+position: absolute;
+left: 0;
+bottom: 0;
+height: 2px;
+width: 100%;
+background: #4cb5ff;
+animation: cdm-help-progress 15s linear forwards;
 }
-#cdmFontHelpPopup .cdm-help-close:hover,
-#cdmImgHelpPopup .cdm-help-close:hover,
-#cdmWidthHelpPopup .cdm-help-close:hover {
-color: #111 !important;
+@keyframes cdm-help-progress {
+from { width: 100%; }
+to { width: 0%; }
 }
 .cdm-master.dark-theme #cdmFontHelpPopup,
 .cdm-master.dark-theme #cdmImgHelpPopup,
@@ -1350,15 +1353,8 @@ border-color: #555 !important;
 .cdm-master.dark-theme #cdmWidthHelpPopup p {
 color: #e0e0e0 !important;
 }
-.cdm-master.dark-theme #cdmFontHelpPopup .cdm-help-close,
-.cdm-master.dark-theme #cdmImgHelpPopup .cdm-help-close,
-.cdm-master.dark-theme #cdmWidthHelpPopup .cdm-help-close {
-color: #bbb !important;
-}
-.cdm-master.dark-theme #cdmFontHelpPopup .cdm-help-close:hover,
-.cdm-master.dark-theme #cdmImgHelpPopup .cdm-help-close:hover,
-.cdm-master.dark-theme #cdmWidthHelpPopup .cdm-help-close:hover {
-color: #fff !important;
+.cdm-master.dark-theme .cdm-help-progress {
+background: #4cb5ff;
 }
 #cdmCustomColorPopup {
 border-radius: 12px !important;
@@ -2671,13 +2667,14 @@ var fontHelpIcon = $('#cdmFontHelpIcon');
 var imgHelpPopup = $('#cdmImgHelpPopup');
 var widthHelpPopup = $('#cdmWidthHelpPopup');
 
-function cdmCenterPopup($pop) {
-var w = $pop.outerWidth() || 480;
-var h = $pop.outerHeight() || 200;
+// [20.10.2026, задача №6] Подсказки открываются в левом верхнем углу окна
+// (left:12px; top:12px) — фиксированная позиция, не по центру (по решению владельца).
+var helpAutoTimers = {};
+
+function cdmShowHelpPopup($pop) {
 var vw = window.innerWidth;
-var vh = window.innerHeight;
-var left = Math.max(10, Math.min((vw - w) / 2, vw - w - 10));
-var top = Math.max(10, Math.min((vh - h) / 2, vh - h - 10));
+var left = Math.min(12, vw - 40);
+var top = 12;
 $pop.css({
 position: 'fixed',
 left: left + 'px',
@@ -2695,27 +2692,43 @@ $('#cdmFontHelpPopup, #cdmImgHelpPopup, #cdmWidthHelpPopup').each(function() {
 
 fontHelpIcon.on('click', function(e) {
 e.stopPropagation();
-if (fontHelpPopup.is(':visible')) { fontHelpPopup.hide(); return; }
+if (fontHelpPopup.is(':visible')) { fontHelpPopup.hide(); clearTimeout(helpAutoTimers.font); return; }
 cdmHideAllHelp('cdmFontHelpPopup');
-cdmCenterPopup(fontHelpPopup);
+cdmShowHelpPopup(fontHelpPopup);
+cdmScheduleHelpAutoClose(fontHelpPopup, 'font');
 });
 imgHelpPopup = imgHelpPopup; // (привязка ниже делегирована)
 $(document).on('click', '.cdm-img-help-icon', function(e) {
 e.stopPropagation();
-if (imgHelpPopup.is(':visible')) { imgHelpPopup.hide(); return; }
+if (imgHelpPopup.is(':visible')) { imgHelpPopup.hide(); clearTimeout(helpAutoTimers.img); return; }
 cdmHideAllHelp('cdmImgHelpPopup');
-cdmCenterPopup(imgHelpPopup);
+cdmShowHelpPopup(imgHelpPopup);
+cdmScheduleHelpAutoClose(imgHelpPopup, 'img');
 });
 $(document).on('click', '.cdm-width-help-icon', function(e) {
 e.stopPropagation();
-if (widthHelpPopup.is(':visible')) { widthHelpPopup.hide(); return; }
+if (widthHelpPopup.is(':visible')) { widthHelpPopup.hide(); clearTimeout(helpAutoTimers.width); return; }
 cdmHideAllHelp('cdmWidthHelpPopup');
-cdmCenterPopup(widthHelpPopup);
+cdmShowHelpPopup(widthHelpPopup);
+cdmScheduleHelpAutoClose(widthHelpPopup, 'width');
 });
-$(document).on('click', '.cdm-help-close', function() {
-var id = $(this).attr('data-close');
-$('#' + id).hide();
-});
+
+// [20.10.2026, задача №6] Закрытие подсказок: крестик убран — подсказка
+// закрывается САМА через 15 секунд (как тост), с линией прогресса внизу.
+function cdmScheduleHelpAutoClose($pop, key) {
+  if (helpAutoTimers[key]) clearTimeout(helpAutoTimers[key]);
+  var $bar = $pop.find('.cdm-help-progress').first();
+  if ($bar.length) {
+    $bar.get(0).style.animation = 'none';
+    void $bar.get(0).offsetWidth;
+    $bar.get(0).style.animation = '';
+  }
+  helpAutoTimers[key] = setTimeout(function() {
+    $pop.hide();
+    helpAutoTimers[key] = null;
+  }, 15000);
+}
+
 $(document).on('click', function(e) {
 if ($(e.target).closest('#cdmFontHelpPopup').length || $(e.target).closest('#cdmImgHelpPopup').length || $(e.target).closest('#cdmWidthHelpPopup').length) return;
 if ($(e.target).closest('.cdm-img-help-icon, .cdm-width-help-icon, #cdmFontHelpIcon').length) return;

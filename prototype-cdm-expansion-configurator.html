@@ -1934,9 +1934,8 @@ finalHtml = '<div class="phone-mock"><div class="display-mock"><div class="cdm-c
    (2) Если разметка изменилась — ПЕРЕИСПОЛЬЗУЕМ уже загруженные элементы <img>:
    переносим их в новую разметку вместо создания новых. Битмап остаётся
    декодированным, картинка рисуется сразу — без повторной загрузки и вспышки. */
-if (finalHtml === cdmLastPreviewHtml) {
-return;
-}
+var cdmHtmlChanged = (finalHtml !== cdmLastPreviewHtml);
+if (cdmHtmlChanged) {
 cdmLastPreviewHtml = finalHtml;
 var cdmImgPool = {};
 try {
@@ -1956,6 +1955,13 @@ try { this.parentNode.replaceChild(old, this); } catch (e) {}
 }
 });
 } catch (e) {}
+}
+/* [02.11.2026, правка после задачи №16] ШРИФТ ПРИМЕНЯЕМ ВСЕГДА.
+   Выбранный шрифт задаётся КЛАССОМ на .desktop-screen/.display-mock и в разметку
+   превью НЕ входит. Из-за этого при пропуске «пустого» рендера шрифт не
+   применялся: он появлялся только после изменения цвета (менялся html, рендер
+   выполнялся целиком). Теперь пропускается только пересборка разметки, а класс
+   шрифта и размеры обновляются при каждом вызове. */
 
 if (selectedFont !== 'none') {
 var fontClass = 'cdm-font-' + selectedFont.toLowerCase().replace(/\s/g, '');

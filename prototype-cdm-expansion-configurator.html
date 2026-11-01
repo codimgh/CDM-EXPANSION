@@ -2221,9 +2221,35 @@ return (fontLinkHtml + code).replace(/\n/g, '');
 
 let currentSuffix = '';
 let finalCode = '';
+/* [01.11.2026, задача №16-2] СКЛЕЙКА РЕНДЕРОВ ПРЕВЬЮ.
+   Превью строится целиком через innerHTML: элементы <img> пересоздаются в DOM,
+   из-за чего картинки визуально «мигают». Причин несколько: applySettings()
+   вызывает setDesktopWidth() (а тот — updateAll()), затем в конце —
+   ещё один updateAll(); кроме того превью перерисовывалось на КАЖДЫЙ resize
+   (открытие модалки — это анимация ширины и серия resize-событий).
+   Решение: рендер превью ставится в очередь на следующий кадр. Сколько бы
+   вызовов ни пришло синхронно (или в пределах одного кадра), превью строится
+   ОДИН раз. */
+var _cdmPreviewScheduled = false;
+function schedulePreviewRender() {
+if (_cdmPreviewScheduled) return;
+_cdmPreviewScheduled = true;
+var done = false;
+var run = function () {
+if (done) return;
+done = true;
+_cdmPreviewScheduled = false;
+updatePreview();
+};
+/* Рендер в ближайшем кадре; резервный таймер 60 мс — на случай, когда
+   requestAnimationFrame не срабатывает (фоновая/скрытая вкладка). Повторный
+   вызов отсекается флагом done, поэтому двойной отрисовки не будет. */
+if (window.requestAnimationFrame) requestAnimationFrame(run);
+setTimeout(run, 60);
+}
 function updateAll() {
 updateRangeDisplays();
-updatePreview();
+schedulePreviewRender();
 finalCode = generateFinalCode();
 }
 
@@ -2837,8 +2863,16 @@ window.parent.postMessage({ action: 'cdm-apply', code: codeToApply, settings: ge
 $(window).on('resize', function() {
 // [1.70/задача№6] Требовалась перерисовка превью при контрольных точках; они удалены —
 // при ресайзе можно просто обновить превью (безопасно).
+// [01.11.2026, задача №16-2] Ресайз ОТКЛАДЫВАЕТСЯ (debounce 200 мс): при открытии
+// модалки ширина анимируется и приходит серия resize-событий — раньше каждое
+// давало полную перерисовку превью и мигание картинок. Теперь перерисовка одна,
+// после того как размер устоялся.
 if (previewMode === 'desktop') {
+if (window.__cdmResizeTimer) clearTimeout(window.__cdmResizeTimer);
+window.__cdmResizeTimer = setTimeout(function() {
+window.__cdmResizeTimer = null;
 updatePreview();
+}, 200);
 }
 });
 

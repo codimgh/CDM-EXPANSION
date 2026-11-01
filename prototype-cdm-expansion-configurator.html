@@ -1,4 +1,4 @@
-﻿<!-- CDM-EXPANSION — генератор (прототип конфигуратора). © Кодим (codimgh), 2026.
+<!-- CDM-EXPANSION — генератор (прототип конфигуратора). © Кодим (codimgh), 2026.
 Распространение и модификация — только по письменному разрешению правообладателя
 (ограниченная лицензия, см. LICENSE). jQuery и OverlayScrollbars — их собственные лицензии. -->
 <!-- генератор кода слайдер вариант №1 расширенная версия (адаптирован под контракт cdm, раздел 10.5) -->
@@ -2385,6 +2385,10 @@ try {
 var data = e.data;
 if (!data || typeof data !== 'object') return;
 if (data.action === 'cdm-init' && data.settings) {
+// [1.88.3] Настройки пришли раньше отложенного рендера — отменяем «дефолтный»
+// первый рендер, чтобы превью построилось ОДИН раз (без мигания картинок).
+if (window.__cdmWaitInitTimer) { clearTimeout(window.__cdmWaitInitTimer); window.__cdmWaitInitTimer = null; }
+window.__cdmFirstRenderPending = false;
 applySettings(data.settings);
 }
 if (data.action === 'cdm-theme-toggle') {
@@ -2859,7 +2863,19 @@ zoomScale.on('input', updatePreviewAnimStyle);
 
 renderSlides();
 bindSlideInputs();
-updateAll();
+/* [1.88.3, задача №15-2] ПЕРВЫЙ РЕНДЕР ПРЕВЬЮ — ТОЛЬКО ПОСЛЕ НАСТРОЕК (cdm-init).
+   Раньше здесь сразу шёл updateAll(): при открытии конфигуратора превью строилось
+   ДВАЖДЫ — сначала с дефолтами, затем ещё раз внутри applySettings после cdm-init.
+   Картинки пересоздавались в DOM, и было видно мигание («превью грузится дважды»).
+   Теперь ждём cdm-init; если его нет (генератор открыт напрямую в браузере) —
+   рисуем дефолт через 400 мс. */
+window.__cdmFirstRenderPending = true;
+window.__cdmWaitInitTimer = setTimeout(function () {
+  if (window.__cdmFirstRenderPending) {
+    window.__cdmFirstRenderPending = false;
+    updateAll();
+  }
+}, 400);
 })();
 </script>
 <script>

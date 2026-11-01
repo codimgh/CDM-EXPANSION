@@ -2230,6 +2230,33 @@ let finalCode = '';
    Решение: рендер превью ставится в очередь на следующий кадр. Сколько бы
    вызовов ни пришло синхронно (или в пределах одного кадра), превью строится
    ОДИН раз. */
+/* [задача №16-6] Ждём загрузки/декодирования картинок превью (не более 1,5 с),
+   чтобы сообщить расширению о готовности ТОЛЬКО когда кадры уже можно показать. */
+function cdmWhenPreviewImagesReady(cb) {
+var finished = false;
+var finish = function () {
+if (finished) return;
+finished = true;
+try { cb(); } catch (e) {}
+};
+var cap = setTimeout(finish, 1500);
+try {
+var imgs = document.querySelectorAll('#cdmLivePreview img');
+var pending = 0;
+var tick = function () {
+pending--;
+if (pending <= 0) { clearTimeout(cap); finish(); }
+};
+for (var i = 0; i < imgs.length; i++) {
+var im = imgs[i];
+if (im.complete && im.naturalWidth > 0) continue;
+pending++;
+im.addEventListener('load', tick);
+im.addEventListener('error', tick);
+}
+if (pending === 0) { clearTimeout(cap); finish(); }
+} catch (e) { clearTimeout(cap); finish(); }
+}
 var _cdmPreviewScheduled = false;
 function schedulePreviewRender() {
 if (_cdmPreviewScheduled) return;
@@ -2239,11 +2266,17 @@ var run = function () {
 if (done) return;
 done = true;
 _cdmPreviewScheduled = false;
+/* [временно, задача №16] Счётчик рендеров превью: по нему видно, строится ли
+   превью один раз за открытие. Удаляется после подтверждения. */
+window.__cdmRenderCount = (window.__cdmRenderCount || 0) + 1;
+console.log('[CDM-GEN] рендер превью #' + window.__cdmRenderCount);
 updatePreview();
-/* [02.11.2026, задача №16] Сообщаем расширению, что ПЕРВЫЙ рендер превью готов:
-   по этому сигналу снимается заглушка «Загрузка конфигуратора». Если снимать её
-   по событию load, на быстрых открытиях (всё из кеша) заглушка исчезает раньше
-   отрисовки превью — видно пустую область и «проявление» картинок (мигание). */
+/* [02.11.2026, задача №16-6] Сигнал готовности отправляем не сразу после сборки
+   DOM, а после того как КАРТИНКИ ПРЕВЬЮ ЗАГРУЖЕНЫ/ДЕКОДИРОВАНЫ (не более 1,5 с
+   ожидания). Иначе заглушка «Загрузка конфигуратора» снималась раньше, чем
+   картинки появлялись, и пользователь видел «проявление» кадров — то самое
+   двойное мигание, особенно на повторных (закешированных) открытиях. */
+cdmWhenPreviewImagesReady(function () {
 if (!window.__cdmReadySent) {
 window.__cdmReadySent = true;
 try {
@@ -2252,6 +2285,7 @@ window.parent.postMessage({ action: 'cdm-ready' }, '*');
 }
 } catch (e) {}
 }
+});
 };
 /* Рендер в ближайшем кадре; резервный таймер 60 мс — на случай, когда
    requestAnimationFrame не срабатывает (фоновая/скрытая вкладка). Повторный
@@ -2423,8 +2457,12 @@ try {
 var data = e.data;
 if (!data || typeof data !== 'object') return;
 if (data.action === 'cdm-init' && data.settings) {
-// [1.88.3] Настройки пришли раньше отложенного рендера — отменяем «дефолтный»
-// первый рендер, чтобы превью построилось ОДИН раз (без мигания картинок).
+// [02.11.2026, задача №16-5] Настройки применяем ТОЛЬКО ОДИН РАЗ за загрузку
+// документа. Расширение может прислать их дважды (ответ на cdm-init-request и
+// на событии load) — второй раз игнорируем, иначе превью перерисовывается и
+// картинки мигают.
+if (window.__cdmInitApplied) return;
+window.__cdmInitApplied = true;
 if (window.__cdmWaitInitTimer) { clearTimeout(window.__cdmWaitInitTimer); window.__cdmWaitInitTimer = null; }
 window.__cdmFirstRenderPending = false;
 applySettings(data.settings);
@@ -2924,12 +2962,26 @@ window.__cdmFirstRenderPending = true;
    когда генератор открыт напрямую в браузере (родителя нет). */
 var cdmIsEmbedded = false;
 try { cdmIsEmbedded = !!(window.parent && window.parent !== window); } catch (e) {}
+/* [02.11.2026, задача №16-5] РУКОПОЖАТИЕ ВМЕСТО ОЖИДАНИЯ.
+   Раньше генератор просто ЖДАЛ cdm-init от расширения, и на быстрых открытиях
+   (всё из кеша) порядок «кто раньше» менялся: превью успевало отрисоваться с
+   дефолтами, а затем перерисовывалось с сохранёнными настройками — двойное
+   мигание картинок. Теперь генератор САМ просит настройки, как только загрузился
+   (cdm-init-request), расширение отвечает сразу (cdm-init) — рендер один.
+   Таймер ниже — только страховка для случая, когда ответа нет вообще. */
+if (cdmIsEmbedded) {
+  var cdmAsk = function () {
+    try { window.parent.postMessage({ action: 'cdm-init-request' }, '*'); } catch (e) {}
+  };
+  cdmAsk();
+  setTimeout(cdmAsk, 300);
+}
 window.__cdmWaitInitTimer = setTimeout(function () {
   if (window.__cdmFirstRenderPending) {
     window.__cdmFirstRenderPending = false;
     updateAll();
   }
-}, cdmIsEmbedded ? 2500 : 400);
+}, cdmIsEmbedded ? 8000 : 400);
 })();
 </script>
 <script>

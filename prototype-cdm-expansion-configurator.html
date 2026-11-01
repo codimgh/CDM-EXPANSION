@@ -1858,8 +1858,8 @@ return slides;
 
 function updatePreview() {
 var container = $('#cdmLivePreview');
-container.empty();
-
+// [02.11.2026, задача №16-8] container.empty() здесь убран: ниже решается,
+// нужна ли перерисовка вообще (если разметка не изменилась — превью не трогаем).
 var useMobile = (previewMode === 'mobile');
 var slides = getSlideData();
 var slideCount = slides.length;
@@ -1897,7 +1897,14 @@ var delayStep = totalSec / slideCount;
 var slidesHtml = '';
 for (var i = 0; i < slideCount; i++) {
 var s = slides[i] || { title: 'Заголовок ' + (i+1), text: '', img: '' };
-var delay = i * delayStep;
+/* [02.11.2026, задача №16-9] ПЕРВЫЙ СЛАЙД ВИДЕН СРАЗУ.
+   В keyframes cdm-sp-slideanim на 0% прозрачность 0, на 10% — 1. Без сдвига
+   первые 10% цикла (при 15 с это 1,5 с) ВСЕ слайды полностью прозрачны: сразу
+   после снятия заглушки «Загрузка конфигуратора» пользователь видел пустую
+   область, а затем «проявление» картинки — это и воспринималось как мигание.
+   Сдвигаем фазу на -10% цикла: первый слайд полностью виден с первого кадра,
+   далее окна слайдов идут подряд без разрывов. */
+var delay = (i * delayStep) - (totalSec * 0.1);
 var animDur = totalSec + 's';
 // [20.10.2026, задача №14] Защита от висящих картинок: если хостинг недоступен,
 // слайд получает нейтральный фон-заглушку вместо долгого ожидания таймаута.
@@ -1920,7 +1927,35 @@ finalHtml = '<div class="desktop-mock"><div class="desktop-screen"><div class="c
 } else {
 finalHtml = '<div class="phone-mock"><div class="display-mock"><div class="cdm-content-wrapper" style="width:100%; margin:0 auto;">' + contentHtml + '</div></div></div>';
 }
+/* [02.11.2026, задача №16-8] ГЛАВНОЕ ИСПРАВЛЕНИЕ МИГАНИЯ.
+   (1) Если разметка превью НЕ изменилась — вообще не трогаем DOM. Любой лишний
+   рендер (resize при анимации ширины модалки, повторная инициализация) раньше
+   пересоздавал <img>, и картинки «моргали».
+   (2) Если разметка изменилась — ПЕРЕИСПОЛЬЗУЕМ уже загруженные элементы <img>:
+   переносим их в новую разметку вместо создания новых. Битмап остаётся
+   декодированным, картинка рисуется сразу — без повторной загрузки и вспышки. */
+if (finalHtml === cdmLastPreviewHtml) {
+return;
+}
+cdmLastPreviewHtml = finalHtml;
+var cdmImgPool = {};
+try {
+container.find('img').each(function () {
+var s = this.getAttribute('src');
+if (s && !cdmImgPool[s]) cdmImgPool[s] = this;
+});
+} catch (e) {}
 container.html(finalHtml);
+try {
+container.find('img').each(function () {
+var s = this.getAttribute('src');
+var old = s ? cdmImgPool[s] : null;
+if (old && old !== this) {
+delete cdmImgPool[s];
+try { this.parentNode.replaceChild(old, this); } catch (e) {}
+}
+});
+} catch (e) {}
 
 if (selectedFont !== 'none') {
 var fontClass = 'cdm-font-' + selectedFont.toLowerCase().replace(/\s/g, '');
@@ -2025,7 +2060,9 @@ slidesHtml += '<div class="cdm-' + suffix + '-2">\n<img src="' + escapeHtml(imgS
 
 var animDelaysCss = '';
 for (var i = 0; i < slideCount; i++) {
-var delay = i * delayStep;
+// [02.11.2026, задача №16-9] Та же фаза, что и в превью: первый слайд виден
+// сразу, без пустого кадра в начале цикла (иначе блок на странице «проявляется»).
+var delay = (i * delayStep) - (totalSec * 0.1);
 animDelaysCss += '.cdm-' + suffix + '-2:nth-child(' + (i+1) + '),\n.cdm-' + suffix + '-2:nth-child(' + (i+1) + ') img {\n-webkit-animation-delay: ' + delay + 's;\nanimation-delay: ' + delay + 's;\n}\n';
 }
 
@@ -2221,6 +2258,9 @@ return (fontLinkHtml + code).replace(/\n/g, '');
 
 let currentSuffix = '';
 let finalCode = '';
+// [задача №16-8] Последняя собранная разметка превью: если не изменилась,
+// перерисовка не выполняется (иначе картинки пересоздаются и мигают).
+let cdmLastPreviewHtml = null;
 /* [01.11.2026, задача №16-2] СКЛЕЙКА РЕНДЕРОВ ПРЕВЬЮ.
    Превью строится целиком через innerHTML: элементы <img> пересоздаются в DOM,
    из-за чего картинки визуально «мигают». Причин несколько: applySettings()

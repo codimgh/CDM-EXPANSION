@@ -2240,6 +2240,18 @@ if (done) return;
 done = true;
 _cdmPreviewScheduled = false;
 updatePreview();
+/* [02.11.2026, задача №16] Сообщаем расширению, что ПЕРВЫЙ рендер превью готов:
+   по этому сигналу снимается заглушка «Загрузка конфигуратора». Если снимать её
+   по событию load, на быстрых открытиях (всё из кеша) заглушка исчезает раньше
+   отрисовки превью — видно пустую область и «проявление» картинок (мигание). */
+if (!window.__cdmReadySent) {
+window.__cdmReadySent = true;
+try {
+if (window.parent && window.parent !== window) {
+window.parent.postMessage({ action: 'cdm-ready' }, '*');
+}
+} catch (e) {}
+}
 };
 /* Рендер в ближайшем кадре; резервный таймер 60 мс — на случай, когда
    requestAnimationFrame не срабатывает (фоновая/скрытая вкладка). Повторный
@@ -2904,12 +2916,20 @@ bindSlideInputs();
    Теперь ждём cdm-init; если его нет (генератор открыт напрямую в браузере) —
    рисуем дефолт через 400 мс. */
 window.__cdmFirstRenderPending = true;
+/* [02.11.2026, задача №16-4] ВАЖНО: внутри iframe (генератор открыт расширением)
+   cdm-init приходит на событии load РОДИТЕЛЯ — оно наступает позже, чем загрузка
+   самого документа генератора. Дефолтный рендер по таймеру 400 мс успевал
+   сработать РАНЬШЕ настроек, и превью строилось дважды (мигание картинок).
+   Поэтому в iframe ждём cdm-init до 2,5 с; 400 мс оставляем только для случая,
+   когда генератор открыт напрямую в браузере (родителя нет). */
+var cdmIsEmbedded = false;
+try { cdmIsEmbedded = !!(window.parent && window.parent !== window); } catch (e) {}
 window.__cdmWaitInitTimer = setTimeout(function () {
   if (window.__cdmFirstRenderPending) {
     window.__cdmFirstRenderPending = false;
     updateAll();
   }
-}, 400);
+}, cdmIsEmbedded ? 2500 : 400);
 })();
 </script>
 <script>

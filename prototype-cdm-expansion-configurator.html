@@ -1963,13 +1963,17 @@ try { this.parentNode.replaceChild(old, this); } catch (e) {}
    выполнялся целиком). Теперь пропускается только пересборка разметки, а класс
    шрифта и размеры обновляются при каждом вызове. */
 
-if (selectedFont !== 'none') {
-var fontClass = 'cdm-font-' + selectedFont.toLowerCase().replace(/\s/g, '');
-container.find('.desktop-screen, .display-mock').addClass(fontClass);
-} else {
+/* [05.11.2026, задача №16] Снимаем ВСЕ прежние классы шрифта при каждом вызове —
+   иначе при переключении Montserrat → Oswald на .desktop-screen накапливаются
+   оба (cdm-font-montserrat cdm-font-oswald), CSS-правила с !important равной
+   специфичности выбирают шрифт по порядку в файле, а не выбранный — «то
+   применяется, то нет». Теперь класс всегда один, выбранный. */
 container.find('.desktop-screen, .display-mock').removeClass(function(index, className) {
 return (className.match(/cdm-font-\S+/g) || []).join(' ');
 });
+if (selectedFont !== 'none') {
+var fontClass = 'cdm-font-' + selectedFont.toLowerCase().replace(/\s/g, '');
+container.find('.desktop-screen, .display-mock').addClass(fontClass);
 }
 
 if (previewMode === 'desktop') {

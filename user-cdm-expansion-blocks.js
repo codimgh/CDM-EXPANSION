@@ -8,6 +8,6 @@
     }
   ],
   "options": {
-    "hide_tab": true
+    "hide_tab": false
   }
 }

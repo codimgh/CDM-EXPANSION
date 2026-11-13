@@ -2316,10 +2316,6 @@ var run = function () {
 if (done) return;
 done = true;
 _cdmPreviewScheduled = false;
-/* [временно, задача №16] Счётчик рендеров превью: по нему видно, строится ли
-   превью один раз за открытие. Удаляется после подтверждения. */
-window.__cdmRenderCount = (window.__cdmRenderCount || 0) + 1;
-console.log('[CDM-GEN] рендер превью #' + window.__cdmRenderCount);
 updatePreview();
 /* [02.11.2026, задача №16-6] Сигнал готовности отправляем не сразу после сборки
    DOM, а после того как КАРТИНКИ ПРЕВЬЮ ЗАГРУЖЕНЫ/ДЕКОДИРОВАНЫ (не более 1,5 с
@@ -2871,22 +2867,34 @@ colorHexInput.val(hexColor);
 var paletteEl = element.closest ? element.closest('.cdm-color-palette') : null;
 var paletteRect = paletteEl ? paletteEl.getBoundingClientRect() : element.getBoundingClientRect();
 var topPos = paletteRect.top;
-// [20.10.2026, задача №6] Адаптивное позиционирование окна «Свой цвет»: при УЗКОЙ модалке
-// (панель настроек плавающая, класс cdm-panel-open) окно ставим ЛЕВЕЕ панели (панель справа
-// 350px + отступ 20px), чтобы панель его не перекрывала и оно не уходило за правый край.
-// При широкой модалке — исходная позиция left:920px, но с защитой от выхода за экран.
+// [13.11.2026, задача №6] Позиция окна «Свой цвет» — РЯДОМ С ПАЛИТРОЙ (зазор ≤ 20px),
+// а НЕ у правого края окна (было left:920px/прижатие к краю) — попап появлялся слишком
+// далеко от блока палитры. Теперь:
+//   • основное — прижать к ПРАВОМУ краю палитры (+14px зазора), сверху — по верху палитры
+//     (top − 4px, чтобы визуально «встал» рядом со строкой «Свой цвет»);
+//   • узкая модалка (панель настроек плавающая справа, .cdm-panel-open): правым потолком
+//     служит левый край панели (vw − 370), чтобы попап не лёг под неё; если справа от
+//     палитры не влезает — поставить слева от палитры (+14px);
+//   • защита от выхода за левый/правый край окна (clamp 10px).
 var popupW = 333; // 285 (внутр.) + 24×2 (padding) + рамка
 var vw = window.innerWidth;
 var masterEl = document.querySelector('.cdm-master.cdm-panel-open');
-var leftPos;
+var gap = 14; // зазор между палитрой и попапом (≤ 20px)
+var rightLimit = vw - 10;
 if (masterEl && vw < 1480) {
-leftPos = vw - popupW - 370;
-if (leftPos < 10) leftPos = 10;
-} else {
-leftPos = Math.min(920, vw - popupW - 10);
-if (leftPos < 10) leftPos = 10;
+rightLimit = vw - 370 - 14; // до левого края плавающей панели (350px + отступ 20px) минус зазор
 }
-popupColorPicker.css({ top: topPos + 'px', left: leftPos + 'px', display: 'block' });
+var leftPos = paletteRect.right + gap;
+if (leftPos + popupW > rightLimit) {
+// Справа не влезает: для узкой модалки — слева от палитры; для широкой — прижать к правому краю
+if (masterEl && vw < 1480) {
+leftPos = paletteRect.left - popupW - gap;
+} else {
+leftPos = rightLimit - popupW;
+}
+}
+if (leftPos < 10) leftPos = 10;
+popupColorPicker.css({ top: (topPos - 4) + 'px', left: leftPos + 'px', display: 'block' });
 }
 
 function hideColorPopup() { popupColorPicker.hide(); activeColorCallback = null; }

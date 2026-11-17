@@ -229,6 +229,12 @@ filter: invert(1) brightness(1.5);
 </p>
 <div class="cdm-help-progress"></div>
 </div>
+<div id="cdmWideHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:490px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
+<p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
+Нестандартная ширина позволяет сделать блок шире стандартного контейнера страницы: «1280» зафиксирует блок на 1280 пикселей, «100%» растянет его на всю ширину экрана (но не более 1680 пикселей). Подсказка скоро будет дополнена.
+</p>
+<div class="cdm-help-progress"></div>
+</div>
 <div id="cdmLivePreviewWrapper" style="display: flex; justify-content: center; min-height: 450px; background: transparent; border-radius: 12px;">
 <div id="cdmLivePreview" style="width: 100%; padding: 5px; display: flex; align-items: flex-start; justify-content: center;"></div>
 </div>
@@ -238,12 +244,19 @@ filter: invert(1) brightness(1.5);
 <div style="margin-bottom:24px;">
 <h3 style="font-size:14px; font-weight:300; margin:0 0 16px; color:#333;"><i class="ph ph-faders" style="font-size:14px; color:#333; margin-right:6px;"></i>Общие настройки</h3>
 <div class="cdm-control-group">
-<label class="cdm-label">Ширина блока слайдера <span id="desktopWidthVal">820</span>px <i class="ph ph-question cdm-width-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
+<label class="cdm-label">Стандартная ширина блока <span id="desktopWidthVal">820</span>px <i class="ph ph-question cdm-width-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
 <div class="cdm-width-btns cdm-control-group-inner" id="cdmDesktopWidthBtns">
 <button type="button" class="cdm-width-btn" data-width="620">620</button>
 <button type="button" class="cdm-width-btn" data-width="720">720</button>
 <button type="button" class="cdm-width-btn" data-width="820">820</button>
 <button type="button" class="cdm-width-btn" data-width="1020">1020</button>
+</div>
+</div>
+<div class="cdm-control-group">
+<label class="cdm-label">Нестандартная ширина блока <i class="ph ph-question cdm-wide-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
+<div class="cdm-width-btns cdm-control-group-inner" id="cdmWideWidthBtns">
+<button type="button" class="cdm-width-btn" data-wide="1280">1280</button>
+<button type="button" class="cdm-width-btn" data-wide="full">100%</button>
 </div>
 </div>
 <div class="cdm-control-group">
@@ -729,8 +742,12 @@ box-sizing: border-box;
 letter-spacing: -0.5px;
 }
 .cdm-controls-col .cdm-width-btn.active { background: #4DB5FF; border-color: #4DB5FF; color: #fff; }
+.cdm-controls-col #cdmWideWidthBtns .cdm-width-btn.active { background: #2f9e44; border-color: #2f9e44; color: #fff; }
+.cdm-controls-col #cdmWideWidthBtns .cdm-width-btn:not(.active) { color: #b3541e; border-color: #e0a877; }
 .cdm-master.dark-theme .cdm-controls-col .cdm-width-btn { background: transparent; color: #ddd; border-color: #41454a; }
 .cdm-master.dark-theme .cdm-controls-col .cdm-width-btn.active { background: #4DB5FF; border-color: #4DB5FF; color: #fff; }
+.cdm-master.dark-theme .cdm-controls-col #cdmWideWidthBtns .cdm-width-btn.active { background: #2f9e44; border-color: #2f9e44; color: #fff; }
+.cdm-master.dark-theme .cdm-controls-col #cdmWideWidthBtns .cdm-width-btn:not(.active) { color: #e8a87c; border-color: #7a5a3c; }
 .cdm-custom-color-row { cursor: pointer; }
 .cdm-custom-color-row span { letter-spacing: -0.5px; }
 .cdm-custom-color-row:hover { opacity: 0.8; }
@@ -1596,12 +1613,30 @@ $('.cdm-width-btn').removeClass('active');
 if (n > 0) {
 $('.cdm-width-btn[data-width="' + n + '"]').addClass('active');
 }
+if (wideWidth) { wideWidth = 0; $('#cdmWideWidthBtns .cdm-width-btn').removeClass('active'); }
+updateAll();
+}
+// [задача №10] Нестандартная ширина блока: 0 = выключено (стандартная),
+// 1280 = фикс. ширина, 'full' = 100% экрана с потолком 1680 (см. generateFinalCode).
+let wideWidth = 0;
+function setWideWidth(val) {
+wideWidth = val;
+$('#cdmWideWidthBtns .cdm-width-btn').removeClass('active');
+if (val) {
+$('#cdmWideWidthBtns .cdm-width-btn[data-wide="' + val + '"]').addClass('active');
+}
+if (val) {
+$('#cdmDesktopWidthBtns .cdm-width-btn').removeClass('active');
+}
 updateAll();
 }
 // Инициализация кнопок выбора ширины (active по текущему desktopWidth без перерисовки)
 (function initWidthButtons() {
 $('#cdmDesktopWidthBtns .cdm-width-btn').on('click', function() {
 setDesktopWidth($(this).data('width'));
+});
+$('#cdmWideWidthBtns .cdm-width-btn').on('click', function() {
+setWideWidth($(this).data('wide'));
 });
 if (desktopWidth > 0) {
 $('.cdm-width-btn[data-width="' + desktopWidth + '"]').addClass('active');
@@ -1923,7 +1958,12 @@ var contentHtml = '<div class="cdm-slider-preview" style="width:100%; height:' +
 
 var finalHtml = '';
 if (previewMode === 'desktop') {
+if (wideWidth) {
+var wideMax = (wideWidth === 'full') ? 1680 : 1280;
+finalHtml = '<div class="desktop-mock"><div class="desktop-screen"><div class="cdm-content-wrapper cdm-content-wrapper-wide" style="width:100%; max-width:' + wideMax + 'px; margin:0 auto;">' + contentHtml + '</div></div></div>';
+} else {
 finalHtml = '<div class="desktop-mock"><div class="desktop-screen"><div class="cdm-content-wrapper" style="width:100%; max-width:' + desktopWidth + 'px; margin:0 auto;">' + contentHtml + '</div></div></div>';
+}
 } else {
 finalHtml = '<div class="phone-mock"><div class="display-mock"><div class="cdm-content-wrapper" style="width:100%; margin:0 auto;">' + contentHtml + '</div></div></div>';
 }
@@ -2077,6 +2117,8 @@ animDelaysCss += '.cdm-' + suffix + '-2:nth-child(' + (i+1) + '),\n.cdm-' + suff
 }
 
 var deskW = desktopWidth;
+var wideMax = 0;
+if (wideWidth) { wideMax = (wideWidth === 'full') ? 1680 : 1280; }
 var deskH = desktopHeight.val();
 var deskTSize = desktopTitleSize.val();
 var deskTxSize = desktopTextSize.val();
@@ -2115,6 +2157,18 @@ var mobPanelRadius = mobilePanelRadius.val();
 var panelPadding = deskPanelPT + 'px ' + deskPanelPR + 'px ' + deskPanelPB + 'px ' + deskPanelPL + 'px';
 var panelMargin = '0 ' + deskPanelMR + 'px ' + deskPanelMB + 'px ' + deskPanelML + 'px';
 
+// [задача №10] Широкий режим: блок выходит за контейнер страницы
+// (width:100vw + центрирование по экрану + потолок 1280/1680).
+var blockW100 = 'width: 100%;\n';
+var blockMaxW = 'max-width: var(--cdm-' + suffix + '-1);\n';
+var blockMargin = 'margin: 0 auto;\n';
+if (wideMax) {
+blockW100 = 'width: 100vw;\n';
+blockMaxW = 'max-width: ' + wideMax + 'px;\n';
+blockMargin = 'margin-left: calc(50% - 50vw);\n';
+}
+var wideScript = wideMax ? '<script>\n(function(){try{var el=document.querySelector(".cdm-' + suffix + '-1");if(!el)return;var n=el;while(n&&n!==document.body){var cs=getComputedStyle(n);if(cs.overflowX==="hidden"||cs.overflow==="hidden"){n.style.overflowX="visible";n.style.overflow="visible";}n=n.parentElement;}var d=document.documentElement;var b=document.body;if(d){d.style.overflowX="visible";d.style.overflow="visible";}if(b){b.style.overflowX="visible";b.style.overflow="visible";}}catch(e){}})();\n<\/script>\n' : '';
+
 var code = '<div class="cdm-' + suffix + '-1">\n' +
 slidesHtml +
 '</div>\n' +
@@ -2147,13 +2201,13 @@ slidesHtml +
 '--cdm-' + suffix + '-27: ' + desktopTextAlign + ';\n' +
 '}\n' +
 '.cdm-' + suffix + '-1 {\n' +
-'width: 100%;\n' +
+blockW100 +
 'height: var(--cdm-' + suffix + '-2);\n' +
-'max-width: var(--cdm-' + suffix + '-1);\n' +
+blockMaxW +
 'position: relative;\n' +
 'overflow: hidden;\n' +
 'background: #fff;\n' +
-'margin: 0 auto;\n' +
+blockMargin +
 'border-radius: var(--cdm-' + suffix + '-14);\n' +
 'border: var(--cdm-' + suffix + '-16) solid var(--cdm-' + suffix + '-17);\n' +
 '}\n' +
@@ -2261,7 +2315,8 @@ animDelaysCss +
 '}\n' +
 '}\n' +
 fontCssExtra +
-'</style>\n';
+'</style>\n' +
+wideScript;
 
 return (fontLinkHtml + code).replace(/\n/g, '');
 }
@@ -2365,6 +2420,7 @@ borderOpacity: borderOpacity.val(),
 titleOpacity: titleOpacity.val(),
 textOpacity: textOpacity.val(),
 selectedFont: selectedFont,
+wideWidth: wideWidth,
 desktop: {
 blockWidthDesktop: desktopWidth, height: desktopHeight.val(),
 titleSize: desktopTitleSize.val(), textSize: desktopTextSize.val(),
@@ -2481,6 +2537,13 @@ slidesData = s.slides.map(function(x, i) { return { id: x.id || (i + 1), title: 
 renderSlides();
 bindSlideInputs();
 }
+// [задача №10] Нестандартная ширина ПОСЛЕ стандартной: setDesktopWidth сбросил бы
+// wideWidth, поэтому восстанавливаем в самом конце (и только потом финальный updateAll).
+if (s.wideWidth !== undefined) {
+setWideWidth(s.wideWidth);
+} else {
+setWideWidth(0);
+}
 updateAll();
 }
 
@@ -2543,6 +2606,7 @@ textColor: '#333333',
 borderColor: '#cccccc',
 borderOpacity: 0,
 selectedFont: 'none',
+wideWidth: 0,
 desktopWidth: 820,
 desktopHeight: 600,
 desktopTitleSize: 22,
@@ -2605,6 +2669,7 @@ mobileTitleAlign = defaultValues.mobileTitleAlign;
 mobileTextAlign = defaultValues.mobileTextAlign;
 
 setDesktopWidth(defaultValues.desktopWidth);
+setWideWidth(defaultValues.wideWidth);
 desktopHeight.val(defaultValues.desktopHeight);
 desktopTitleSize.val(defaultValues.desktopTitleSize);
 desktopTextSize.val(defaultValues.desktopTextSize);
@@ -2779,6 +2844,7 @@ var fontHelpPopup = $('#cdmFontHelpPopup');
 var fontHelpIcon = $('#cdmFontHelpIcon');
 var imgHelpPopup = $('#cdmImgHelpPopup');
 var widthHelpPopup = $('#cdmWidthHelpPopup');
+var wideHelpPopup = $('#cdmWideHelpPopup');
 
 // [20.10.2026, задача №6] Подсказки открываются в левом верхнем углу окна
 // (left:12px; top:12px) — фиксированная позиция, не по центру (по решению владельца).
@@ -2798,7 +2864,7 @@ display: 'block'
 }
 
 function cdmHideAllHelp(exceptId) {
-$('#cdmFontHelpPopup, #cdmImgHelpPopup, #cdmWidthHelpPopup').each(function() {
+$('#cdmFontHelpPopup, #cdmImgHelpPopup, #cdmWidthHelpPopup, #cdmWideHelpPopup').each(function() {
   if (this.id !== exceptId) { this.style.display = 'none'; }
 });
 }
@@ -2825,6 +2891,13 @@ cdmHideAllHelp('cdmWidthHelpPopup');
 cdmShowHelpPopup(widthHelpPopup);
 cdmScheduleHelpAutoClose(widthHelpPopup, 'width');
 });
+$(document).on('click', '.cdm-wide-help-icon', function(e) {
+e.stopPropagation();
+if (wideHelpPopup.is(':visible')) { wideHelpPopup.hide(); clearTimeout(helpAutoTimers.wide); return; }
+cdmHideAllHelp('cdmWideHelpPopup');
+cdmShowHelpPopup(wideHelpPopup);
+cdmScheduleHelpAutoClose(wideHelpPopup, 'wide');
+});
 
 // [20.10.2026, задача №6] Закрытие подсказок: крестик убран — подсказка
 // закрывается САМА через 25 секунд (как тост), с линией прогресса внизу.
@@ -2843,7 +2916,7 @@ function cdmScheduleHelpAutoClose($pop, key) {
 }
 
 $(document).on('click', function(e) {
-if ($(e.target).closest('#cdmFontHelpPopup').length || $(e.target).closest('#cdmImgHelpPopup').length || $(e.target).closest('#cdmWidthHelpPopup').length) return;
+if ($(e.target).closest('#cdmFontHelpPopup').length || $(e.target).closest('#cdmImgHelpPopup').length || $(e.target).closest('#cdmWidthHelpPopup').length || $(e.target).closest('#cdmWideHelpPopup').length) return;
 if ($(e.target).closest('.cdm-img-help-icon, .cdm-width-help-icon, #cdmFontHelpIcon').length) return;
 cdmHideAllHelp();
 });

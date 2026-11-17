@@ -2165,9 +2165,9 @@ var blockMargin = 'margin: 0 auto;\n';
 if (wideMax) {
 blockW100 = 'width: 100vw;\n';
 blockMaxW = 'max-width: ' + wideMax + 'px;\n';
-blockMargin = 'margin-left: calc(50% - 50vw);\n';
+blockMargin = 'margin-left: calc((100vw - min(100vw, ' + wideMax + 'px)) / 2);\n';
 }
-var wideScript = wideMax ? '<script>\n(function(){try{var el=document.querySelector(".cdm-' + suffix + '-1");if(!el)return;var n=el;while(n&&n!==document.body){var cs=getComputedStyle(n);if(cs.overflowX==="hidden"||cs.overflow==="hidden"){n.style.overflowX="visible";n.style.overflow="visible";}n=n.parentElement;}var d=document.documentElement;var b=document.body;if(d){d.style.overflowX="visible";d.style.overflow="visible";}if(b){b.style.overflowX="visible";b.style.overflow="visible";}}catch(e){}})();\n<\/script>\n' : '';
+var wideScript = wideMax ? '<script>\n(function(){try{var el=document.querySelector(".cdm-' + suffix + '-1");if(!el)return;var n=el.parentElement;while(n&&n!==document.body){var cs=getComputedStyle(n);if(cs.overflowX==="hidden"||cs.overflow==="hidden"){n.style.overflowX="visible";n.style.overflow="visible";}n=n.parentElement;}var d=document.documentElement;var b=document.body;if(d){d.style.overflowX="visible";d.style.overflow="visible";}if(b){b.style.overflowX="visible";b.style.overflow="visible";}}catch(e){}})();\n<\/script>\n' : '';
 
 var code = '<div class="cdm-' + suffix + '-1">\n' +
 slidesHtml +

@@ -235,8 +235,14 @@ filter: invert(1) brightness(1.5);
 </p>
 <div class="cdm-help-progress"></div>
 </div>
+<div id="cdmFitHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:460px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
+<p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
+Эта строка показывает, в каком масштабе блок нарисован в окне предпросмотра. «Блок 1600 px» — ширина блока на настоящей странице, «превью 86%» — во сколько раз он уменьшен здесь, чтобы целиком поместиться по ширине колонки. Пропорции сохранены: на живой странице блок будет выглядеть так же, только крупнее. Кнопка «1:1» показывает блок в точном размере — если он не помещается, появляется горизонтальная прокрутка.
+</p>
+<div class="cdm-help-progress"></div>
+</div>
 <div class="cdm-preview-tools" id="cdmPreviewTools">
-<span class="cdm-fit-badge" id="cdmFitBadge">—</span>
+<span class="cdm-fit-info"><span class="cdm-fit-badge" id="cdmFitBadge">—</span><i class="ph ph-question cdm-fit-help-icon" id="cdmFitHelpIcon" style="font-size:16px; vertical-align:middle; cursor:pointer; margin-left:6px;"></i></span>
 <span class="cdm-fit-btns">
 <button type="button" class="cdm-fit-btn active" data-fit="fit">Вписать</button>
 <button type="button" class="cdm-fit-btn" data-fit="1">1:1</button>
@@ -1125,17 +1131,20 @@ border-left: 1px solid #bdbdbd63;
 border-right: 1px solid #bdbdbd63;
 display: flex;
 justify-content: center;
+align-items: flex-start;
 padding-bottom: 120px;
+box-sizing: border-box;
 }
 .desktop-screen { background: transparent; border-radius: 12px; overflow: hidden; padding: 80px 20px; margin: 12px; display: flex; justify-content: center; transition: max-width 0.2s ease, padding 0.2s ease; box-sizing: border-box; width: 100%; }
 .cdm-preview-tools { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 6px; margin: 0 0 4px; font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: -0.5px; color: #666; background: rgba(255,255,255,0.92); border-radius: 6px; }
 .cdm-master.dark-theme .cdm-preview-tools { background: rgba(26,26,26,0.92); color: #bbb; }
+.cdm-fit-info { display: inline-flex; align-items: center; gap: 2px; }
 .cdm-fit-badge { white-space: nowrap; }
 .cdm-fit-btns { display: inline-flex; gap: 4px; }
 .cdm-fit-btn { border: 1px solid #ccccccab; background: transparent; color: inherit; border-radius: 5px; padding: 2px 8px; font: inherit; cursor: pointer; }
 .cdm-fit-btn.active { background: #4DB5FF; border-color: #4DB5FF; color: #fff; }
-.cdm-preview-scaler { margin: 0 auto; }
-.cdm-fit-screen { width: auto; }
+.cdm-preview-scaler { margin: 0 auto; width: 100%; }
+.cdm-fit-screen { width: auto; flex-shrink: 0; }
 .desktop-screen .cdm-slider-preview { width: 100%; }
 .phone-mock { width: 380px; padding: 60px 0 0 0; background: transparent; border: 1px solid #bdbdbd63; border-bottom: none; border-top-right-radius: 30px; border-top-left-radius: 30px; position: relative; margin: 0 auto; height: auto; min-height: 501px; box-sizing: border-box; }
 .phone-mock .display-mock { height: auto; min-height: 100%; width: 100%; background: transparent; position: relative; overflow: hidden; padding: 20px 15px; }
@@ -1341,13 +1350,15 @@ color: #ddd;
 }
 #cdmFontHelpPopup,
 #cdmImgHelpPopup,
-#cdmWidthHelpPopup {
+#cdmWidthHelpPopup,
+#cdmFitHelpPopup {
 border: 1px solid #ccccccab;
 box-shadow: none;
 }
 #cdmFontHelpPopup p,
 #cdmImgHelpPopup p,
-#cdmWidthHelpPopup p {
+#cdmWidthHelpPopup p,
+#cdmFitHelpPopup p {
 color: #333;
 }
 .cdm-help-progress {
@@ -1365,13 +1376,15 @@ to { width: 0%; }
 }
 .cdm-master.dark-theme #cdmFontHelpPopup,
 .cdm-master.dark-theme #cdmImgHelpPopup,
-.cdm-master.dark-theme #cdmWidthHelpPopup {
+.cdm-master.dark-theme #cdmWidthHelpPopup,
+.cdm-master.dark-theme #cdmFitHelpPopup {
 background: #1a1a1a !important;
 border-color: #555 !important;
 }
 .cdm-master.dark-theme #cdmFontHelpPopup p,
 .cdm-master.dark-theme #cdmImgHelpPopup p,
-.cdm-master.dark-theme #cdmWidthHelpPopup p {
+.cdm-master.dark-theme #cdmWidthHelpPopup p,
+.cdm-master.dark-theme #cdmFitHelpPopup p {
 color: #e0e0e0 !important;
 }
 .cdm-master.dark-theme .cdm-help-progress {
@@ -1980,11 +1993,11 @@ var finalHtml = '';
 if (previewMode === 'desktop') {
 if (wideWidth) {
 var wideMax = wideWidth;
-finalHtml = '<div class="cdm-preview-scaler"><div class="desktop-mock" style="width:fit-content;margin:0 auto;"><div class="desktop-screen cdm-fit-screen"><div class="cdm-content-wrapper cdm-content-wrapper-wide" style="width:' + wideMax + 'px; max-width:' + wideMax + 'px; margin:0 auto;">' + contentHtml + '</div></div></div></div>';
+finalHtml = '<div class="cdm-preview-scaler"><div class="desktop-mock" style="width:100%;margin:0 auto;"><div class="desktop-screen cdm-fit-screen"><div class="cdm-content-wrapper cdm-content-wrapper-wide" style="width:' + wideMax + 'px; max-width:' + wideMax + 'px; margin:0 auto;">' + contentHtml + '</div></div></div></div>';
 } else {
 var deskW = (typeof desktopWidth === 'number' && desktopWidth > 0) ? desktopWidth : 0;
 var deskStyle = deskW ? ('width:' + deskW + 'px; max-width:' + deskW + 'px; margin:0 auto;') : 'width:100%; margin:0 auto;';
-finalHtml = '<div class="cdm-preview-scaler"><div class="desktop-mock" style="width:fit-content;margin:0 auto;"><div class="desktop-screen cdm-fit-screen"><div class="cdm-content-wrapper" style="' + deskStyle + '">' + contentHtml + '</div></div></div></div>';
+finalHtml = '<div class="cdm-preview-scaler"><div class="desktop-mock" style="width:100%;margin:0 auto;"><div class="desktop-screen cdm-fit-screen"><div class="cdm-content-wrapper" style="' + deskStyle + '">' + contentHtml + '</div></div></div></div>';
 }
 } else {
 finalHtml = '<div class="cdm-preview-scaler"><div class="phone-mock"><div class="display-mock"><div class="cdm-content-wrapper" style="width:100%; margin:0 auto;">' + contentHtml + '</div></div></div></div>';
@@ -2050,43 +2063,59 @@ var mockMobile = container.find('.phone-mock');
 requestAnimationFrame(cdmApplyPreviewScale);
 }
 
+/* [20.11.2026, задача №22] FIT-МАСШТАБ ПРЕВЬЮ.
+   Раньше zoom стоял на .cdm-preview-scaler, а рамка (.desktop-mock) была
+   width:fit-content — вместе с масштабом «прыгали» и ширина, и высота рамки
+   при смене размера блока. Теперь рамка ПОСТОЯННАЯ: ширина — вся колонка
+   превью, высота — натуральная высота при 100% (замер до масштабирования).
+   Масштабируется только содержимое (.desktop-screen) — рамка не двигается.
+   В режиме «1:1» рамка, наоборот, равна точному размеру блока и область
+   превью прокручивается по горизонтали. */
 var previewFit = true;
 function cdmApplyPreviewScale() {
 var lp = document.getElementById('cdmLivePreview');
 var badge = document.getElementById('cdmFitBadge');
 if (!lp || !badge) return;
 var scaler = lp.querySelector('.cdm-preview-scaler');
-if (!scaler) return;
+if (!scaler) { badge.textContent = '—'; return; }
 var mock = scaler.querySelector('.desktop-mock');
+var screen = mock ? mock.querySelector('.desktop-screen') : null;
 var targetW = wideWidth || ((typeof desktopWidth === 'number' && desktopWidth > 0) ? desktopWidth : 0);
-if (!mock || !targetW) {
-scaler.style.zoom = '';
+if (!mock || !screen || !targetW) {
+if (screen) screen.style.zoom = '';
+if (mock) { mock.style.height = ''; mock.style.width = ''; }
 scaler.style.width = '';
 scaler.style.overflowX = '';
 scaler.style.overflowY = '';
-badge.textContent = targetW ? (targetW + ' px') : '—';
+// Без рамки десктопа (мобильное превью) масштаб не показываем.
+badge.textContent = '—';
 return;
 }
-scaler.style.zoom = 1;
+screen.style.zoom = 1;
+mock.style.height = '';
+mock.style.width = '100%';
 scaler.style.width = '';
 scaler.style.overflowX = 'visible';
 scaler.style.overflowY = 'visible';
-mock.style.maxWidth = 'none';
-void scaler.offsetWidth;
-var naturalW = mock.offsetWidth;
-mock.style.width = naturalW + 'px';
+void mock.offsetHeight;
+var frameH = mock.offsetHeight;
+/* Ширина содержимого + боковые отступы .desktop-screen (12px слева и справа):
+   иначе при k = 1 блок с отступами выходил за рамку на 24px. */
+var naturalW = screen.offsetWidth + 24;
 if (!previewFit) {
+mock.style.width = 'fit-content';
 scaler.style.width = '100%';
 scaler.style.overflowX = 'auto';
 scaler.style.overflowY = 'hidden';
-badge.textContent = targetW + ' px · 100%';
+badge.textContent = 'Блок ' + targetW + ' px · 1:1';
 return;
 }
 var avail = lp.clientWidth - 10;
 if (avail < 40) avail = 40;
 var k = Math.min(1, avail / naturalW);
-scaler.style.zoom = k;
-badge.textContent = targetW + ' px · ' + Math.round(k * 100) + '%';
+if (k < 1) screen.style.zoom = k;
+mock.style.height = frameH + 'px';
+badge.textContent = 'Блок ' + targetW + ' px · превью ' + Math.round(k * 100) + '%';
 }
 
 function generateFinalCode() {
@@ -2096,32 +2125,39 @@ currentSuffix = suffix;
 // [1.72] Карта выбранных шрифтов (data-value из конфигуратора → Google Fonts семейство + CSS).
 // Используется, чтобы встраивать В КОД блока только выбранный шрифт (link + font-family),
 // а не все 26. Раньше шрифт применялся только в превью фрейма и не попадал в публичный блок.
+/* [20.11.2026, задача №10/№21/№22] ВЕСА ШРИФТОВ.
+   Раньше ссылка Google Fonts шла без оси wght — css2 отдавал ТОЛЬКО вес 400,
+   и на живой странице жирность 100/700/900 не применялась (лиц других весов
+   просто не было). Теперь для каждого семейства перечислены РЕАЛЬНО
+   доступные веса (проверено запросами к fonts.googleapis.com 20.11.2026;
+   api2 отвечает 400, если просить недоступный вес). Ось задаётся списком,
+   а не диапазоном: списком работает и у статических, и у вариативных шрифтов. */
 var cdmFontMap = {
-'Montserrat': { gf: 'Montserrat', css: "'Montserrat', sans-serif" },
-'Oswald': { gf: 'Oswald', css: "'Oswald', sans-serif" },
-'Raleway': { gf: 'Raleway', css: "'Raleway', sans-serif" },
-'PlayfairDisplay': { gf: 'Playfair Display', css: "'Playfair Display', serif" },
-'Roboto': { gf: 'Roboto', css: "'Roboto', sans-serif" },
-'Lobster': { gf: 'Lobster', css: "'Lobster', cursive" },
-'Pacifico': { gf: 'Pacifico', css: "'Pacifico', cursive" },
-'Caveat': { gf: 'Caveat', css: "'Caveat', cursive" },
-'MontserratAlternates': { gf: 'Montserrat Alternates', css: "'Montserrat Alternates', sans-serif" },
-'KellySlab': { gf: 'Kelly Slab', css: "'Kelly Slab', cursive" },
-'Pangolin': { gf: 'Pangolin', css: "'Pangolin', cursive" },
-'OpenSansCondensed': { gf: 'Open Sans Condensed', css: "'Open Sans Condensed', sans-serif" },
-'AmaticSC': { gf: 'Amatic SC', css: "'Amatic SC', cursive" },
-'Merriweather': { gf: 'Merriweather', css: "'Merriweather', serif" },
-'Comfortaa': { gf: 'Comfortaa', css: "'Comfortaa', sans-serif" },
-'PTMono': { gf: 'PT Mono', css: "'PT Mono', monospace" },
-'OpenSans': { gf: 'Open Sans', css: "'Open Sans', sans-serif" },
-'Alice': { gf: 'Alice', css: "'Alice', serif" },
-'IBMPlexSans': { gf: 'IBM Plex Sans', css: "'IBM Plex Sans', sans-serif" },
-'Manrope': { gf: 'Manrope', css: "'Manrope', sans-serif" },
-'RobotoSlab': { gf: 'Roboto Slab', css: "'Roboto Slab', serif" },
-'CormorantGaramond': { gf: 'Cormorant Garamond', css: "'Cormorant Garamond', serif" },
-'RussoOne': { gf: 'Russo One', css: "'Russo One', sans-serif" },
-'SourceSansPro': { gf: 'Source Sans Pro', css: "'Source Sans Pro', sans-serif" },
-'Exo2': { gf: 'Exo 2', css: "'Exo 2', sans-serif" }
+'Montserrat': { gf: 'Montserrat', css: "'Montserrat', sans-serif", w: '100;200;300;400;500;600;700;800;900' },
+'Oswald': { gf: 'Oswald', css: "'Oswald', sans-serif", w: '200;300;400;500;600;700' },
+'Raleway': { gf: 'Raleway', css: "'Raleway', sans-serif", w: '100;200;300;400;500;600;700;800;900' },
+'PlayfairDisplay': { gf: 'Playfair Display', css: "'Playfair Display', serif", w: '400;500;600;700;800;900' },
+'Roboto': { gf: 'Roboto', css: "'Roboto', sans-serif", w: '100;200;300;400;500;600;700;800;900' },
+'Lobster': { gf: 'Lobster', css: "'Lobster', cursive", w: '400' },
+'Pacifico': { gf: 'Pacifico', css: "'Pacifico', cursive", w: '400' },
+'Caveat': { gf: 'Caveat', css: "'Caveat', cursive", w: '400;500;600;700' },
+'MontserratAlternates': { gf: 'Montserrat Alternates', css: "'Montserrat Alternates', sans-serif", w: '100;200;300;400;500;600;700;800;900' },
+'KellySlab': { gf: 'Kelly Slab', css: "'Kelly Slab', cursive", w: '400' },
+'Pangolin': { gf: 'Pangolin', css: "'Pangolin', cursive", w: '400' },
+'OpenSansCondensed': { gf: 'Open Sans Condensed', css: "'Open Sans Condensed', sans-serif", w: '300;700' },
+'AmaticSC': { gf: 'Amatic SC', css: "'Amatic SC', cursive", w: '400;700' },
+'Merriweather': { gf: 'Merriweather', css: "'Merriweather', serif", w: '300;400;500;600;700;800;900' },
+'Comfortaa': { gf: 'Comfortaa', css: "'Comfortaa', sans-serif", w: '300;400;500;600;700' },
+'PTMono': { gf: 'PT Mono', css: "'PT Mono', monospace", w: '400' },
+'OpenSans': { gf: 'Open Sans', css: "'Open Sans', sans-serif", w: '300;400;500;600;700;800' },
+'Alice': { gf: 'Alice', css: "'Alice', serif", w: '400' },
+'IBMPlexSans': { gf: 'IBM Plex Sans', css: "'IBM Plex Sans', sans-serif", w: '100;200;300;400;500;600;700' },
+'Manrope': { gf: 'Manrope', css: "'Manrope', sans-serif", w: '200;300;400;500;600;700;800' },
+'RobotoSlab': { gf: 'Roboto Slab', css: "'Roboto Slab', serif", w: '100;200;300;400;500;600;700;800;900' },
+'CormorantGaramond': { gf: 'Cormorant Garamond', css: "'Cormorant Garamond', serif", w: '300;400;500;600;700' },
+'RussoOne': { gf: 'Russo One', css: "'Russo One', sans-serif", w: '400' },
+'SourceSansPro': { gf: 'Source Sans Pro', css: "'Source Sans Pro', sans-serif", w: '200;300;400;600;700;900' },
+'Exo2': { gf: 'Exo 2', css: "'Exo 2', sans-serif", w: '100;200;300;400;500;600;700;800;900' }
 };
 var selFont = (typeof selectedFont === 'string') ? selectedFont : 'none';
 var fontData = selFont !== 'none' ? cdmFontMap[selFont] : null;
@@ -2129,7 +2165,13 @@ var fontLinkHtml = '';
 var fontCssExtra = '';
 if (fontData) {
 var gfName = fontData.gf.replace(/ /g, '+');
-fontLinkHtml = '<link href="https://fonts.googleapis.com/css2?family=' + gfName + '&display=swap" rel="stylesheet">\n';
+// [20.11.2026] Ось wght обязательна: без неё css2 отдаёт только 400 и
+// настройки «жирность» на живой странице не видны. onerror — страховка:
+// если Google не отдаст запрошенный набор (изменит линейку веса), ссылка
+// сама переключится на обычную без оси, и шрифт всё равно загрузится.
+var gfPlainUrl = 'https://fonts.googleapis.com/css2?family=' + gfName + '&display=swap';
+var gfUrl = fontData.w ? ('https://fonts.googleapis.com/css2?family=' + gfName + ':wght@' + fontData.w + '&display=swap') : gfPlainUrl;
+fontLinkHtml = '<link href="' + gfUrl + '" rel="stylesheet" onerror="this.onerror=null;this.href=\'' + gfPlainUrl + '\'">\n';
 fontCssExtra = '.cdm-' + suffix + '-3 h5, .cdm-' + suffix + '-3 p { font-family: ' + fontData.css + ' !important; }\n';
 }
 
@@ -2912,6 +2954,7 @@ var fontHelpIcon = $('#cdmFontHelpIcon');
 var imgHelpPopup = $('#cdmImgHelpPopup');
 var widthHelpPopup = $('#cdmWidthHelpPopup');
 var wideHelpPopup = $('#cdmWideHelpPopup');
+var fitHelpPopup = $('#cdmFitHelpPopup');
 
 // [20.10.2026, задача №6] Подсказки открываются в левом верхнем углу окна
 // (left:12px; top:12px) — фиксированная позиция, не по центру (по решению владельца).
@@ -2931,7 +2974,7 @@ display: 'block'
 }
 
 function cdmHideAllHelp(exceptId) {
-$('#cdmFontHelpPopup, #cdmImgHelpPopup, #cdmWidthHelpPopup, #cdmWideHelpPopup').each(function() {
+$('#cdmFontHelpPopup, #cdmImgHelpPopup, #cdmWidthHelpPopup, #cdmWideHelpPopup, #cdmFitHelpPopup').each(function() {
   if (this.id !== exceptId) { this.style.display = 'none'; }
 });
 }
@@ -2965,6 +3008,13 @@ cdmHideAllHelp('cdmWideHelpPopup');
 cdmShowHelpPopup(wideHelpPopup);
 cdmScheduleHelpAutoClose(wideHelpPopup, 'wide');
 });
+$(document).on('click', '.cdm-fit-help-icon', function(e) {
+e.stopPropagation();
+if (fitHelpPopup.is(':visible')) { fitHelpPopup.hide(); clearTimeout(helpAutoTimers.fit); return; }
+cdmHideAllHelp('cdmFitHelpPopup');
+cdmShowHelpPopup(fitHelpPopup);
+cdmScheduleHelpAutoClose(fitHelpPopup, 'fit');
+});
 
 // [20.10.2026, задача №6] Закрытие подсказок: крестик убран — подсказка
 // закрывается САМА через 25 секунд (как тост), с линией прогресса внизу.
@@ -2983,8 +3033,8 @@ function cdmScheduleHelpAutoClose($pop, key) {
 }
 
 $(document).on('click', function(e) {
-if ($(e.target).closest('#cdmFontHelpPopup').length || $(e.target).closest('#cdmImgHelpPopup').length || $(e.target).closest('#cdmWidthHelpPopup').length || $(e.target).closest('#cdmWideHelpPopup').length) return;
-if ($(e.target).closest('.cdm-img-help-icon, .cdm-width-help-icon, #cdmFontHelpIcon').length) return;
+if ($(e.target).closest('#cdmFontHelpPopup').length || $(e.target).closest('#cdmImgHelpPopup').length || $(e.target).closest('#cdmWidthHelpPopup').length || $(e.target).closest('#cdmWideHelpPopup').length || $(e.target).closest('#cdmFitHelpPopup').length) return;
+if ($(e.target).closest('.cdm-img-help-icon, .cdm-width-help-icon, #cdmFontHelpIcon, .cdm-fit-help-icon').length) return;
 cdmHideAllHelp();
 });
 

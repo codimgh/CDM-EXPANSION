@@ -237,7 +237,7 @@ filter: invert(1) brightness(1.5);
 </div>
 <div id="cdmFitHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:460px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
-Эта строка показывает, в каком масштабе блок нарисован в окне предпросмотра. «Блок 1600 px» — ширина блока на настоящей странице, «Превью 86%» — во сколько раз он уменьшен здесь, чтобы целиком поместиться по ширине колонки. Пропорции сохранены: на живой странице блок будет выглядеть так же, только крупнее. Кнопка «Реальный размер» открывает блок в настоящую ширину на весь экран (крестик или Esc — закрыть); если блок шире экрана, внутри окна появится горизонтальная прокрутка.
+Эта строка показывает, в каком масштабе блок нарисован в окне предпросмотра. «Блок 1600 px» — ширина блока на настоящей странице, «Превью 86%» — во сколько раз он уменьшен здесь, чтобы целиком поместиться по ширине колонки. Пропорции сохранены: на живой странице блок будет выглядеть так же, только крупнее. Кнопка «Реальный размер» открывает блок в отдельном окне браузера в настоящую ширину; окно закрывается обычным крестиком. Если окно уже ширины блока, блок адаптируется по ширине окна.
 </p>
 <div class="cdm-help-progress"></div>
 </div>
@@ -250,10 +250,6 @@ filter: invert(1) brightness(1.5);
 <div id="cdmLivePreviewWrapper" style="display: flex; justify-content: center; min-height: 450px; background: transparent; border-radius: 12px;">
 <div id="cdmLivePreview" style="width: 100%; padding: 5px; display: flex; align-items: flex-start; justify-content: flex-start;"></div>
 </div>
-</div>
-<div id="cdmRealSizeLayer" role="dialog" aria-modal="true" aria-label="Блок в реальном размере">
-<div class="cdm-rs-head"><span id="cdmRealSizeLabel">Блок —</span><button type="button" id="cdmRealSizeClose" class="cdm-rs-close" aria-label="Закрыть">×</button></div>
-<div class="cdm-rs-body"><iframe id="cdmRealSizeFrame" title="Блок в реальном размере"></iframe></div>
 </div>
 <div class="cdm-controls-col">
 <div class="cdm-controls-inner">
@@ -1154,21 +1150,6 @@ box-sizing: border-box;
 .cdm-fit-btns { display: inline-flex; gap: 4px; }
 .cdm-real-size-btn { border: 1px solid #ccccccab; background: transparent; color: inherit; border-radius: 5px; padding: 2px 8px; font: inherit; cursor: pointer; white-space: nowrap; }
 .cdm-real-size-btn:hover { border-color: #4DB5FF; color: #4DB5FF; }
-/* [20.11.2026, задача №22] Полноэкранный просмотр в реальном размере:
-   слой на весь экран, внутри — iframe точной ширины N с готовым кодом блока
-   (100vw внутри iframe считается от ширины блока, а не от окна). */
-#cdmRealSizeLayer { position: fixed; inset: 0; z-index: 9000; display: flex; flex-direction: column; background: #fff; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.16s ease, visibility 0s linear 0.16s; }
-#cdmRealSizeLayer.on { visibility: visible; pointer-events: auto; opacity: 1; transition: opacity 0.16s ease; }
-#cdmRealSizeLayer .cdm-rs-head, #cdmRealSizeLayer .cdm-rs-body { opacity: 0; transition: opacity 0.16s ease, transform 0.18s ease; }
-#cdmRealSizeLayer.content .cdm-rs-head, #cdmRealSizeLayer.content .cdm-rs-body { opacity: 1; }
-body.cdm-rs-prep .cdm-two-columns { visibility: hidden !important; }
-body.cdm-rs-prep { background: #fff; }
-.cdm-rs-head { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #e3e6e8; background: #fff; font-family: 'Inter', sans-serif; font-size: 14px; color: #333; }
-.cdm-rs-close { border: 0; background: transparent; color: #666; font-size: 26px; line-height: 1; padding: 0 4px; cursor: pointer; }
-.cdm-rs-close:hover { color: #111; }
-.cdm-rs-body { flex: 1; min-height: 0; overflow: auto; display: flex; align-items: flex-start; justify-content: flex-start; padding: 12px 0; background: #f3f4f6; transform: scale(0.985); transition: transform 0.18s ease; }
-#cdmRealSizeLayer.shown .cdm-rs-body { transform: scale(1); }
-#cdmRealSizeFrame { border: 0; background: #fff; display: block; flex: none; margin: 0 auto; }
 .cdm-preview-scaler { margin: 0 auto; width: 100%; }
 .cdm-fit-screen { width: auto; flex-shrink: 0; }
 .desktop-screen .cdm-slider-preview { width: 100%; }
@@ -2159,129 +2140,35 @@ mock.style.height = frameH + 'px';
 badge.innerHTML = cdmFitBadgeHtml('Блок ' + targetW + ' px', 'Превью ' + Math.round(k * 100) + '%');
 }
 
-/* [20.11.2026, задача №22] Кнопка «Реальный размер»: полноэкранный просмотр
-   блока в точной ширине N. Внутри слоя — вложенный iframe шириной N с готовым
-   кодом блока (finalCode): 100vw внутри него считается от ширины блока, а не
-   от окна. Закрытие — крестик или Esc; если Fullscreen API недоступен,
-   остаётся оверлей в пределах фрейма. */
-var cdmRealSizeActive = false;
-var cdmRealSizeIgnoreResize = 0;
-var cdmRealSizeShownTimer = null;
-var cdmRealSizeCloseTimer = null;
-function cdmRealSizeLayerEl() { return document.getElementById('cdmRealSizeLayer'); }
-function cdmRealSizeFrameEl() { return document.getElementById('cdmRealSizeFrame'); }
-
+/* [20.11.2026, задача №22] Кнопка «Реальный размер»: открывает блок в отдельном
+   окне браузера в точной ширине N. Внутри — готовый код блока (finalCode) на
+   чистой странице: 100vw считается от ширины окна, поэтому блок адаптируется
+   к окну так же, как на реальной странице. */
 function cdmRealSizeOpen() {
-var layer = cdmRealSizeLayerEl();
-var frame = cdmRealSizeFrameEl();
-var label = document.getElementById('cdmRealSizeLabel');
-if (!layer || !frame || cdmRealSizeActive) return;
 var targetW = wideWidth || ((typeof desktopWidth === 'number' && desktopWidth > 0) ? desktopWidth : 0);
 if (!targetW) return;
-if (window.__cdmResizeTimer) { clearTimeout(window.__cdmResizeTimer); window.__cdmResizeTimer = null; }
-if (cdmRealSizeCloseTimer) { clearTimeout(cdmRealSizeCloseTimer); cdmRealSizeCloseTimer = null; }
-cdmRealSizeActive = true;
-/* До входа в fullscreen прячем интерфейс генератора под белым слоем:
-   иначе во время перехода браузер растягивает превью и настройки на весь
-   экран — это и выглядело как рывок. */
-document.body.classList.add('cdm-rs-prep');
-layer.classList.remove('content');
-if (label) label.textContent = 'Блок ' + targetW + ' px · реальный размер';
-frame.style.width = targetW + 'px';
-// Высота известна заранее (настройка «Высота блока слайдера») — iframe не прыгает
-// с 80 до полной высоты после загрузки.
-frame.style.height = (parseInt(desktopHeight.val(), 10) || 600) + 'px';
-/* Базовые правила для просмотра: убираем поля документа (иначе блок сдвигается
-   относительно вьюпорта) и включаем border-box у корня — как в превью
-   (.cdm-master *), чтобы ширина блока включала рамку и не появлялось 4px скролла. */
-frame.srcdoc = '<style>html,body{margin:0;padding:0}body>div{box-sizing:border-box}</style>' + (finalCode || '');
-layer.classList.add('on');
-/* Содержимое (шапка и блок) проявляется после входа в fullscreen — или по
-   таймеру/при ошибке, если Fullscreen API недоступен. */
-if (cdmRealSizeShownTimer) { clearTimeout(cdmRealSizeShownTimer); cdmRealSizeShownTimer = null; }
-if (!layer.requestFullscreen) {
-layer.classList.add('content');
-} else {
-try {
-var p = layer.requestFullscreen();
-if (p && p.catch) p.catch(function() { layer.classList.add('content'); });
-} catch (e) { layer.classList.add('content'); }
-cdmRealSizeShownTimer = setTimeout(function() { layer.classList.add('content'); }, 250);
+var blockH = parseInt(desktopHeight.val(), 10) || 600;
+var availW = (window.screen && screen.availWidth) ? screen.availWidth : (targetW + 40);
+var availH = (window.screen && screen.availHeight) ? screen.availHeight : (blockH + 120);
+var winW = Math.min(targetW + 40, availW);
+var winH = Math.min(blockH + 120, availH);
+var left = Math.max(0, Math.round((availW - winW) / 2));
+var top = Math.max(0, Math.round((availH - winH) / 2));
+var html = '<!doctype html><html><head><meta charset="utf-8"><title>Блок ' + targetW + ' px · реальный размер</title>' +
+'<style>html,body{margin:0;padding:0;background:#fff}body>div{box-sizing:border-box;margin:0 auto}</style>' +
+'</head><body>' + (finalCode || '') + '</body></html>';
+var url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+var features = 'popup=yes,width=' + winW + ',height=' + winH + ',left=' + left + ',top=' + top;
+var win = window.open(url, '_blank', features);
+setTimeout(function() { URL.revokeObjectURL(url); }, 60000);
+if (!win) {
+try { alert('Не удалось открыть окно. Разрешите всплывающие окна для этого сайта.'); } catch (e) {}
 }
-}
-function cdmRealSizeClose() {
-var layer = cdmRealSizeLayerEl();
-var frame = cdmRealSizeFrameEl();
-if (!layer || !cdmRealSizeActive) return;
-cdmRealSizeActive = false;
-cdmRealSizeIgnoreResize = Date.now() + 900;
-if (cdmRealSizeShownTimer) { clearTimeout(cdmRealSizeShownTimer); cdmRealSizeShownTimer = null; }
-if (cdmRealSizeCloseTimer) { clearTimeout(cdmRealSizeCloseTimer); cdmRealSizeCloseTimer = null; }
-layer.classList.remove('content');
-/* Выходим из fullscreen сразу, а слой убираем ТОЛЬКО после фактического
-   выхода (опрос до 600 мс): возвращаем интерфейс генератора и растворяем
-   белый слой уже на месте фрейма. */
-try { if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen(); } catch (e) {}
-var fadeStart = Date.now();
-var fadeWhenExited = function () {
-if (cdmRealSizeActive) return;
-if (document.fullscreenElement && Date.now() - fadeStart < 600) { setTimeout(fadeWhenExited, 30); return; }
-document.body.classList.remove('cdm-rs-prep');
-layer.classList.remove('on');
-setTimeout(function () {
-if (cdmRealSizeActive) return;
-if (frame) frame.srcdoc = '';
-}, 160);
-};
-setTimeout(fadeWhenExited, 30);
 }
 (function () {
-/* Слой переносим в body: тогда скрытие интерфейса генератора (cdm-rs-prep)
-   не задевает сам слой, а position:fixed считается от окна, а не от сетки. */
-var layerEl = cdmRealSizeLayerEl();
-if (layerEl && layerEl.parentElement !== document.body) document.body.appendChild(layerEl);
 var btn = document.getElementById('cdmRealSizeBtn');
 if (btn) btn.addEventListener('click', cdmRealSizeOpen);
-var close = document.getElementById('cdmRealSizeClose');
-if (close) close.addEventListener('click', cdmRealSizeClose);
-var frame = cdmRealSizeFrameEl();
-if (frame) frame.addEventListener('load', function () {
-try {
-var d = frame.contentDocument;
-var h = d && d.documentElement ? d.documentElement.scrollHeight : 0;
-if (h && Math.abs(h - frame.offsetHeight) > 1) frame.style.height = Math.max(h, 80) + 'px';
-} catch (e) {}
-});
-document.addEventListener('fullscreenchange', function () {
-var layer = cdmRealSizeLayerEl();
-if (!layer) return;
-if (document.fullscreenElement) {
-if (cdmRealSizeActive) layer.classList.add('content');
-return;
-}
-if (cdmRealSizeActive) {
-// Esc: браузер вышел из fullscreen сам — возвращаем интерфейс и гасим слой.
-cdmRealSizeActive = false;
-cdmRealSizeIgnoreResize = Date.now() + 700;
-if (cdmRealSizeShownTimer) { clearTimeout(cdmRealSizeShownTimer); cdmRealSizeShownTimer = null; }
-layer.classList.remove('content');
-document.body.classList.remove('cdm-rs-prep');
-layer.classList.remove('on');
-cdmRealSizeCloseTimer = setTimeout(function () {
-cdmRealSizeCloseTimer = null;
-if (!cdmRealSizeActive) {
-var f = cdmRealSizeFrameEl();
-if (f) f.srcdoc = '';
-}
-}, 160);
-}
-});
-document.addEventListener('keydown', function (e) {
-if (e.key !== 'Escape') return;
-if (cdmRealSizeActive) cdmRealSizeClose();
-});
 })();
-
 function generateFinalCode() {
 var suffix = generateRandomSuffix(15);
 currentSuffix = suffix;
@@ -3327,14 +3214,10 @@ $(window).on('resize', function() {
 // модалки ширина анимируется и приходит серия resize-событий — раньше каждое
 // давало полную перерисовку превью и мигание картинок. Теперь перерисовка одна,
 // после того как размер устоялся.
-// [20.11.2026, задача №22] Пока открыт «Реальный размер», превью НЕ перерисовываем:
-// вход/выход из fullscreen меняет ширину фрейма — это давало рывок и смену процента.
-if (cdmRealSizeActive || Date.now() < cdmRealSizeIgnoreResize) return;
 if (previewMode === 'desktop') {
 if (window.__cdmResizeTimer) clearTimeout(window.__cdmResizeTimer);
 window.__cdmResizeTimer = setTimeout(function() {
 window.__cdmResizeTimer = null;
-if (cdmRealSizeActive || Date.now() < cdmRealSizeIgnoreResize) return;
 updatePreview();
 }, 200);
 }

@@ -235,8 +235,15 @@ filter: invert(1) brightness(1.5);
 </p>
 <div class="cdm-help-progress"></div>
 </div>
+<div class="cdm-preview-tools" id="cdmPreviewTools">
+<span class="cdm-fit-badge" id="cdmFitBadge">—</span>
+<span class="cdm-fit-btns">
+<button type="button" class="cdm-fit-btn active" data-fit="fit">Вписать</button>
+<button type="button" class="cdm-fit-btn" data-fit="1">1:1</button>
+</span>
+</div>
 <div id="cdmLivePreviewWrapper" style="display: flex; justify-content: center; min-height: 450px; background: transparent; border-radius: 12px;">
-<div id="cdmLivePreview" style="width: 100%; padding: 5px; display: flex; align-items: flex-start; justify-content: center;"></div>
+<div id="cdmLivePreview" style="width: 100%; padding: 5px; display: flex; align-items: flex-start; justify-content: flex-start;"></div>
 </div>
 </div>
 <div class="cdm-controls-col">
@@ -1121,6 +1128,14 @@ justify-content: center;
 padding-bottom: 120px;
 }
 .desktop-screen { background: transparent; border-radius: 12px; overflow: hidden; padding: 80px 20px; margin: 12px; display: flex; justify-content: center; transition: max-width 0.2s ease, padding 0.2s ease; box-sizing: border-box; width: 100%; }
+.cdm-preview-tools { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 6px; margin: 0 0 4px; font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: -0.5px; color: #666; background: rgba(255,255,255,0.92); border-radius: 6px; }
+.cdm-master.dark-theme .cdm-preview-tools { background: rgba(26,26,26,0.92); color: #bbb; }
+.cdm-fit-badge { white-space: nowrap; }
+.cdm-fit-btns { display: inline-flex; gap: 4px; }
+.cdm-fit-btn { border: 1px solid #ccccccab; background: transparent; color: inherit; border-radius: 5px; padding: 2px 8px; font: inherit; cursor: pointer; }
+.cdm-fit-btn.active { background: #4DB5FF; border-color: #4DB5FF; color: #fff; }
+.cdm-preview-scaler { margin: 0 auto; }
+.cdm-fit-screen { width: auto; }
 .desktop-screen .cdm-slider-preview { width: 100%; }
 .phone-mock { width: 380px; padding: 60px 0 0 0; background: transparent; border: 1px solid #bdbdbd63; border-bottom: none; border-top-right-radius: 30px; border-top-left-radius: 30px; position: relative; margin: 0 auto; height: auto; min-height: 501px; box-sizing: border-box; }
 .phone-mock .display-mock { height: auto; min-height: 100%; width: 100%; background: transparent; position: relative; overflow: hidden; padding: 20px 15px; }
@@ -1965,12 +1980,14 @@ var finalHtml = '';
 if (previewMode === 'desktop') {
 if (wideWidth) {
 var wideMax = wideWidth;
-finalHtml = '<div class="desktop-mock"><div class="desktop-screen"><div class="cdm-content-wrapper cdm-content-wrapper-wide" style="width:100%; max-width:' + wideMax + 'px; margin:0 auto;">' + contentHtml + '</div></div></div>';
+finalHtml = '<div class="cdm-preview-scaler"><div class="desktop-mock" style="width:fit-content;margin:0 auto;"><div class="desktop-screen cdm-fit-screen"><div class="cdm-content-wrapper cdm-content-wrapper-wide" style="width:' + wideMax + 'px; max-width:' + wideMax + 'px; margin:0 auto;">' + contentHtml + '</div></div></div></div>';
 } else {
-finalHtml = '<div class="desktop-mock"><div class="desktop-screen"><div class="cdm-content-wrapper" style="width:100%; max-width:' + desktopWidth + 'px; margin:0 auto;">' + contentHtml + '</div></div></div>';
+var deskW = (typeof desktopWidth === 'number' && desktopWidth > 0) ? desktopWidth : 0;
+var deskStyle = deskW ? ('width:' + deskW + 'px; max-width:' + deskW + 'px; margin:0 auto;') : 'width:100%; margin:0 auto;';
+finalHtml = '<div class="cdm-preview-scaler"><div class="desktop-mock" style="width:fit-content;margin:0 auto;"><div class="desktop-screen cdm-fit-screen"><div class="cdm-content-wrapper" style="' + deskStyle + '">' + contentHtml + '</div></div></div></div>';
 }
 } else {
-finalHtml = '<div class="phone-mock"><div class="display-mock"><div class="cdm-content-wrapper" style="width:100%; margin:0 auto;">' + contentHtml + '</div></div></div>';
+finalHtml = '<div class="cdm-preview-scaler"><div class="phone-mock"><div class="display-mock"><div class="cdm-content-wrapper" style="width:100%; margin:0 auto;">' + contentHtml + '</div></div></div></div>';
 }
 /* [02.11.2026, задача №16-8] ГЛАВНОЕ ИСПРАВЛЕНИЕ МИГАНИЯ.
    (1) Если разметка превью НЕ изменилась — вообще не трогаем DOM. Любой лишний
@@ -2030,6 +2047,46 @@ screen.css('padding', '80px 20px').css('max-width', '');
 var mockMobile = container.find('.phone-mock');
 // [1.70/задача№6] Контрольные точки мобильного превью удалены — ничего не добавляем.
 }
+requestAnimationFrame(cdmApplyPreviewScale);
+}
+
+var previewFit = true;
+function cdmApplyPreviewScale() {
+var lp = document.getElementById('cdmLivePreview');
+var badge = document.getElementById('cdmFitBadge');
+if (!lp || !badge) return;
+var scaler = lp.querySelector('.cdm-preview-scaler');
+if (!scaler) return;
+var mock = scaler.querySelector('.desktop-mock');
+var targetW = wideWidth || ((typeof desktopWidth === 'number' && desktopWidth > 0) ? desktopWidth : 0);
+if (!mock || !targetW) {
+scaler.style.zoom = '';
+scaler.style.width = '';
+scaler.style.overflowX = '';
+scaler.style.overflowY = '';
+badge.textContent = targetW ? (targetW + ' px') : '—';
+return;
+}
+scaler.style.zoom = 1;
+scaler.style.width = '';
+scaler.style.overflowX = 'visible';
+scaler.style.overflowY = 'visible';
+mock.style.maxWidth = 'none';
+void scaler.offsetWidth;
+var naturalW = mock.offsetWidth;
+mock.style.width = naturalW + 'px';
+if (!previewFit) {
+scaler.style.width = '100%';
+scaler.style.overflowX = 'auto';
+scaler.style.overflowY = 'hidden';
+badge.textContent = targetW + ' px · 100%';
+return;
+}
+var avail = lp.clientWidth - 10;
+if (avail < 40) avail = 40;
+var k = Math.min(1, avail / naturalW);
+scaler.style.zoom = k;
+badge.textContent = targetW + ' px · ' + Math.round(k * 100) + '%';
 }
 
 function generateFinalCode() {
@@ -2170,11 +2227,12 @@ var blockW100 = 'width: 100%;\n';
 var blockMaxW = 'max-width: var(--cdm-' + suffix + '-1);\n';
 var blockMargin = 'margin: 0 auto;\n';
 if (wideMax) {
-blockW100 = 'width: min(100vw, ' + wideMax + 'px);\n';
+var wideW = 'min(var(--cdm-vw, 100vw), ' + wideMax + 'px)';
+blockW100 = 'width: ' + wideW + ';\n';
 blockMaxW = 'max-width: ' + wideMax + 'px;\n';
-blockMargin = 'margin-left: calc(50% - min(100vw, ' + wideMax + 'px) / 2);\n';
+blockMargin = 'margin-left: calc(50% - ' + wideW + ' / 2);\n';
 }
-var wideScript = wideMax ? '<script>\n(function(){try{var el=document.querySelector(".cdm-' + suffix + '-1");if(!el)return;var n=el.parentElement;while(n&&n!==document.body){var cs=getComputedStyle(n);if(cs.overflowX==="hidden"||cs.overflow==="hidden"){n.style.overflowX="visible";n.style.overflow="visible";}n=n.parentElement;}var d=document.documentElement;var b=document.body;if(d){d.style.overflowX="visible";d.style.overflow="visible";}if(b){b.style.overflowX="visible";b.style.overflow="visible";}}catch(e){}})();\n<\/script>\n' : '';
+var wideScript = wideMax ? '<script>\n(function(){try{var el=document.querySelector(".cdm-' + suffix + '-1");if(!el)return;var setVw=function(){el.style.setProperty(\"--cdm-vw\",document.documentElement.clientWidth+\"px\");};setVw();requestAnimationFrame(setVw);var vwTries=0;var vwTimer=setInterval(function(){setVw();if(++vwTries>20){clearInterval(vwTimer);}},100);window.addEventListener(\"resize\",setVw);window.addEventListener(\"load\",setVw);var n=el.parentElement;while(n&&n!==document.body){var cs=getComputedStyle(n);if(cs.overflowX==="hidden"||cs.overflow==="hidden"){n.style.overflowX="visible";n.style.overflow="visible";}n=n.parentElement;}var d=document.documentElement;var b=document.body;if(d){d.style.overflowX="visible";d.style.overflow="visible";}if(b){b.style.overflowX="visible";b.style.overflow="visible";}}catch(e){}})();\n<\/script>\n' : '';
 
 var code = '<div class="cdm-' + suffix + '-1">\n' +
 slidesHtml +
@@ -3044,6 +3102,13 @@ try {
 window.parent.postMessage({ action: 'cdm-apply', code: codeToApply, settings: getSettings() }, '*');
 } catch (e) {}
 }
+
+$('#cdmPreviewTools .cdm-fit-btn').on('click', function() {
+previewFit = ($(this).attr('data-fit') !== '1');
+$('#cdmPreviewTools .cdm-fit-btn').removeClass('active');
+$(this).addClass('active');
+cdmApplyPreviewScale();
+});
 
 $(window).on('resize', function() {
 // [1.70/задача№6] Требовалась перерисовка превью при контрольных точках; они удалены —

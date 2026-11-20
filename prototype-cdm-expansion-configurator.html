@@ -2140,31 +2140,19 @@ mock.style.height = frameH + 'px';
 badge.innerHTML = cdmFitBadgeHtml('Блок ' + targetW + ' px', 'Превью ' + Math.round(k * 100) + '%');
 }
 
-/* [20.11.2026, задача №22] Кнопка «Реальный размер»: открывает блок в отдельном
-   окне браузера в точной ширине N. Внутри — готовый код блока (finalCode) на
-   чистой странице: 100vw считается от ширины окна, поэтому блок адаптируется
-   к окну так же, как на реальной странице. */
+/* [20.11.2026, задача №22] Кнопка «Реальный размер»: открывает блок в НОВОЙ
+   ВКЛАДКЕ браузера в точной ширине N. Внутри — готовый код блока (finalCode)
+   на чистой странице: 100vw считается от ширины вкладки, поэтому блок
+   адаптируется к ней так же, как на реальной странице. */
 function cdmRealSizeOpen() {
 var targetW = wideWidth || ((typeof desktopWidth === 'number' && desktopWidth > 0) ? desktopWidth : 0);
 if (!targetW) return;
-var blockH = parseInt(desktopHeight.val(), 10) || 600;
-var availW = (window.screen && screen.availWidth) ? screen.availWidth : (targetW + 40);
-var availH = (window.screen && screen.availHeight) ? screen.availHeight : (blockH + 120);
-var winW = Math.min(targetW + 40, availW);
-var winH = Math.min(blockH + 120, availH);
-var left = Math.max(0, Math.round((availW - winW) / 2));
-var top = Math.max(0, Math.round((availH - winH) / 2));
 var html = '<!doctype html><html><head><meta charset="utf-8"><title>Блок ' + targetW + ' px · реальный размер</title>' +
 '<style>html,body{margin:0;padding:0;background:#fff}body>div{box-sizing:border-box;margin:0 auto}</style>' +
 '</head><body>' + (finalCode || '') + '</body></html>';
 var url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
-var features = 'popup=yes,width=' + winW + ',height=' + winH + ',left=' + left + ',top=' + top;
-var win = null;
-try { win = window.open(url, '_blank', features); } catch (e) {}
-setTimeout(function() { URL.revokeObjectURL(url); }, 60000);
-if (!win) {
-/* Окно заблокировано (попап-блокировщик/политика) — открываем ту же страницу
-   новой вкладкой: переход по ссылке блокировщик не режет. */
+/* Только новая вкладка: отдельных окон нет, в панели задач ничего не копится.
+   Переход по ссылке не требует разрешения popups у iframe. */
 var a = document.createElement('a');
 a.href = url;
 a.target = '_blank';
@@ -2173,7 +2161,7 @@ a.style.display = 'none';
 document.body.appendChild(a);
 a.click();
 setTimeout(function() { if (a.parentNode) a.parentNode.removeChild(a); }, 0);
-}
+setTimeout(function() { URL.revokeObjectURL(url); }, 60000);
 }
 (function () {
 var btn = document.getElementById('cdmRealSizeBtn');

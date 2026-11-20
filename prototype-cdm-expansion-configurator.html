@@ -1205,6 +1205,12 @@ box-sizing: border-box;
 }
 .cdm-slider-preview .cdm-sp-panel h5 {
 margin: 0;
+/* [20.11.2026] Жирность в превью — через переменную: ползунок меняет только
+   значение переменной и не пересобирает разметку превью (без мигания). */
+font-weight: var(--cdm-pv-tweight, 700);
+}
+.cdm-slider-preview .cdm-sp-panel p {
+font-weight: var(--cdm-pv-txweight, 300);
 }
 .cdm-slider-preview .cdm-sp-panel p {
 margin-bottom: 10px;
@@ -1981,8 +1987,8 @@ var imgOnerr = 'this.onerror=null;this.style.display="none";this.closest(".cdm-s
 slidesHtml += '<div class="cdm-sp-slide" style="animation: cdm-sp-slideanim ' + animDur + ' infinite; animation-delay: ' + delay + 's;">' +
 '<img src="' + escapeHtml(imgSrcP) + '" alt="" onerror="' + imgOnerr + '" style="animation: cdm-sp-zoom ' + animDur + ' infinite; animation-delay: ' + delay + 's;">' +
 '<div class="cdm-sp-panel" style="background: ' + bgRgba + '; border-radius:' + panelRadius + '; bottom:' + panelBottom + '; left:' + panelML + '; right:' + panelMR + '; width:auto; padding:' + panelPT + ' ' + panelPR + ' ' + panelPB + ' ' + panelPL + ';">' +
-'<h5 style="font-size:' + tSize + '; color:' + titleRgba + '; font-weight:' + tWeight + '; margin-bottom:' + txMargin + '; text-align:' + tAlign + ';">' + escapeHtml(s.title) + '</h5>' +
-'<p style="font-size:' + txSize + '; color:' + textRgba + '; font-weight:' + txWeight + '; margin:0; text-align:' + txAlign + ';">' + escapeHtml(s.text) + '</p>' +
+'<h5 style="font-size:' + tSize + '; color:' + titleRgba + '; margin-bottom:' + txMargin + '; text-align:' + tAlign + ';">' + escapeHtml(s.title) + '</h5>' +
+'<p style="font-size:' + txSize + '; color:' + textRgba + '; margin:0; text-align:' + txAlign + ';">' + escapeHtml(s.text) + '</p>' +
 '</div>' +
 '</div>';
 }
@@ -2050,6 +2056,14 @@ if (selectedFont !== 'none') {
 var fontClass = 'cdm-font-' + selectedFont.toLowerCase().replace(/\s/g, '');
 container.find('.desktop-screen, .display-mock').addClass(fontClass);
 }
+/* [20.11.2026] Жирность текста — CSS-переменными на экране превью.
+   Раньше значение сидело в inline-стилях h5/p, поэтому каждое движение
+   ползунка меняло разметку и пересобирало превью целиком — это и давало
+   мигание. Теперь разметка не меняется: обновляются только переменные. */
+container.find('.desktop-screen, .display-mock').each(function() {
+this.style.setProperty('--cdm-pv-tweight', tWeight);
+this.style.setProperty('--cdm-pv-txweight', txWeight);
+});
 
 if (previewMode === 'desktop') {
 var mock = container.find('.desktop-mock');

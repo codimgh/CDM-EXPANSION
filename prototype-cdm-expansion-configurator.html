@@ -2157,15 +2157,17 @@ var mobPanelRadius = mobilePanelRadius.val();
 var panelPadding = deskPanelPT + 'px ' + deskPanelPR + 'px ' + deskPanelPB + 'px ' + deskPanelPL + 'px';
 var panelMargin = '0 ' + deskPanelMR + 'px ' + deskPanelMB + 'px ' + deskPanelML + 'px';
 
-// [задача №10] Широкий режим: блок выходит за контейнер страницы
-// (width:100vw + центрирование по экрану + потолок 1280/1680).
+// [задача №10/№20] Широкий режим: блок выходит за контейнер страницы.
+// margin-left считается от КОНТЕЙНЕРА: calc(50% - min(100vw, W) / 2)
+// ставит левый край в (100vw - width) / 2 от края экрана (контейнер
+// Taplink центрирован) — и при потолке, и без него.
 var blockW100 = 'width: 100%;\n';
 var blockMaxW = 'max-width: var(--cdm-' + suffix + '-1);\n';
 var blockMargin = 'margin: 0 auto;\n';
 if (wideMax) {
-blockW100 = 'width: 100vw;\n';
+blockW100 = 'width: min(100vw, ' + wideMax + 'px);\n';
 blockMaxW = 'max-width: ' + wideMax + 'px;\n';
-blockMargin = 'margin-left: calc((100vw - min(100vw, ' + wideMax + 'px)) / 2);\n';
+blockMargin = 'margin-left: calc(50% - min(100vw, ' + wideMax + 'px) / 2);\n';
 }
 var wideScript = wideMax ? '<script>\n(function(){try{var el=document.querySelector(".cdm-' + suffix + '-1");if(!el)return;var n=el.parentElement;while(n&&n!==document.body){var cs=getComputedStyle(n);if(cs.overflowX==="hidden"||cs.overflow==="hidden"){n.style.overflowX="visible";n.style.overflow="visible";}n=n.parentElement;}var d=document.documentElement;var b=document.body;if(d){d.style.overflowX="visible";d.style.overflow="visible";}if(b){b.style.overflowX="visible";b.style.overflow="visible";}}catch(e){}})();\n<\/script>\n' : '';
 
@@ -2282,6 +2284,7 @@ animDelaysCss +
 '.cdm-' + suffix + '-1 {\n' +
 'width: 100% !important;\n' +
 'max-width: 100% !important;\n' +
+'margin-left: 0 !important;\n' +
 'height: ' + mobH + 'px !important;\n' +
 'border-width: ' + mobBW + 'px;\n' +
 'border-color: ' + borderRgba + ';\n' +
@@ -2310,6 +2313,7 @@ animDelaysCss +
 '.cdm-' + suffix + '-1 {\n' +
 'width: 100% !important;\n' +
 'max-width: 100% !important;\n' +
+'margin-left: 0 !important;\n' +
 'height: ' + mobH + 'px !important;\n' +
 'margin-top: 8%;\n' +
 '}\n' +

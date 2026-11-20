@@ -2159,10 +2159,20 @@ var html = '<!doctype html><html><head><meta charset="utf-8"><title>Блок ' +
 '</head><body>' + (finalCode || '') + '</body></html>';
 var url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
 var features = 'popup=yes,width=' + winW + ',height=' + winH + ',left=' + left + ',top=' + top;
-var win = window.open(url, '_blank', features);
+var win = null;
+try { win = window.open(url, '_blank', features); } catch (e) {}
 setTimeout(function() { URL.revokeObjectURL(url); }, 60000);
 if (!win) {
-try { alert('Не удалось открыть окно. Разрешите всплывающие окна для этого сайта.'); } catch (e) {}
+/* Окно заблокировано (попап-блокировщик/политика) — открываем ту же страницу
+   новой вкладкой: переход по ссылке блокировщик не режет. */
+var a = document.createElement('a');
+a.href = url;
+a.target = '_blank';
+a.rel = 'noopener';
+a.style.display = 'none';
+document.body.appendChild(a);
+a.click();
+setTimeout(function() { if (a.parentNode) a.parentNode.removeChild(a); }, 0);
 }
 }
 (function () {

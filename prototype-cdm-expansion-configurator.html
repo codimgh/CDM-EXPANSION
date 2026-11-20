@@ -1158,8 +1158,11 @@ box-sizing: border-box;
    слой на весь экран, внутри — iframe точной ширины N с готовым кодом блока
    (100vw внутри iframe считается от ширины блока, а не от окна). */
 #cdmRealSizeLayer { position: fixed; inset: 0; z-index: 9000; display: flex; flex-direction: column; background: #fff; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.16s ease, visibility 0s linear 0.16s; }
-#cdmRealSizeLayer.on { visibility: visible; pointer-events: auto; transition: opacity 0.16s ease; }
-#cdmRealSizeLayer.shown { opacity: 1; }
+#cdmRealSizeLayer.on { visibility: visible; pointer-events: auto; opacity: 1; transition: opacity 0.16s ease; }
+#cdmRealSizeLayer .cdm-rs-head, #cdmRealSizeLayer .cdm-rs-body { opacity: 0; transition: opacity 0.16s ease, transform 0.18s ease; }
+#cdmRealSizeLayer.content .cdm-rs-head, #cdmRealSizeLayer.content .cdm-rs-body { opacity: 1; }
+body.cdm-rs-prep .cdm-two-columns { visibility: hidden !important; }
+body.cdm-rs-prep { background: #fff; }
 .cdm-rs-head { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #e3e6e8; background: #fff; font-family: 'Inter', sans-serif; font-size: 14px; color: #333; }
 .cdm-rs-close { border: 0; background: transparent; color: #666; font-size: 26px; line-height: 1; padding: 0 4px; cursor: pointer; }
 .cdm-rs-close:hover { color: #111; }
@@ -2178,6 +2181,11 @@ if (!targetW) return;
 if (window.__cdmResizeTimer) { clearTimeout(window.__cdmResizeTimer); window.__cdmResizeTimer = null; }
 if (cdmRealSizeCloseTimer) { clearTimeout(cdmRealSizeCloseTimer); cdmRealSizeCloseTimer = null; }
 cdmRealSizeActive = true;
+/* До входа в fullscreen прячем интерфейс генератора под белым слоем:
+   иначе во время перехода браузер растягивает превью и настройки на весь
+   экран — это и выглядело как рывок. */
+document.body.classList.add('cdm-rs-prep');
+layer.classList.remove('content');
 if (label) label.textContent = 'Блок ' + targetW + ' px · реальный размер';
 frame.style.width = targetW + 'px';
 // Высота известна заранее (настройка «Высота блока слайдера») — iframe не прыгает
@@ -2188,17 +2196,17 @@ frame.style.height = (parseInt(desktopHeight.val(), 10) || 600) + 'px';
    (.cdm-master *), чтобы ширина блока включала рамку и не появлялось 4px скролла. */
 frame.srcdoc = '<style>html,body{margin:0;padding:0}body>div{box-sizing:border-box}</style>' + (finalCode || '');
 layer.classList.add('on');
-/* Показываем содержимое после входа в fullscreen (или по таймеру, если API
-   недоступен) — иначе слой на миг появляется размером с фрейм. */
+/* Содержимое (шапка и блок) проявляется после входа в fullscreen — или по
+   таймеру/при ошибке, если Fullscreen API недоступен. */
 if (cdmRealSizeShownTimer) { clearTimeout(cdmRealSizeShownTimer); cdmRealSizeShownTimer = null; }
 if (!layer.requestFullscreen) {
-layer.classList.add('shown');
+layer.classList.add('content');
 } else {
 try {
 var p = layer.requestFullscreen();
-if (p && p.catch) p.catch(function() { layer.classList.add('shown'); });
-} catch (e) { layer.classList.add('shown'); }
-cdmRealSizeShownTimer = setTimeout(function() { layer.classList.add('shown'); }, 250);
+if (p && p.catch) p.catch(function() { layer.classList.add('content'); });
+} catch (e) { layer.classList.add('content'); }
+cdmRealSizeShownTimer = setTimeout(function() { layer.classList.add('content'); }, 250);
 }
 }
 function cdmRealSizeClose() {
@@ -2209,24 +2217,29 @@ cdmRealSizeActive = false;
 cdmRealSizeIgnoreResize = Date.now() + 900;
 if (cdmRealSizeShownTimer) { clearTimeout(cdmRealSizeShownTimer); cdmRealSizeShownTimer = null; }
 if (cdmRealSizeCloseTimer) { clearTimeout(cdmRealSizeCloseTimer); cdmRealSizeCloseTimer = null; }
-/* Выходим из fullscreen сразу, а слой растворяем ТОЛЬКО после фактического
-   выхода (опрос до 600 мс). Так нет ни «белой паузы», ни чёрного фона:
-   слой исчезает уже на месте фрейма, поверх превью. */
+layer.classList.remove('content');
+/* Выходим из fullscreen сразу, а слой убираем ТОЛЬКО после фактического
+   выхода (опрос до 600 мс): возвращаем интерфейс генератора и растворяем
+   белый слой уже на месте фрейма. */
 try { if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen(); } catch (e) {}
 var fadeStart = Date.now();
 var fadeWhenExited = function () {
 if (cdmRealSizeActive) return;
 if (document.fullscreenElement && Date.now() - fadeStart < 600) { setTimeout(fadeWhenExited, 30); return; }
-layer.classList.remove('shown');
+document.body.classList.remove('cdm-rs-prep');
+layer.classList.remove('on');
 setTimeout(function () {
 if (cdmRealSizeActive) return;
-layer.classList.remove('on');
 if (frame) frame.srcdoc = '';
-}, 150);
+}, 160);
 };
 setTimeout(fadeWhenExited, 30);
 }
 (function () {
+/* Слой переносим в body: тогда скрытие интерфейса генератора (cdm-rs-prep)
+   не задевает сам слой, а position:fixed считается от окна, а не от сетки. */
+var layerEl = cdmRealSizeLayerEl();
+if (layerEl && layerEl.parentElement !== document.body) document.body.appendChild(layerEl);
 var btn = document.getElementById('cdmRealSizeBtn');
 if (btn) btn.addEventListener('click', cdmRealSizeOpen);
 var close = document.getElementById('cdmRealSizeClose');
@@ -2243,23 +2256,24 @@ document.addEventListener('fullscreenchange', function () {
 var layer = cdmRealSizeLayerEl();
 if (!layer) return;
 if (document.fullscreenElement) {
-if (cdmRealSizeActive) layer.classList.add('shown');
+if (cdmRealSizeActive) layer.classList.add('content');
 return;
 }
 if (cdmRealSizeActive) {
-// Esc: браузер вышел из fullscreen сам — гасим слой и возвращаем превью без рывка.
+// Esc: браузер вышел из fullscreen сам — возвращаем интерфейс и гасим слой.
 cdmRealSizeActive = false;
 cdmRealSizeIgnoreResize = Date.now() + 700;
 if (cdmRealSizeShownTimer) { clearTimeout(cdmRealSizeShownTimer); cdmRealSizeShownTimer = null; }
-layer.classList.remove('shown');
+layer.classList.remove('content');
+document.body.classList.remove('cdm-rs-prep');
+layer.classList.remove('on');
 cdmRealSizeCloseTimer = setTimeout(function () {
 cdmRealSizeCloseTimer = null;
 if (!cdmRealSizeActive) {
-layer.classList.remove('on');
 var f = cdmRealSizeFrameEl();
 if (f) f.srcdoc = '';
 }
-}, 150);
+}, 160);
 }
 });
 document.addEventListener('keydown', function (e) {

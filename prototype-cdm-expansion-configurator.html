@@ -237,20 +237,23 @@ filter: invert(1) brightness(1.5);
 </div>
 <div id="cdmFitHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:460px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
-Эта строка показывает, в каком масштабе блок нарисован в окне предпросмотра. «Блок 1600 px» — ширина блока на настоящей странице, «Превью 86%» — во сколько раз он уменьшен здесь, чтобы целиком поместиться по ширине колонки. Пропорции сохранены: на живой странице блок будет выглядеть так же, только крупнее. Кнопка «1:1» показывает блок в точном размере — если он не помещается, появляется горизонтальная прокрутка.
+Эта строка показывает, в каком масштабе блок нарисован в окне предпросмотра. «Блок 1600 px» — ширина блока на настоящей странице, «Превью 86%» — во сколько раз он уменьшен здесь, чтобы целиком поместиться по ширине колонки. Пропорции сохранены: на живой странице блок будет выглядеть так же, только крупнее. Кнопка «Реальный размер» открывает блок в настоящую ширину на весь экран (крестик или Esc — закрыть); если блок шире экрана, внутри окна появится горизонтальная прокрутка.
 </p>
 <div class="cdm-help-progress"></div>
 </div>
 <div class="cdm-preview-tools" id="cdmPreviewTools">
 <span class="cdm-fit-info"><span class="cdm-fit-badge" id="cdmFitBadge">—</span><i class="ph ph-question cdm-fit-help-icon" id="cdmFitHelpIcon" style="font-size:16px; vertical-align:middle; cursor:pointer; margin-left:6px;"></i></span>
 <span class="cdm-fit-btns">
-<button type="button" class="cdm-fit-btn active" data-fit="fit">Вписать</button>
-<button type="button" class="cdm-fit-btn" data-fit="1">1:1</button>
+<button type="button" class="cdm-real-size-btn" id="cdmRealSizeBtn">Реальный размер</button>
 </span>
 </div>
 <div id="cdmLivePreviewWrapper" style="display: flex; justify-content: center; min-height: 450px; background: transparent; border-radius: 12px;">
 <div id="cdmLivePreview" style="width: 100%; padding: 5px; display: flex; align-items: flex-start; justify-content: flex-start;"></div>
 </div>
+</div>
+<div id="cdmRealSizeLayer" role="dialog" aria-modal="true" aria-label="Блок в реальном размере">
+<div class="cdm-rs-head"><span id="cdmRealSizeLabel">Блок —</span><button type="button" id="cdmRealSizeClose" class="cdm-rs-close" aria-label="Закрыть">×</button></div>
+<div class="cdm-rs-body"><iframe id="cdmRealSizeFrame" title="Блок в реальном размере"></iframe></div>
 </div>
 <div class="cdm-controls-col">
 <div class="cdm-controls-inner">
@@ -1149,8 +1152,18 @@ box-sizing: border-box;
 .cdm-fit-badge-icon { display: inline-flex; flex: none; width: var(--cdm-fit-badge-icon-size, 16px); height: var(--cdm-fit-badge-icon-size, 16px); color: var(--cdm-fit-badge-icon-color, currentColor); }
 .cdm-fit-badge-icon svg { width: 100%; height: 100%; display: block; }
 .cdm-fit-btns { display: inline-flex; gap: 4px; }
-.cdm-fit-btn { border: 1px solid #ccccccab; background: transparent; color: inherit; border-radius: 5px; padding: 2px 8px; font: inherit; cursor: pointer; }
-.cdm-fit-btn.active { background: #4DB5FF; border-color: #4DB5FF; color: #fff; }
+.cdm-real-size-btn { border: 1px solid #ccccccab; background: transparent; color: inherit; border-radius: 5px; padding: 2px 8px; font: inherit; cursor: pointer; white-space: nowrap; }
+.cdm-real-size-btn:hover { border-color: #4DB5FF; color: #4DB5FF; }
+/* [20.11.2026, задача №22] Полноэкранный просмотр в реальном размере:
+   слой на весь экран, внутри — iframe точной ширины N с готовым кодом блока
+   (100vw внутри iframe считается от ширины блока, а не от окна). */
+#cdmRealSizeLayer { position: fixed; inset: 0; z-index: 9000; display: none; flex-direction: column; background: #fff; }
+#cdmRealSizeLayer.on { display: flex; }
+.cdm-rs-head { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #e3e6e8; background: #fff; font-family: 'Inter', sans-serif; font-size: 14px; color: #333; }
+.cdm-rs-close { border: 0; background: transparent; color: #666; font-size: 26px; line-height: 1; padding: 0 4px; cursor: pointer; }
+.cdm-rs-close:hover { color: #111; }
+.cdm-rs-body { flex: 1; min-height: 0; overflow: auto; display: flex; align-items: flex-start; justify-content: flex-start; padding: 12px 0; background: #f3f4f6; }
+#cdmRealSizeFrame { border: 0; background: #fff; display: block; flex: none; margin: 0 auto; }
 .cdm-preview-scaler { margin: 0 auto; width: 100%; }
 .cdm-fit-screen { width: auto; flex-shrink: 0; }
 .desktop-screen .cdm-slider-preview { width: 100%; }
@@ -2091,8 +2104,8 @@ requestAnimationFrame(cdmApplyPreviewScale);
    при смене размера блока. Теперь рамка ПОСТОЯННАЯ: ширина — вся колонка
    превью, высота — натуральная высота при 100% (замер до масштабирования).
    Масштабируется только содержимое (.desktop-screen) — рамка не двигается.
-   В режиме «1:1» рамка, наоборот, равна точному размеру блока и область
-   превью прокручивается по горизонтали. */
+   Режима «1:1» больше нет: он заменён кнопкой «Реальный размер» —
+   полноэкранный просмотр в точной ширине блока (см. cdmRealSizeOpen). */
 /* [20.11.2026, задача №22] Иконки подписи превью: рамка (перед «Блок»)
    и превью/масштаб (перед «Превью»). Размер и цвет задаются отдельными
    CSS-переменными (--cdm-fit-badge-icon-size / -color), текст — своими
@@ -2103,7 +2116,6 @@ function cdmFitBadgeHtml(leftText, rightText) {
   return '<span class="cdm-fit-badge-part"><span class="cdm-fit-badge-icon">' + CDM_FIT_ICON_BLOCK + '</span><span class="cdm-fit-badge-text">' + leftText + '</span></span>' +
     ' ' + '<span class="cdm-fit-badge-part"><span class="cdm-fit-badge-icon">' + CDM_FIT_ICON_PREVIEW + '</span><span class="cdm-fit-badge-text">' + rightText + '</span></span>';
 }
-var previewFit = true;
 function cdmApplyPreviewScale() {
 var lp = document.getElementById('cdmLivePreview');
 var badge = document.getElementById('cdmFitBadge');
@@ -2134,14 +2146,6 @@ var frameH = mock.offsetHeight;
 /* Ширина содержимого + боковые отступы .desktop-screen (12px слева и справа):
    иначе при k = 1 блок с отступами выходил за рамку на 24px. */
 var naturalW = screen.offsetWidth + 24;
-if (!previewFit) {
-mock.style.width = 'fit-content';
-scaler.style.width = '100%';
-scaler.style.overflowX = 'auto';
-scaler.style.overflowY = 'hidden';
-badge.innerHTML = cdmFitBadgeHtml('Блок ' + targetW + ' px', '1:1');
-return;
-}
 var avail = lp.clientWidth - 10;
 if (avail < 40) avail = 40;
 var k = Math.min(1, avail / naturalW);
@@ -2149,6 +2153,71 @@ if (k < 1) screen.style.zoom = k;
 mock.style.height = frameH + 'px';
 badge.innerHTML = cdmFitBadgeHtml('Блок ' + targetW + ' px', 'Превью ' + Math.round(k * 100) + '%');
 }
+
+/* [20.11.2026, задача №22] Кнопка «Реальный размер»: полноэкранный просмотр
+   блока в точной ширине N. Внутри слоя — вложенный iframe шириной N с готовым
+   кодом блока (finalCode): 100vw внутри него считается от ширины блока, а не
+   от окна. Закрытие — крестик или Esc; если Fullscreen API недоступен,
+   остаётся оверлей в пределах фрейма. */
+function cdmRealSizeOpen() {
+var layer = document.getElementById('cdmRealSizeLayer');
+var frame = document.getElementById('cdmRealSizeFrame');
+var label = document.getElementById('cdmRealSizeLabel');
+if (!layer || !frame) return;
+var targetW = wideWidth || ((typeof desktopWidth === 'number' && desktopWidth > 0) ? desktopWidth : 0);
+if (!targetW) return;
+if (label) label.textContent = 'Блок ' + targetW + ' px · реальный размер';
+frame.style.width = targetW + 'px';
+frame.style.height = '80px';
+/* Базовые правила для просмотра: убираем поля документа (иначе блок сдвигается
+   относительно вьюпорта) и включаем border-box у корня — как в превью
+   (.cdm-master *), чтобы ширина блока включала рамку и не появлялось 4px скролла. */
+frame.srcdoc = '<style>html,body{margin:0;padding:0}body>div{box-sizing:border-box}</style>' + (finalCode || '');
+layer.classList.add('on');
+if (layer.requestFullscreen) {
+try {
+var p = layer.requestFullscreen();
+if (p && p.catch) p.catch(function() {});
+} catch (e) {}
+}
+}
+function cdmRealSizeClose() {
+var layer = document.getElementById('cdmRealSizeLayer');
+var frame = document.getElementById('cdmRealSizeFrame');
+try {
+if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
+} catch (e) {}
+if (layer) layer.classList.remove('on');
+if (frame) frame.srcdoc = '';
+}
+(function () {
+var btn = document.getElementById('cdmRealSizeBtn');
+if (btn) btn.addEventListener('click', cdmRealSizeOpen);
+var close = document.getElementById('cdmRealSizeClose');
+if (close) close.addEventListener('click', cdmRealSizeClose);
+var frame = document.getElementById('cdmRealSizeFrame');
+if (frame) frame.addEventListener('load', function () {
+try {
+var d = frame.contentDocument;
+var h = d && d.documentElement ? d.documentElement.scrollHeight : 0;
+if (h) frame.style.height = Math.max(h, 80) + 'px';
+} catch (e) {}
+});
+document.addEventListener('fullscreenchange', function () {
+if (document.fullscreenElement) return;
+var l = document.getElementById('cdmRealSizeLayer');
+if (l && l.classList.contains('on')) {
+l.classList.remove('on');
+var f = document.getElementById('cdmRealSizeFrame');
+if (f) f.srcdoc = '';
+}
+});
+document.addEventListener('keydown', function (e) {
+if (e.key !== 'Escape') return;
+var l = document.getElementById('cdmRealSizeLayer');
+if (l && l.classList.contains('on')) cdmRealSizeClose();
+});
+})();
 
 function generateFinalCode() {
 var suffix = generateRandomSuffix(15);
@@ -3185,12 +3254,8 @@ window.parent.postMessage({ action: 'cdm-apply', code: codeToApply, settings: ge
 } catch (e) {}
 }
 
-$('#cdmPreviewTools .cdm-fit-btn').on('click', function() {
-previewFit = ($(this).attr('data-fit') !== '1');
-$('#cdmPreviewTools .cdm-fit-btn').removeClass('active');
-$(this).addClass('active');
-cdmApplyPreviewScale();
-});
+// [20.11.2026, задача №22] Переключатель «Вписать/1:1» заменён кнопкой
+// «Реальный размер» (полноэкранный просмотр); превью всегда масштабируется.
 
 $(window).on('resize', function() {
 // [1.70/задача№6] Требовалась перерисовка превью при контрольных точках; они удалены —

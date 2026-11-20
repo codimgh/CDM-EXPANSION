@@ -231,7 +231,7 @@ filter: invert(1) brightness(1.5);
 </div>
 <div id="cdmWideHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:490px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
-Нестандартная ширина позволяет сделать блок шире стандартного контейнера страницы: «1280» зафиксирует блок на 1280 пикселей, «100%» растянет его на всю ширину экрана (но не более 1920 пикселей). Подсказка скоро будет дополнена.
+Нестандартная ширина позволяет сделать блок шире стандартного контейнера страницы: кнопки 1280, 1440, 1600 и 1920 задают максимальную ширину блока в пикселях. Если экран уже выбранного значения, блок занимает всю ширину экрана — поэтому на ноутбуке 1366 px кнопки 1440/1600/1920 выглядят одинаково, разница видна только на мониторах шире выбранного значения. Подсказка скоро будет дополнена.
 </p>
 <div class="cdm-help-progress"></div>
 </div>
@@ -256,7 +256,9 @@ filter: invert(1) brightness(1.5);
 <label class="cdm-label">Нестандартная ширина блока <i class="ph ph-question cdm-wide-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
 <div class="cdm-width-btns cdm-control-group-inner" id="cdmWideWidthBtns">
 <button type="button" class="cdm-width-btn" data-wide="1280">1280</button>
-<button type="button" class="cdm-width-btn" data-wide="full">100%</button>
+<button type="button" class="cdm-width-btn" data-wide="1440">1440</button>
+<button type="button" class="cdm-width-btn" data-wide="1600">1600</button>
+<button type="button" class="cdm-width-btn" data-wide="1920">1920</button>
 </div>
 </div>
 <div class="cdm-control-group">
@@ -1616,10 +1618,13 @@ $('.cdm-width-btn[data-width="' + n + '"]').addClass('active');
 if (wideWidth) { wideWidth = 0; $('#cdmWideWidthBtns .cdm-width-btn').removeClass('active'); }
 updateAll();
 }
-// [задача №10] Нестандартная ширина блока: 0 = выключено (стандартная),
-// 1280 = фикс. ширина, 'full' = 100% экрана с потолком 1920 (см. generateFinalCode).
+// [задача №10/№21] Нестандартная ширина блока: 0 = выключено (стандартная),
+// 1280/1440/1600/1920 = блок до N px; на экране уже N — во всю ширину
+// (см. generateFinalCode). Старое значение 'full' читается как 1920.
 let wideWidth = 0;
 function setWideWidth(val) {
+if (val === 'full') val = 1920;
+val = Number(val) || 0;
 wideWidth = val;
 $('#cdmWideWidthBtns .cdm-width-btn').removeClass('active');
 if (val) {
@@ -1959,7 +1964,7 @@ var contentHtml = '<div class="cdm-slider-preview" style="width:100%; height:' +
 var finalHtml = '';
 if (previewMode === 'desktop') {
 if (wideWidth) {
-var wideMax = (wideWidth === 'full') ? 1920 : 1280;
+var wideMax = wideWidth;
 finalHtml = '<div class="desktop-mock"><div class="desktop-screen"><div class="cdm-content-wrapper cdm-content-wrapper-wide" style="width:100%; max-width:' + wideMax + 'px; margin:0 auto;">' + contentHtml + '</div></div></div>';
 } else {
 finalHtml = '<div class="desktop-mock"><div class="desktop-screen"><div class="cdm-content-wrapper" style="width:100%; max-width:' + desktopWidth + 'px; margin:0 auto;">' + contentHtml + '</div></div></div>';
@@ -2118,7 +2123,7 @@ animDelaysCss += '.cdm-' + suffix + '-2:nth-child(' + (i+1) + '),\n.cdm-' + suff
 
 var deskW = desktopWidth;
 var wideMax = 0;
-if (wideWidth) { wideMax = (wideWidth === 'full') ? 1920 : 1280; }
+if (wideWidth) { wideMax = wideWidth; }
 var deskH = desktopHeight.val();
 var deskTSize = desktopTitleSize.val();
 var deskTxSize = desktopTextSize.val();

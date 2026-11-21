@@ -202,7 +202,7 @@ filter: invert(1) brightness(1.5);
 <i class="ph ph-device-mobile cdm-device-icon" data-device="mobile" style="font-size:20px; cursor: pointer;"></i>
 </div>
 </div>
-<div id="cdmFontHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:460px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
+<div id="cdmFontHelpPopup" class="cdm-help-popup" style="display:none; width:460px;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
 В случае, если в настройке используется вариант «Шрифт не выбран», на публичной странице сайта к шрифтам блока, будут применены те настройки шрифтов, которые установлены в разделе «Дизайн» в настройках «Таплинк».
 </p>
@@ -211,13 +211,13 @@ filter: invert(1) brightness(1.5);
 </p>
 <div class="cdm-help-progress"></div>
 </div>
-<div id="cdmImgHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:400px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
+<div id="cdmImgHelpPopup" class="cdm-help-popup" style="display:none; width:400px;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
 Вставь прямую ссылку на картинку, которая будет использована для слайда. Лучше использовать картинки с соотношением сторон 16:9 и в размере не менее 1920×1080, это на всякий случай, чтобы сервис не «шакалил» качество картинки.
 </p>
 <div class="cdm-help-progress"></div>
 </div>
-<div id="cdmWidthHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:490px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
+<div id="cdmWidthHelpPopup" class="cdm-help-popup" style="display:none; width:490px;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0 0 12px 0;">
 Ширина блока для превью задаётся дискретно, согласно логике стандартных настроек ширины страницы «Таплинк» - выбери один из стандартных размеров страницы, которые установлены у тебя: 620, 720, 820 или 1020.
 </p>
@@ -229,19 +229,19 @@ filter: invert(1) brightness(1.5);
 </p>
 <div class="cdm-help-progress"></div>
 </div>
-<div id="cdmWideHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:490px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
+<div id="cdmWideHelpPopup" class="cdm-help-popup" style="display:none; width:490px;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
 Нестандартная ширина позволяет сделать блок шире стандартного контейнера страницы: кнопки 1280, 1440, 1600 и 1920 задают максимальную ширину блока в пикселях. Если экран уже выбранного значения, блок занимает всю ширину экрана — поэтому на ноутбуке 1366 px кнопки 1440/1600/1920 выглядят одинаково, разница видна только на мониторах шире выбранного значения. Подсказка скоро будет дополнена.
 </p>
 <div class="cdm-help-progress"></div>
 </div>
-<div id="cdmFitHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:460px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
+<div id="cdmFitHelpPopup" class="cdm-help-popup" style="display:none; width:460px;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
 Эта строка показывает, в каком масштабе блок нарисован в окне предпросмотра. «Блок 1600 px» — ширина блока на настоящей странице, «Превью 86%» — во сколько раз он уменьшен здесь, чтобы целиком поместиться по ширине колонки. Пропорции сохранены: на живой странице блок будет выглядеть так же, только крупнее. Если блок не помещается в предпросмотр целиком, в настройках под «Нестандартной шириной блока» появляется кнопка «Смотреть в полном размере»: она открывает блок в новой вкладке браузера в настоящую ширину. Если окно уже ширины блока, блок адаптируется по ширине окна.
 </p>
 <div class="cdm-help-progress"></div>
 </div>
-<div id="cdmMarginHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:490px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
+<div id="cdmMarginHelpPopup" class="cdm-help-popup" style="display:none; width:490px;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
 Внешние отступы добавляют пустое пространство между блоком и соседними блоками страницы. Ширину и центрирование блока они не меняют: увеличивается только расстояние сверху и снизу. Отступ складывается с собственными промежутками Taplink, поэтому итоговое расстояние на странице может оказаться больше выбранного значения. Мобильные отступы действуют на экранах уже 441 px. На очень узких экранах (до 400 px) к верхнему отступу сохраняется базовый отступ 8% ширины экрана.
 </p>
@@ -1435,18 +1435,31 @@ color: #999;
 .cdm-master.dark-theme .cdm-slide-reorder-icon:hover {
 color: #ddd;
 }
-#cdmFontHelpPopup,
-#cdmImgHelpPopup,
-#cdmWidthHelpPopup,
-#cdmFitHelpPopup {
-border: 1px solid #ccccccab;
-box-shadow: none;
+.cdm-help-popup {
+position: fixed;
+left: 12px;
+top: 12px;
+z-index: 5000;
+padding: 18px 24px;
+border: none;
+border-radius: var(--cdm-help-radius, 14px);
+background: var(--cdm-help-bg, #4db5ff);
+color: var(--cdm-help-fg, #ffffff);
+font-family: 'Inter', sans-serif;
+line-height: 1.6;
+text-wrap: pretty;
+overflow-wrap: break-word;
+overflow: hidden;
+max-width: calc(100vw - 40px);
+box-shadow: var(--cdm-help-shadow, 0 18px 44px -14px rgba(11, 68, 112, 0.55), 0 4px 12px rgba(11, 68, 112, 0.16));
+transform-origin: top left;
+will-change: transform, opacity;
 }
-#cdmFontHelpPopup p,
-#cdmImgHelpPopup p,
-#cdmWidthHelpPopup p,
-#cdmFitHelpPopup p {
-color: #333;
+.cdm-help-popup p {
+font-size: 15px !important;
+font-weight: 400 !important;
+line-height: 1.55 !important;
+color: inherit;
 }
 .cdm-help-progress {
 position: absolute;
@@ -1454,28 +1467,19 @@ left: 0;
 bottom: 0;
 height: 2px;
 width: 100%;
-background: #4cb5ff;
+background: var(--cdm-help-bar, #ffffff);
+transform-origin: 0 50%;
 animation: cdm-help-progress 25s linear forwards;
 }
 @keyframes cdm-help-progress {
-from { width: 100%; }
-to { width: 0%; }
+from { transform: scaleX(1); }
+to { transform: scaleX(0); }
 }
-.cdm-master.dark-theme #cdmFontHelpPopup,
-.cdm-master.dark-theme #cdmImgHelpPopup,
-.cdm-master.dark-theme #cdmWidthHelpPopup,
-.cdm-master.dark-theme #cdmFitHelpPopup {
-background: #1a1a1a !important;
-border-color: #555 !important;
+.cdm-master.dark-theme .cdm-help-popup {
+--cdm-help-shadow: 0 20px 48px -14px rgba(0, 0, 0, 0.7), 0 4px 12px rgba(0, 0, 0, 0.35);
 }
-.cdm-master.dark-theme #cdmFontHelpPopup p,
-.cdm-master.dark-theme #cdmImgHelpPopup p,
-.cdm-master.dark-theme #cdmWidthHelpPopup p,
-.cdm-master.dark-theme #cdmFitHelpPopup p {
-color: #e0e0e0 !important;
-}
-.cdm-master.dark-theme .cdm-help-progress {
-background: #4cb5ff;
+@media (prefers-reduced-motion: reduce) {
+.cdm-help-popup { transition: none; }
 }
 #cdmCustomColorPopup {
 border-radius: 12px !important;
@@ -3178,85 +3182,221 @@ var marginHelpPopup = $('#cdmMarginHelpPopup');
 
 // [20.10.2026, задача №6] Подсказки открываются в левом верхнем углу окна
 // (left:12px; top:12px) — фиксированная позиция, не по центру (по решению владельца).
-var helpAutoTimers = {};
+var CDM_HELP_MS = 25000;
+var cdmHelpCurrent = null;
+var cdmHelpTimer = null;
+var cdmHelpRemain = CDM_HELP_MS;
+var cdmHelpStartedAt = 0;
+var cdmHelpPaused = false;
+var cdmHelpSoundOn = true;
+var cdmHelpSoundLast = 0;
+var cdmHelpAudio = null;
+var cdmHelpSprings = new WeakMap();
+
+function cdmHelpReduced() {
+return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+}
+
+function cdmHelpApply(el, st) {
+el.style.opacity = String(st.o.v);
+el.style.transform = 'translateY(' + st.y.v.toFixed(2) + 'px) scale(' + st.s.v.toFixed(4) + ')';
+}
+
+// Пружина: прерывание сохраняет скорость свойства (импульс), как в Ding.
+function cdmHelpSpring(el, target, cfg) {
+var st = cdmHelpSprings.get(el);
+if (!st) {
+st = { o: { v: 0, vel: 0 }, y: { v: -6, vel: 0 }, s: { v: 0.97, vel: 0 }, raf: 0, target: {} };
+cdmHelpSprings.set(el, st);
+}
+for (var key in target) st.target[key] = target[key];
+if (cdmHelpReduced()) {
+for (var urgent in st.target) { st[urgent].v = st.target[urgent]; st[urgent].vel = 0; }
+cdmHelpApply(el, st);
+if (st.raf) { cancelAnimationFrame(st.raf); st.raf = 0; }
+return;
+}
+if (st.raf) return;
+var stiffness = (cfg && cfg.stiffness) || 320;
+var damping = (cfg && cfg.damping) || 27;
+var last = performance.now();
+function cdmHelpFrame(now) {
+var dt = Math.min((now - last) / 1000, 0.032);
+last = now;
+var done = true;
+['o', 'y', 's'].forEach(function (prop) {
+if (!(prop in st.target)) return;
+var p = st[prop];
+var t = st.target[prop];
+p.vel += (-stiffness * (p.v - t) - damping * p.vel) * dt;
+p.v += p.vel * dt;
+if (Math.abs(p.v - t) < 0.002 && Math.abs(p.vel) < 0.05) { p.v = t; p.vel = 0; } else { done = false; }
+});
+cdmHelpApply(el, st);
+st.raf = done ? 0 : requestAnimationFrame(cdmHelpFrame);
+}
+st.raf = requestAnimationFrame(cdmHelpFrame);
+}
+
+function cdmHelpUnlockAudio() {
+try {
+var AC = window.AudioContext || window.webkitAudioContext;
+if (!AC) return;
+if (!cdmHelpAudio) cdmHelpAudio = new AC();
+if (cdmHelpAudio.state === 'suspended') cdmHelpAudio.resume();
+} catch (err) { cdmHelpAudio = null; }
+}
+
+// Короткая нота (Web Audio, без файлов): соль+ре, мягкая атака, слышимая громкость.
+function cdmHelpSound() {
+if (!cdmHelpSoundOn) return;
+var nowMs = Date.now();
+if (nowMs - cdmHelpSoundLast < 260) return;
+cdmHelpSoundLast = nowMs;
+cdmHelpUnlockAudio();
+var ctx = cdmHelpAudio;
+if (!ctx || ctx.state !== 'running') return;
+var t = ctx.currentTime;
+var master = ctx.createGain();
+master.gain.setValueAtTime(0.0001, t);
+master.gain.exponentialRampToValueAtTime(0.42, t + 0.012);
+master.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
+master.connect(ctx.destination);
+[[784, 'sine', 1], [1175, 'triangle', 0.3]].forEach(function (p) {
+var osc = ctx.createOscillator();
+var g = ctx.createGain();
+osc.type = p[1];
+osc.frequency.setValueAtTime(p[0], t);
+g.gain.value = p[2];
+osc.connect(g);
+g.connect(master);
+osc.start(t);
+osc.stop(t + 0.4);
+});
+}
+
+function cdmHelpIsOpen($pop) {
+var el = $pop && $pop.get(0);
+return !!el && el === cdmHelpCurrent && el.style.display !== 'none';
+}
+
+function cdmHelpClearTimer() {
+if (cdmHelpTimer) { clearTimeout(cdmHelpTimer); cdmHelpTimer = null; }
+}
+
+function cdmHideHelp($pop, instant) {
+var el = $pop && $pop.get(0);
+if (!el) return;
+if (cdmHelpCurrent === el) {
+cdmHelpCurrent = null;
+cdmHelpClearTimer();
+cdmHelpPaused = false;
+cdmHelpRemain = CDM_HELP_MS;
+}
+clearTimeout(el.__cdmHideTimer);
+if (instant || cdmHelpReduced()) { el.style.display = 'none'; return; }
+cdmHelpSpring(el, { o: 0, y: -5, s: 0.985 }, { stiffness: 380, damping: 32 });
+el.__cdmHideTimer = setTimeout(function () {
+if (cdmHelpCurrent !== el) el.style.display = 'none';
+}, 240);
+}
+
+$(document).on('pointerdown.cdmHelpAudio', function () { cdmHelpUnlockAudio(); });
+
+$(document).on('mouseenter', '.cdm-help-popup', function () {
+if (this !== cdmHelpCurrent || cdmHelpPaused) return;
+cdmHelpPaused = true;
+cdmHelpRemain = Math.max(0, cdmHelpRemain - (Date.now() - cdmHelpStartedAt));
+cdmHelpClearTimer();
+var bar = this.querySelector('.cdm-help-progress');
+if (bar) bar.style.animationPlayState = 'paused';
+});
+
+$(document).on('mouseleave', '.cdm-help-popup', function () {
+if (this !== cdmHelpCurrent || !cdmHelpPaused) return;
+cdmHelpPaused = false;
+cdmHelpStartedAt = Date.now();
+var el = this;
+var bar = el.querySelector('.cdm-help-progress');
+if (bar) bar.style.animationPlayState = 'running';
+cdmHelpTimer = setTimeout(function () { cdmHideHelp($(el)); }, cdmHelpRemain);
+});
+
+$(document).on('keydown', function (e) {
+if ((e.key === 'Escape' || e.keyCode === 27) && cdmHelpCurrent) {
+e.preventDefault();
+cdmHideHelp($(cdmHelpCurrent));
+}
+});
 
 function cdmShowHelpPopup($pop) {
+var el = $pop.get(0);
 var vw = window.innerWidth;
-var left = Math.min(12, vw - 40);
-var top = 12;
-$pop.css({
-position: 'fixed',
-left: left + 'px',
-top: top + 'px',
-transform: 'none',
-display: 'block'
-});
+el.style.position = 'fixed';
+el.style.left = Math.min(12, vw - 40) + 'px';
+el.style.top = '12px';
+el.style.display = 'block';
+if (cdmHelpCurrent && cdmHelpCurrent !== el) cdmHideHelp($(cdmHelpCurrent), true);
+cdmHelpCurrent = el;
+clearTimeout(el.__cdmHideTimer);
+var st = cdmHelpSprings.get(el);
+if (!st) {
+st = { o: { v: 0, vel: 0 }, y: { v: -6, vel: 0 }, s: { v: 0.97, vel: 0 }, raf: 0, target: {} };
+cdmHelpSprings.set(el, st);
+}
+if (!cdmHelpReduced()) {
+st.o.v = 0; st.y.v = -6; st.s.v = 0.97;
+st.o.vel = 0; st.y.vel = 0; st.s.vel = 0;
+cdmHelpApply(el, st);
+}
+cdmHelpSpring(el, { o: 1, y: 0, s: 1 }, { stiffness: 330, damping: 26 });
+cdmHelpSound();
 }
 
 function cdmHideAllHelp(exceptId) {
 $('#cdmFontHelpPopup, #cdmImgHelpPopup, #cdmWidthHelpPopup, #cdmWideHelpPopup, #cdmFitHelpPopup, #cdmMarginHelpPopup').each(function() {
-  if (this.id !== exceptId) { this.style.display = 'none'; }
+  if (this.id !== exceptId && this.style.display !== 'none') cdmHideHelp($(this));
 });
 }
 
-fontHelpIcon.on('click', function(e) {
+var CDM_HELP_MAP = [
+{ sel: '#cdmFontHelpIcon', popup: '#cdmFontHelpPopup' },
+{ sel: '.cdm-img-help-icon', popup: '#cdmImgHelpPopup' },
+{ sel: '.cdm-width-help-icon', popup: '#cdmWidthHelpPopup' },
+{ sel: '.cdm-wide-help-icon', popup: '#cdmWideHelpPopup' },
+{ sel: '.cdm-fit-help-icon', popup: '#cdmFitHelpPopup' },
+{ sel: '.cdm-margin-help-icon', popup: '#cdmMarginHelpPopup' }
+];
+$(document).on('click', CDM_HELP_MAP.map(function (m) { return m.sel; }).join(','), function (e) {
 e.stopPropagation();
-if (fontHelpPopup.is(':visible')) { fontHelpPopup.hide(); clearTimeout(helpAutoTimers.font); return; }
-cdmHideAllHelp('cdmFontHelpPopup');
-cdmShowHelpPopup(fontHelpPopup);
-cdmScheduleHelpAutoClose(fontHelpPopup, 'font');
-});
-imgHelpPopup = imgHelpPopup; // (привязка ниже делегирована)
-$(document).on('click', '.cdm-img-help-icon', function(e) {
-e.stopPropagation();
-if (imgHelpPopup.is(':visible')) { imgHelpPopup.hide(); clearTimeout(helpAutoTimers.img); return; }
-cdmHideAllHelp('cdmImgHelpPopup');
-cdmShowHelpPopup(imgHelpPopup);
-cdmScheduleHelpAutoClose(imgHelpPopup, 'img');
-});
-$(document).on('click', '.cdm-width-help-icon', function(e) {
-e.stopPropagation();
-if (widthHelpPopup.is(':visible')) { widthHelpPopup.hide(); clearTimeout(helpAutoTimers.width); return; }
-cdmHideAllHelp('cdmWidthHelpPopup');
-cdmShowHelpPopup(widthHelpPopup);
-cdmScheduleHelpAutoClose(widthHelpPopup, 'width');
-});
-$(document).on('click', '.cdm-wide-help-icon', function(e) {
-e.stopPropagation();
-if (wideHelpPopup.is(':visible')) { wideHelpPopup.hide(); clearTimeout(helpAutoTimers.wide); return; }
-cdmHideAllHelp('cdmWideHelpPopup');
-cdmShowHelpPopup(wideHelpPopup);
-cdmScheduleHelpAutoClose(wideHelpPopup, 'wide');
-});
-$(document).on('click', '.cdm-fit-help-icon', function(e) {
-e.stopPropagation();
-if (fitHelpPopup.is(':visible')) { fitHelpPopup.hide(); clearTimeout(helpAutoTimers.fit); return; }
-cdmHideAllHelp('cdmFitHelpPopup');
-cdmShowHelpPopup(fitHelpPopup);
-cdmScheduleHelpAutoClose(fitHelpPopup, 'fit');
-});
-$(document).on('click', '.cdm-margin-help-icon', function(e) {
-e.stopPropagation();
-if (marginHelpPopup.is(':visible')) { marginHelpPopup.hide(); clearTimeout(helpAutoTimers.margin); return; }
-cdmHideAllHelp('cdmMarginHelpPopup');
-cdmShowHelpPopup(marginHelpPopup);
-cdmScheduleHelpAutoClose(marginHelpPopup, 'margin');
+var $pop = null;
+for (var i = 0; i < CDM_HELP_MAP.length; i++) {
+if ($(this).is(CDM_HELP_MAP[i].sel)) { $pop = $(CDM_HELP_MAP[i].popup); break; }
+}
+if (!$pop) return;
+if (cdmHelpIsOpen($pop)) { cdmHideHelp($pop); return; }
+cdmHideAllHelp($pop.attr('id'));
+cdmShowHelpPopup($pop);
+cdmScheduleHelpAutoClose($pop);
 });
 
 // [20.10.2026, задача №6] Закрытие подсказок: крестик убран — подсказка
 // закрывается САМА через 25 секунд (как тост), с линией прогресса внизу.
-function cdmScheduleHelpAutoClose($pop, key) {
-  if (helpAutoTimers[key]) clearTimeout(helpAutoTimers[key]);
-  var $bar = $pop.find('.cdm-help-progress').first();
-  if ($bar.length) {
-    $bar.get(0).style.animation = 'none';
-    void $bar.get(0).offsetWidth;
-    $bar.get(0).style.animation = '';
+function cdmScheduleHelpAutoClose($pop) {
+  var bar = $pop.find('.cdm-help-progress').get(0);
+  cdmHelpClearTimer();
+  cdmHelpPaused = false;
+  cdmHelpRemain = CDM_HELP_MS;
+  cdmHelpStartedAt = Date.now();
+  if (bar) {
+    bar.style.animation = 'none';
+    void bar.offsetWidth;
+    bar.style.animation = '';
+    bar.style.animationPlayState = 'running';
   }
-  helpAutoTimers[key] = setTimeout(function() {
-    $pop.hide();
-    helpAutoTimers[key] = null;
-  }, 25000);
+  cdmHelpTimer = setTimeout(function() {
+    cdmHideHelp($pop);
+  }, CDM_HELP_MS);
 }
 
 $(document).on('click', function(e) {

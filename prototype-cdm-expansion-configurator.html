@@ -213,25 +213,25 @@ filter: invert(1) brightness(1.5);
 </div>
 <div id="cdmImgHelpPopup" class="cdm-help-popup" style="display:none; width:400px;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
-Вставь прямую ссылку на картинку, которая будет использована для слайда. Лучше использовать картинки с соотношением сторон 16:9 и в размере не менее 1920×1080, это на всякий случай, чтобы сервис не «шакалил» качество картинки.
+Вставь прямую ссылку на картинку, которая будет использована для слайда. Лучше использовать картинки с соотношением сторон 16:9 и в размере не менее 1920×1080, учитывай качество картинки и её размеры, если собираешься использовать нестандартные размеры блока в конфигураторе.
 </p>
 <div class="cdm-help-progress"></div>
 </div>
 <div id="cdmWidthHelpPopup" class="cdm-help-popup" style="display:none; width:490px;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0 0 12px 0;">
-Ширина блока для превью задаётся дискретно, согласно логике стандартных настроек ширины страницы «Таплинк» - выбери один из стандартных размеров страницы, которые установлены у тебя: 620, 720, 820 или 1020.
+Ширина блока для превью задаётся дискретно, согласно логике настроек ширины страницы, установленных сервисом «Таплинк». Выбери один из стандартных размеров страницы, которые установлены у тебя: 620, 720, 820 или 1020.
 </p>
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0 0 12px 0;">
-Как работает эта настройка, например: стандартная ширина страницы у тебя 820 и ширина блока выбрана 820 - блок будет занимать 100% ширины страницы, или другой пример: ширина страницы 1020, а в настройках выбрана 820, значит блок займет место на странице равное размеру 820.
+Как работает эта настройка, например: стандартная ширина твоей страницы 820 и ширина блока, выбранная в настройках конфигуратора, тоже 820, значит блок будет занимать 100% ширины страницы, или другой пример: ширина твоей страницы 1020, а в настройках конфигуратора выбрана 820, значит блок займет место на странице, равное размеру 820.
 </p>
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
-Есть и обратное правило, когда стандартная ширина страницы меньше чем установленная ширина блока - блок займёт всю доступную ширину страницы. На мобильных устройствах блок всегда на всю ширину экрана.
+Есть и обратное правило, когда стандартная ширина страницы меньше, чем установленная ширина блока в конфигураторе - блок займёт всю доступную ширину страницы. На мобильных устройствах блок всегда на всю ширину экрана.
 </p>
 <div class="cdm-help-progress"></div>
 </div>
 <div id="cdmWideHelpPopup" class="cdm-help-popup" style="display:none; width:490px;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
-Нестандартная ширина позволяет сделать блок шире стандартного контейнера страницы: кнопки 1280, 1440, 1600 и 1920 задают максимальную ширину блока в пикселях. Если экран уже выбранного значения, блок занимает всю ширину экрана — поэтому на ноутбуке 1366 px кнопки 1440/1600/1920 выглядят одинаково, разница видна только на мониторах шире выбранного значения. Подсказка скоро будет дополнена.
+Нестандартная ширина конфигуратора позволяет сделать блок шире стандартного размера страницы. Если экран устройства посетителя сайта, на котором будет отображаться твой сайт, окажется меньше выбранной тобой нестандартной ширины, то блок займёт всю ширину экрана - к примеру, на ноутбуке с шириной экрана 1366 блок с шириной 1440/1600/1920 будет выглядеть одинаково, от края до края экрана, если же ширина экрана устройства будет больше установленной ширины для блока с помощью конфигуратора, то разница в размерах для блока на таком экране будет видна.
 </p>
 <div class="cdm-help-progress"></div>
 </div>
@@ -245,9 +245,9 @@ filter: invert(1) brightness(1.5);
 </p>
 <div class="cdm-help-progress"></div>
 </div>
-<div id="cdmMarginHelpPopup" class="cdm-help-popup" style="display:none; width:490px;">
+<div id="cdmMarginHelpPopup" class="cdm-help-popup" style="display:none; width:445px;">
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
-Внешние отступы добавляют пустое пространство между блоком и соседними блоками страницы. Ширину и центрирование блока они не меняют: увеличивается только расстояние сверху и снизу. Отступ складывается с собственными промежутками Taplink, поэтому итоговое расстояние на странице может оказаться больше выбранного значения. Мобильные отступы действуют на экранах уже 441 px. На очень узких экранах (до 400 px) к верхнему отступу сохраняется базовый отступ 8% ширины экрана.
+Внешние отступы добавляют пространство между твоим блоком и соседними с ним блоками, размещёнными на странице. Размер отступа складывается с собственными отступами «Таплинк», поэтому итоговый размер отступа (расстояние) между блоками может оказаться больше выбранного значения - всегда контролируй и проверяй итоговый отступ на публичной странице сайта.
 </p>
 <div class="cdm-help-progress"></div>
 </div>
@@ -263,7 +263,7 @@ filter: invert(1) brightness(1.5);
 <div style="margin-bottom:24px;">
 <h3 style="font-size:14px; font-weight:300; margin:0 0 16px; color:#333;"><i class="ph ph-faders" style="font-size:14px; color:#333; margin-right:6px;"></i>Общие настройки</h3>
 <div class="cdm-control-group">
-<label class="cdm-label">Стандартная ширина блока <span id="desktopWidthVal">820</span>px <i class="ph ph-question cdm-width-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
+<label class="cdm-label">Стандартная ширина блока <i class="ph ph-question cdm-width-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
 <div class="cdm-width-btns cdm-control-group-inner" id="cdmDesktopWidthBtns">
 <button type="button" class="cdm-width-btn" data-width="620">620</button>
 <button type="button" class="cdm-width-btn" data-width="720">720</button>
@@ -1736,7 +1736,6 @@ const borderOpacity = $('#cdmBorderOpacity');
 const borderOpacityVal = $('#borderOpacityVal');
 
 let desktopWidth = 820;
-const desktopWidthVal = $('#desktopWidthVal');
 // [1.75] Дискретный выбор ширины блока по брейкпоинтам (620/720/820/1020)
 function desktopWidthToPx(w) {
 if (w === 'full') return 0; // "на всю ширину" — 0 = без ограничения max-width
@@ -1750,7 +1749,6 @@ return n === 620 || n === 720 || n === 820 || n === 1020;
 function setDesktopWidth(val) {
 var n = desktopWidthToPx(val);
 desktopWidth = n;
-desktopWidthVal.text(n > 0 ? n : 'полная');
 $('.cdm-width-btn').removeClass('active');
 if (n > 0) {
 $('.cdm-width-btn[data-width="' + n + '"]').addClass('active');
@@ -1786,7 +1784,6 @@ setWideWidth($(this).data('wide'));
 if (desktopWidth > 0) {
 $('.cdm-width-btn[data-width="' + desktopWidth + '"]').addClass('active');
 }
-desktopWidthVal.text(desktopWidth > 0 ? desktopWidth : 'полная');
 })();
 const desktopHeight = $('#cdmDesktopHeight');
 const desktopHeightVal = $('#desktopHeightVal');
@@ -2005,7 +2002,6 @@ totalTimeVal.text(totalTime.val());
 bgOpacityVal.text(bgOpacity.val() + '%');
 titleOpacityVal.text(titleOpacity.val() + '%');
 textOpacityVal.text(textOpacity.val() + '%');
-desktopWidthVal.text(desktopWidth);
 desktopHeightVal.text(desktopHeight.val());
 desktopTitleSizeVal.text(desktopTitleSize.val());
 desktopTextSizeVal.text(desktopTextSize.val());

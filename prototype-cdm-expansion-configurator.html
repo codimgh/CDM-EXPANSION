@@ -1187,6 +1187,13 @@ border-color: #555;
 position: relative;
 overflow: hidden;
 margin: 0 auto;
+/* [эксперимент 21.11.2026] высота, радиус и рамка — переменными, чтобы
+   ползунки не пересобирали превью. */
+height: var(--cdm-pv-h, 400px);
+border-radius: var(--cdm-pv-r, 8px);
+border-style: solid;
+border-width: var(--cdm-pv-bw, 0px);
+border-color: var(--cdm-pv-bc, transparent);
 }
 .cdm-slider-preview .cdm-sp-slide {
 width: 100%;
@@ -1204,11 +1211,14 @@ object-fit: cover;
 }
 .cdm-slider-preview .cdm-sp-panel {
 position: absolute;
-bottom: 0;
-left: 0;
 width: 100%;
-padding: 20px 30px;
 box-sizing: border-box;
+bottom: var(--cdm-pv-pb, 0px);
+left: var(--cdm-pv-pl, 0px);
+right: var(--cdm-pv-prr, 0px);
+padding: var(--cdm-pv-pp, 20px 30px);
+border-radius: var(--cdm-pv-pr, 0px);
+background: var(--cdm-pv-pbg, rgba(255,255,255,0));
 }
 .cdm-slider-preview .cdm-sp-panel h5 {
 margin: 0;
@@ -1219,11 +1229,15 @@ font-weight: var(--cdm-pv-tweight, 700);
    сидели в inline-стилях h5/p, каждое движение ползунка пересобирало превью. */
 font-size: var(--cdm-pv-tsize, 22px);
 color: var(--cdm-pv-tcolor, #333333);
+margin-bottom: var(--cdm-pv-tm, 10px);
+text-align: var(--cdm-pv-ta, left);
 }
 .cdm-slider-preview .cdm-sp-panel p {
 font-weight: var(--cdm-pv-txweight, 300);
 font-size: var(--cdm-pv-txsize, 15px);
 color: var(--cdm-pv-txcolor, #333333);
+margin: 0;
+text-align: var(--cdm-pv-txa, left);
 }
 .cdm-slider-preview .cdm-sp-panel p {
 margin-bottom: 10px;
@@ -1999,14 +2013,14 @@ var imgSrcP = s.img || '';
 var imgOnerr = 'this.onerror=null;this.style.display="none";this.closest(".cdm-sp-slide").style.background="#ececec";';
 slidesHtml += '<div class="cdm-sp-slide" style="animation: cdm-sp-slideanim ' + animDur + ' infinite; animation-delay: ' + delay + 's;">' +
 '<img src="' + escapeHtml(imgSrcP) + '" alt="" onerror="' + imgOnerr + '" style="animation: cdm-sp-zoom ' + animDur + ' infinite; animation-delay: ' + delay + 's;">' +
-'<div class="cdm-sp-panel" style="background: ' + bgRgba + '; border-radius:' + panelRadius + '; bottom:' + panelBottom + '; left:' + panelML + '; right:' + panelMR + '; width:auto; padding:' + panelPT + ' ' + panelPR + ' ' + panelPB + ' ' + panelPL + ';">' +
-'<h5 style="margin-bottom:' + txMargin + '; text-align:' + tAlign + ';">' + escapeHtml(s.title) + '</h5>' +
-'<p style="margin:0; text-align:' + txAlign + ';">' + escapeHtml(s.text) + '</p>' +
+'<div class="cdm-sp-panel" style="width:auto;">' +
+'<h5>' + escapeHtml(s.title) + '</h5>' +
+'<p>' + escapeHtml(s.text) + '</p>' +
 '</div>' +
 '</div>';
 }
 
-var contentHtml = '<div class="cdm-slider-preview" style="width:100%; height:' + sHeight + '; border-radius:' + radius + '; position:relative; overflow:hidden; margin:0 auto; border:' + bWidth + ' solid ' + bColor + ';">' + slidesHtml + '</div>';
+var contentHtml = '<div class="cdm-slider-preview" style="width:100%;">' + slidesHtml + '</div>';
 
 var finalHtml = '';
 if (previewMode === 'desktop') {
@@ -2082,6 +2096,20 @@ this.style.setProperty('--cdm-pv-tsize', tSize);
 this.style.setProperty('--cdm-pv-txsize', txSize);
 this.style.setProperty('--cdm-pv-tcolor', titleRgba);
 this.style.setProperty('--cdm-pv-txcolor', textRgba);
+// [эксперимент] оформление контейнера и плашки — переменными
+this.style.setProperty('--cdm-pv-h', sHeight);
+this.style.setProperty('--cdm-pv-r', radius);
+this.style.setProperty('--cdm-pv-bw', bWidth);
+this.style.setProperty('--cdm-pv-bc', bColor);
+this.style.setProperty('--cdm-pv-pbg', bgRgba);
+this.style.setProperty('--cdm-pv-pr', panelRadius);
+this.style.setProperty('--cdm-pv-pb', panelBottom);
+this.style.setProperty('--cdm-pv-pl', panelML);
+this.style.setProperty('--cdm-pv-prr', panelMR);
+this.style.setProperty('--cdm-pv-pp', panelPT + ' ' + panelPR + ' ' + panelPB + ' ' + panelPL);
+this.style.setProperty('--cdm-pv-tm', txMargin);
+this.style.setProperty('--cdm-pv-ta', tAlign);
+this.style.setProperty('--cdm-pv-txa', txAlign);
 });
 
 if (previewMode === 'desktop') {

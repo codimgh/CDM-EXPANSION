@@ -241,6 +241,12 @@ filter: invert(1) brightness(1.5);
 </p>
 <div class="cdm-help-progress"></div>
 </div>
+<div id="cdmMarginHelpPopup" style="display:none; position:absolute; z-index:5000; padding:18px 24px; border-radius:6px; width:490px; max-width:calc(100vw - 40px); font-family:'Inter',sans-serif; line-height:1.6; text-wrap:pretty; overflow-wrap:break-word; background:#ffffff; color:#333; box-shadow:none; left:12px; top:12px; overflow:hidden;">
+<p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
+Внешние отступы добавляют пустое пространство между блоком и соседними блоками страницы. Ширину и центрирование блока они не меняют: увеличивается только расстояние сверху и снизу. Отступ складывается с собственными промежутками Taplink, поэтому итоговое расстояние на странице может оказаться больше выбранного значения. Мобильные отступы действуют на экранах уже 441 px. На очень узких экранах (до 400 px) к верхнему отступу сохраняется базовый отступ 8% ширины экрана.
+</p>
+<div class="cdm-help-progress"></div>
+</div>
 <div class="cdm-preview-tools" id="cdmPreviewTools">
 <span class="cdm-fit-info"><span class="cdm-fit-badge" id="cdmFitBadge">—</span><i class="ph ph-question cdm-fit-help-icon" id="cdmFitHelpIcon" style="font-size:16px; vertical-align:middle; cursor:pointer; margin-left:6px;"></i></span>
 <span class="cdm-fit-btns">
@@ -594,6 +600,18 @@ filter: invert(1) brightness(1.5);
 <input type="range" id="cdmDesktopPanelRadius" class="cdm-range" min="0" max="30" value="0" step="1">
 </div>
 </div>
+<div class="cdm-control-group">
+<label class="cdm-label cdm-label-range">Внешний отступ блока сверху <span class="cdm-label-value"><span id="desktopBlockMarginTopVal">0</span>px</span><i class="ph ph-question cdm-margin-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
+<div class="cdm-range-wrapper">
+<input type="range" id="cdmDesktopBlockMarginTop" class="cdm-range" min="0" max="120" value="0" step="1">
+</div>
+</div>
+<div class="cdm-control-group">
+<label class="cdm-label cdm-label-range">Внешний отступ блока снизу <span class="cdm-label-value"><span id="desktopBlockMarginBottomVal">0</span>px</span></label>
+<div class="cdm-range-wrapper">
+<input type="range" id="cdmDesktopBlockMarginBottom" class="cdm-range" min="0" max="120" value="0" step="1">
+</div>
+</div>
 </div>
 <div style="margin-bottom:24px;">
 <h3 style="font-size:14px; font-weight:300; margin:0 0 16px; color:#333;"><i class="ph ph-faders" style="font-size:14px; color:#333; margin-right:6px;"></i>Настройки (мобильные)</h3>
@@ -690,6 +708,18 @@ filter: invert(1) brightness(1.5);
 <label class="cdm-label cdm-label-range">Скругление углов плашки <span class="cdm-label-value"><span id="mobilePanelRadiusVal">0</span>px</span></label>
 <div class="cdm-range-wrapper">
 <input type="range" id="cdmMobilePanelRadius" class="cdm-range" min="0" max="30" value="0" step="1">
+</div>
+</div>
+<div class="cdm-control-group">
+<label class="cdm-label cdm-label-range">Внешний отступ блока сверху <span class="cdm-label-value"><span id="mobileBlockMarginTopVal">0</span>px</span><i class="ph ph-question cdm-margin-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
+<div class="cdm-range-wrapper">
+<input type="range" id="cdmMobileBlockMarginTop" class="cdm-range" min="0" max="120" value="0" step="1">
+</div>
+</div>
+<div class="cdm-control-group">
+<label class="cdm-label cdm-label-range">Внешний отступ блока снизу <span class="cdm-label-value"><span id="mobileBlockMarginBottomVal">0</span>px</span></label>
+<div class="cdm-range-wrapper">
+<input type="range" id="cdmMobileBlockMarginBottom" class="cdm-range" min="0" max="120" value="0" step="1">
 </div>
 </div>
 </div>
@@ -1743,6 +1773,10 @@ const desktopPanelBottom = $('#cdmDesktopPanelBottom');
 const desktopPanelBottomVal = $('#desktopPanelBottomVal');
 const desktopPanelRadius = $('#cdmDesktopPanelRadius');
 const desktopPanelRadiusVal = $('#desktopPanelRadiusVal');
+const desktopBlockMarginTop = $('#cdmDesktopBlockMarginTop');
+const desktopBlockMarginTopVal = $('#desktopBlockMarginTopVal');
+const desktopBlockMarginBottom = $('#cdmDesktopBlockMarginBottom');
+const desktopBlockMarginBottomVal = $('#desktopBlockMarginBottomVal');
 
 const mobileHeight = $('#cdmMobileHeight');
 const mobileHeightVal = $('#mobileHeightVal');
@@ -1768,6 +1802,10 @@ const mobilePanelBottom = $('#cdmMobilePanelBottom');
 const mobilePanelBottomVal = $('#mobilePanelBottomVal');
 const mobilePanelRadius = $('#cdmMobilePanelRadius');
 const mobilePanelRadiusVal = $('#mobilePanelRadiusVal');
+const mobileBlockMarginTop = $('#cdmMobileBlockMarginTop');
+const mobileBlockMarginTopVal = $('#mobileBlockMarginTopVal');
+const mobileBlockMarginBottom = $('#cdmMobileBlockMarginBottom');
+const mobileBlockMarginBottomVal = $('#mobileBlockMarginBottomVal');
 
 let bgColor = '#ffffff';
 let titleColor = '#333333';
@@ -1943,6 +1981,8 @@ desktopBorderWidthVal.text(desktopBorderWidth.val());
 borderOpacityVal.text(borderOpacity.val() + '%');
 desktopPanelBottomVal.text(desktopPanelBottom.val());
 desktopPanelRadiusVal.text(desktopPanelRadius.val());
+desktopBlockMarginTopVal.text(desktopBlockMarginTop.val());
+desktopBlockMarginBottomVal.text(desktopBlockMarginBottom.val());
 mobileHeightVal.text(mobileHeight.val());
 mobileTitleSizeVal.text(mobileTitleSize.val());
 mobileTextSizeVal.text(mobileTextSize.val());
@@ -1952,6 +1992,8 @@ mobileTextMarginVal.text(mobileTextMargin.val());
 mobileBorderWidthVal.text(mobileBorderWidth.val());
 mobilePanelBottomVal.text(mobilePanelBottom.val());
 mobilePanelRadiusVal.text(mobilePanelRadius.val());
+mobileBlockMarginTopVal.text(mobileBlockMarginTop.val());
+mobileBlockMarginBottomVal.text(mobileBlockMarginBottom.val());
 }
 
 function getSlideData() {
@@ -2126,6 +2168,16 @@ this.style.setProperty('--cdm-pv-animdur', animDur);
 container.find('.cdm-slider-preview .cdm-sp-slide').each(function(idx) {
 this.style.setProperty('--cdm-pv-dl', ((idx * delayStep) - (totalSec * 0.1)) + 's');
 });
+});
+
+/* [21.11.2026] Внешние отступы блока в превью — только через style, разметку
+   не трогаем (пересборки DOM нет). В мобильном режиме повторяем живое правило
+   узких экранов: сверху max(8%, выбранное значение). */
+var pvMarginTop = useMobile ? mobileBlockMarginTop.val() : desktopBlockMarginTop.val();
+var pvMarginBottom = useMobile ? mobileBlockMarginBottom.val() : desktopBlockMarginBottom.val();
+container.find('.cdm-slider-preview').each(function() {
+this.style.marginTop = useMobile ? ('max(8%, ' + pvMarginTop + 'px)') : (pvMarginTop + 'px');
+this.style.marginBottom = pvMarginBottom + 'px';
 });
 
 if (previewMode === 'desktop') {
@@ -2344,6 +2396,8 @@ var deskPanelPB = desktopPanelPaddingBottom.val();
 var deskPanelPL = desktopPanelPaddingLeft.val();
 var deskPanelBottom = desktopPanelBottom.val();
 var deskPanelRadius = desktopPanelRadius.val();
+var deskBlockMT = desktopBlockMarginTop.val();
+var deskBlockMB = desktopBlockMarginBottom.val();
 var borderRgba = hexToRgba(borderColor, borderOpacity.val());
 
 var mobH = mobileHeight.val();
@@ -2362,6 +2416,8 @@ var mobPanelPB = mobilePanelPaddingBottom.val();
 var mobPanelPL = mobilePanelPaddingLeft.val();
 var mobPanelBottom = mobilePanelBottom.val();
 var mobPanelRadius = mobilePanelRadius.val();
+var mobBlockMT = mobileBlockMarginTop.val();
+var mobBlockMB = mobileBlockMarginBottom.val();
 
 var panelPadding = deskPanelPT + 'px ' + deskPanelPR + 'px ' + deskPanelPB + 'px ' + deskPanelPL + 'px';
 var panelMargin = '0 ' + deskPanelMR + 'px ' + deskPanelMB + 'px ' + deskPanelML + 'px';
@@ -2411,6 +2467,8 @@ slidesHtml +
 '--cdm-' + suffix + '-25: ' + deskPanelPL + 'px;\n' +
 '--cdm-' + suffix + '-26: ' + desktopTitleAlign + ';\n' +
 '--cdm-' + suffix + '-27: ' + desktopTextAlign + ';\n' +
+'--cdm-' + suffix + '-28: ' + deskBlockMT + 'px;\n' +
+'--cdm-' + suffix + '-29: ' + deskBlockMB + 'px;\n' +
 '}\n' +
 '.cdm-' + suffix + '-1 {\n' +
 blockW100 +
@@ -2420,6 +2478,10 @@ blockMaxW +
 'overflow: hidden;\n' +
 'background: #fff;\n' +
 blockMargin +
+/* [21.11.2026] Внешние отступы блока. Стоят ПОСЛЕ blockMargin: иначе
+   margin: 0 auto обнулил бы верхний и нижний отступы. */
+'margin-top: var(--cdm-' + suffix + '-28);\n' +
+'margin-bottom: var(--cdm-' + suffix + '-29);\n' +
 'border-radius: var(--cdm-' + suffix + '-14);\n' +
 'border: var(--cdm-' + suffix + '-16) solid var(--cdm-' + suffix + '-17);\n' +
 '}\n' +
@@ -2498,6 +2560,8 @@ animDelaysCss +
 'height: ' + mobH + 'px !important;\n' +
 'border-width: ' + mobBW + 'px;\n' +
 'border-color: ' + borderRgba + ';\n' +
+'margin-top: ' + mobBlockMT + 'px;\n' +
+'margin-bottom: ' + mobBlockMB + 'px;\n' +
 '}\n' +
 '.cdm-' + suffix + '-3 {\n' +
 'padding: ' + mobPanelPT + 'px ' + mobPanelPR + 'px ' + mobPanelPB + 'px ' + mobPanelPL + 'px;\n' +
@@ -2525,7 +2589,10 @@ animDelaysCss +
 'max-width: 100% !important;\n' +
 'margin-left: 0 !important;\n' +
 'height: ' + mobH + 'px !important;\n' +
-'margin-top: 8%;\n' +
+/* [21.11.2026] Прежний базовый отступ 8% сохранён; выбранный отступ его
+   заменяет, только если он больше (max). */
+'margin-top: max(8%, ' + mobBlockMT + 'px);\n' +
+'margin-bottom: ' + mobBlockMB + 'px;\n' +
 '}\n' +
 '}\n' +
 fontCssExtra +
@@ -2645,7 +2712,8 @@ titleAlign: desktopTitleAlign, textAlign: desktopTextAlign,
 panelMarginRight: desktopPanelMarginRight.val(), panelMarginLeft: desktopPanelMarginLeft.val(), panelMarginBottom: 0,
 panelPaddingTop: desktopPanelPaddingTop.val(), panelPaddingRight: desktopPanelPaddingRight.val(),
 panelPaddingBottom: desktopPanelPaddingBottom.val(), panelPaddingLeft: desktopPanelPaddingLeft.val(),
-panelBottom: desktopPanelBottom.val(), panelRadius: desktopPanelRadius.val()
+panelBottom: desktopPanelBottom.val(), panelRadius: desktopPanelRadius.val(),
+blockMarginTop: desktopBlockMarginTop.val(), blockMarginBottom: desktopBlockMarginBottom.val()
 },
 mobile: {
 height: mobileHeight.val(),
@@ -2657,7 +2725,8 @@ titleAlign: mobileTitleAlign, textAlign: mobileTextAlign,
 panelMarginRight: mobilePanelMarginRight.val(), panelMarginLeft: mobilePanelMarginLeft.val(), panelMarginBottom: 0,
 panelPaddingTop: mobilePanelPaddingTop.val(), panelPaddingRight: mobilePanelPaddingRight.val(),
 panelPaddingBottom: mobilePanelPaddingBottom.val(), panelPaddingLeft: mobilePanelPaddingLeft.val(),
-panelBottom: mobilePanelBottom.val(), panelRadius: mobilePanelRadius.val()
+panelBottom: mobilePanelBottom.val(), panelRadius: mobilePanelRadius.val(),
+blockMarginTop: mobileBlockMarginTop.val(), blockMarginBottom: mobileBlockMarginBottom.val()
 },
 slides: slides
 };
@@ -2744,6 +2813,10 @@ if (m.panelPaddingBottom !== undefined) mobilePanelPaddingBottom.val(m.panelPadd
 if (m.panelPaddingLeft !== undefined) mobilePanelPaddingLeft.val(m.panelPaddingLeft);
 if (m.panelBottom !== undefined) mobilePanelBottom.val(m.panelBottom);
 if (m.panelRadius !== undefined) mobilePanelRadius.val(m.panelRadius);
+if (d.blockMarginTop !== undefined) desktopBlockMarginTop.val(d.blockMarginTop);
+if (d.blockMarginBottom !== undefined) desktopBlockMarginBottom.val(d.blockMarginBottom);
+if (m.blockMarginTop !== undefined) mobileBlockMarginTop.val(m.blockMarginTop);
+if (m.blockMarginBottom !== undefined) mobileBlockMarginBottom.val(m.blockMarginBottom);
 
 // slides
 if (Array.isArray(s.slides) && s.slides.length) {
@@ -2840,6 +2913,8 @@ desktopPanelPaddingBottom: 30,
 desktopPanelPaddingLeft: 30,
 desktopPanelBottom: 0,
 desktopPanelRadius: 0,
+desktopBlockMarginTop: 0,
+desktopBlockMarginBottom: 0,
 mobileHeight: 400,
 mobileTitleSize: 16,
 mobileTextSize: 13,
@@ -2858,6 +2933,8 @@ mobilePanelPaddingBottom: 20,
 mobilePanelPaddingLeft: 20,
 mobilePanelBottom: 0,
 mobilePanelRadius: 0,
+mobileBlockMarginTop: 0,
+mobileBlockMarginBottom: 0,
 slides: [
 { id: 1, title: 'Заголовок', text: 'Рыбатекст используется дизайнерами, проектировщиками и фронтендерами, когда нужно быстро заполнить макеты или прототипы содержимым.', img: 'img/1q.jpg' },
 { id: 2, title: 'Заголовок', text: 'Это тестовый контент, который не должен нести никакого смысла, лишь показать наличие самого текста или продемонстрировать типографику.', img: 'img/2q.jpg' },
@@ -2900,6 +2977,8 @@ desktopPanelPaddingBottom.val(defaultValues.desktopPanelPaddingBottom);
 desktopPanelPaddingLeft.val(defaultValues.desktopPanelPaddingLeft);
 desktopPanelBottom.val(defaultValues.desktopPanelBottom);
 desktopPanelRadius.val(defaultValues.desktopPanelRadius);
+desktopBlockMarginTop.val(defaultValues.desktopBlockMarginTop);
+desktopBlockMarginBottom.val(defaultValues.desktopBlockMarginBottom);
 
 mobileHeight.val(defaultValues.mobileHeight);
 mobileTitleSize.val(defaultValues.mobileTitleSize);
@@ -2916,6 +2995,8 @@ mobilePanelPaddingBottom.val(defaultValues.mobilePanelPaddingBottom);
 mobilePanelPaddingLeft.val(defaultValues.mobilePanelPaddingLeft);
 mobilePanelBottom.val(defaultValues.mobilePanelBottom);
 mobilePanelRadius.val(defaultValues.mobilePanelRadius);
+mobileBlockMarginTop.val(defaultValues.mobileBlockMarginTop);
+mobileBlockMarginBottom.val(defaultValues.mobileBlockMarginBottom);
 
 $('.customColorHexBgColor').text(bgColor);
 $('.customColorPreviewBgColor').css('background', bgColor);
@@ -2957,11 +3038,13 @@ desktopTitleWeight, desktopTextWeight, desktopTextMargin,
 desktopBorderWidth, desktopPanelMarginRight, desktopPanelMarginLeft,
 desktopPanelPaddingTop, desktopPanelPaddingRight, desktopPanelPaddingBottom, desktopPanelPaddingLeft,
 desktopPanelBottom, desktopPanelRadius,
+desktopBlockMarginTop, desktopBlockMarginBottom,
 mobileHeight, mobileTitleSize, mobileTextSize,
 mobileTitleWeight, mobileTextWeight, mobileTextMargin,
 mobileBorderWidth, mobilePanelMarginRight, mobilePanelMarginLeft,
 mobilePanelPaddingTop, mobilePanelPaddingRight, mobilePanelPaddingBottom, mobilePanelPaddingLeft,
-mobilePanelBottom, mobilePanelRadius
+mobilePanelBottom, mobilePanelRadius,
+mobileBlockMarginTop, mobileBlockMarginBottom
 ];
 allInputs.forEach(function(el) { el.on('input', updateAll); });
 
@@ -3060,6 +3143,7 @@ var imgHelpPopup = $('#cdmImgHelpPopup');
 var widthHelpPopup = $('#cdmWidthHelpPopup');
 var wideHelpPopup = $('#cdmWideHelpPopup');
 var fitHelpPopup = $('#cdmFitHelpPopup');
+var marginHelpPopup = $('#cdmMarginHelpPopup');
 
 // [20.10.2026, задача №6] Подсказки открываются в левом верхнем углу окна
 // (left:12px; top:12px) — фиксированная позиция, не по центру (по решению владельца).
@@ -3079,7 +3163,7 @@ display: 'block'
 }
 
 function cdmHideAllHelp(exceptId) {
-$('#cdmFontHelpPopup, #cdmImgHelpPopup, #cdmWidthHelpPopup, #cdmWideHelpPopup, #cdmFitHelpPopup').each(function() {
+$('#cdmFontHelpPopup, #cdmImgHelpPopup, #cdmWidthHelpPopup, #cdmWideHelpPopup, #cdmFitHelpPopup, #cdmMarginHelpPopup').each(function() {
   if (this.id !== exceptId) { this.style.display = 'none'; }
 });
 }
@@ -3120,6 +3204,13 @@ cdmHideAllHelp('cdmFitHelpPopup');
 cdmShowHelpPopup(fitHelpPopup);
 cdmScheduleHelpAutoClose(fitHelpPopup, 'fit');
 });
+$(document).on('click', '.cdm-margin-help-icon', function(e) {
+e.stopPropagation();
+if (marginHelpPopup.is(':visible')) { marginHelpPopup.hide(); clearTimeout(helpAutoTimers.margin); return; }
+cdmHideAllHelp('cdmMarginHelpPopup');
+cdmShowHelpPopup(marginHelpPopup);
+cdmScheduleHelpAutoClose(marginHelpPopup, 'margin');
+});
 
 // [20.10.2026, задача №6] Закрытие подсказок: крестик убран — подсказка
 // закрывается САМА через 25 секунд (как тост), с линией прогресса внизу.
@@ -3138,8 +3229,8 @@ function cdmScheduleHelpAutoClose($pop, key) {
 }
 
 $(document).on('click', function(e) {
-if ($(e.target).closest('#cdmFontHelpPopup').length || $(e.target).closest('#cdmImgHelpPopup').length || $(e.target).closest('#cdmWidthHelpPopup').length || $(e.target).closest('#cdmWideHelpPopup').length || $(e.target).closest('#cdmFitHelpPopup').length) return;
-if ($(e.target).closest('.cdm-img-help-icon, .cdm-width-help-icon, #cdmFontHelpIcon, .cdm-fit-help-icon').length) return;
+if ($(e.target).closest('#cdmFontHelpPopup').length || $(e.target).closest('#cdmImgHelpPopup').length || $(e.target).closest('#cdmWidthHelpPopup').length || $(e.target).closest('#cdmWideHelpPopup').length || $(e.target).closest('#cdmFitHelpPopup').length || $(e.target).closest('#cdmMarginHelpPopup').length) return;
+if ($(e.target).closest('.cdm-img-help-icon, .cdm-width-help-icon, #cdmFontHelpIcon, .cdm-fit-help-icon, .cdm-margin-help-icon').length) return;
 cdmHideAllHelp();
 });
 

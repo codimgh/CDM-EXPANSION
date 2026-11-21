@@ -236,8 +236,12 @@ filter: invert(1) brightness(1.5);
 <div class="cdm-help-progress"></div>
 </div>
 <div id="cdmFitHelpPopup" class="cdm-help-popup" style="display:none; width:460px;">
+<span class="cdm-fit-help-values" id="cdmFitHelpValues"></span>
 <p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
-Эта строка показывает, в каком масштабе блок нарисован в окне предпросмотра. «Блок 1600 px» — ширина блока на настоящей странице, «Превью 86%» — во сколько раз он уменьшен здесь, чтобы целиком поместиться по ширине колонки. Пропорции сохранены: на живой странице блок будет выглядеть так же, только крупнее. Если блок не помещается в предпросмотр целиком, в настройках под «Нестандартной шириной блока» появляется кнопка «Смотреть в полном размере»: она открывает блок в новой вкладке браузера в настоящую ширину. Если окно уже ширины блока, блок адаптируется по ширине окна.
+Первое число — ширина блока на настоящей странице, второе — во сколько раз он уменьшен здесь, чтобы целиком поместиться по ширине окна предпросмотра. Пропорции сохранены: на живой странице блок будет выглядеть так же, только крупнее; «Превью 100%» значит, что блок показан один к одному.
+</p>
+<p style="font-size:14px; font-weight:300; line-height:1.5; margin:8px 0 0;">
+Если блок не помещается целиком, в настройках под «Нестандартной шириной блока» появляется кнопка «Смотреть в полном размере»: она открывает блок в новой вкладке браузера в настоящую ширину. Если окно уже ширины блока, блок адаптируется по ширине окна.
 </p>
 <div class="cdm-help-progress"></div>
 </div>
@@ -1154,8 +1158,21 @@ padding-bottom: 120px;
 box-sizing: border-box;
 }
 .desktop-screen { background: transparent; border-radius: 12px; overflow: hidden; padding: 80px 20px; margin: 12px; display: flex; justify-content: center; transition: max-width 0.2s ease, padding 0.2s ease; box-sizing: border-box; width: 100%; }
-.cdm-preview-tools { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 6px; margin: 0 0 4px; font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: -0.5px; color: #666; background: rgba(255,255,255,0.92); border-radius: 6px; }
-.cdm-master.dark-theme .cdm-preview-tools { background: rgba(26,26,26,0.92); color: #bbb; }
+/* [21.11.2026, задача №30] Строка подписи «Блок N px · Превью k%» убрана из вёрстки:
+   места в потоке не занимает, значения ушли в подсказку «?» у рамки превью.
+   Разметка оставлена в DOM (бейдж и старую иконку обновляет/ловит JS) — только скрыта. */
+.cdm-preview-tools { display: none; }
+/* Пустая верхняя строка превью (иконки темы/девайса внутри скрыты с 1.70): держала
+   margin-bottom 20px и опускала рамку. Инлайновый display:flex на элементе требует
+   !important. Разметка и обработчики остаются — скрываем только вид. */
+.cdm-preview-top { display: none !important; }
+/* Иконка «?» в левом верхнем углу рамки превью (рамка — .desktop-mock, position:relative). */
+.desktop-mock > .cdm-fit-help-icon { position: absolute; top: 8px; left: 8px; z-index: 5; font-size: 16px; line-height: 1; color: #c7c7c7; cursor: pointer; transition: color 0.2s; }
+.desktop-mock > .cdm-fit-help-icon:hover { color: #4DB5FF; }
+.cdm-master.dark-theme .desktop-mock > .cdm-fit-help-icon { color: #7a7a7a; }
+.cdm-master.dark-theme .desktop-mock > .cdm-fit-help-icon:hover { color: #4DB5FF; }
+/* Живые значения в подсказке (те же иконки и порядок, что были в подписи). */
+.cdm-fit-help-values { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 10px; font-size: 14px; font-weight: 400; letter-spacing: -0.5px; white-space: nowrap; }
 .cdm-fit-info { display: inline-flex; align-items: center; gap: 2px; }
 /* [20.11.2026, задача №22] Подпись превью: две части «иконка + текст».
    Настройки текста и иконок независимы:
@@ -2100,11 +2117,11 @@ var finalHtml = '';
 if (previewMode === 'desktop') {
 if (wideWidth) {
 var wideMax = wideWidth;
-finalHtml = '<div class="cdm-preview-scaler"><div class="desktop-mock" style="width:100%;margin:0 auto;"><div class="desktop-screen cdm-fit-screen"><div class="cdm-content-wrapper cdm-content-wrapper-wide" style="width:' + wideMax + 'px; max-width:' + wideMax + 'px; margin:0 auto;">' + contentHtml + '</div></div></div></div>';
+finalHtml = '<div class="cdm-preview-scaler"><div class="desktop-mock" style="width:100%;margin:0 auto;">' + CDM_FIT_HELP_BTN + '<div class="desktop-screen cdm-fit-screen"><div class="cdm-content-wrapper cdm-content-wrapper-wide" style="width:' + wideMax + 'px; max-width:' + wideMax + 'px; margin:0 auto;">' + contentHtml + '</div></div></div></div>';
 } else {
 var deskW = (typeof desktopWidth === 'number' && desktopWidth > 0) ? desktopWidth : 0;
 var deskStyle = deskW ? ('width:' + deskW + 'px; max-width:' + deskW + 'px; margin:0 auto;') : 'width:100%; margin:0 auto;';
-finalHtml = '<div class="cdm-preview-scaler"><div class="desktop-mock" style="width:100%;margin:0 auto;"><div class="desktop-screen cdm-fit-screen"><div class="cdm-content-wrapper" style="' + deskStyle + '">' + contentHtml + '</div></div></div></div>';
+finalHtml = '<div class="cdm-preview-scaler"><div class="desktop-mock" style="width:100%;margin:0 auto;">' + CDM_FIT_HELP_BTN + '<div class="desktop-screen cdm-fit-screen"><div class="cdm-content-wrapper" style="' + deskStyle + '">' + contentHtml + '</div></div></div></div>';
 }
 } else {
 finalHtml = '<div class="cdm-preview-scaler"><div class="phone-mock"><div class="display-mock"><div class="cdm-content-wrapper" style="width:100%; margin:0 auto;">' + contentHtml + '</div></div></div></div>';
@@ -2228,6 +2245,16 @@ requestAnimationFrame(cdmApplyPreviewScale);
    (--cdm-fit-badge-text-size / -color), поэтому правки не пересекаются. */
 var CDM_FIT_ICON_BLOCK = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M1.99219 16C1.99219 14.5999 1.99219 13.8998 2.26467 13.365C2.50435 12.8946 2.88681 12.5122 3.35721 12.2725C3.89199 12 4.59206 12 5.99219 12H17.9922C19.3923 12 20.0924 12 20.6272 12.2725C21.0976 12.5122 21.48 12.8946 21.7197 13.365C21.9922 13.8998 21.9922 14.5999 21.9922 16C21.9922 17.4001 21.9922 18.1002 21.7197 18.635C21.48 19.1054 21.0976 19.4878 20.6272 19.7275C20.0924 20 19.3923 20 17.9922 20H5.99219C4.59206 20 3.89199 20 3.35721 19.7275C2.88681 19.4878 2.50435 19.1054 2.26467 18.635C1.99219 18.1002 1.99219 17.4001 1.99219 16Z"></path><path d="M5.99219 12V14" stroke-linecap="round"></path><path d="M9.99219 12V14" stroke-linecap="round"></path><path d="M13.9922 12V14" stroke-linecap="round"></path><path d="M17.9922 12V14" stroke-linecap="round"></path><path d="M2.49219 6H21.4922" stroke-linecap="round"></path><path d="M3.99219 4L3.41529 4.43826C2.46655 5.159 1.99219 5.51938 1.99219 6C1.99219 6.48062 2.46655 6.841 3.41529 7.56174L3.99219 8" stroke-linecap="round"></path><path d="M19.9922 4L20.5691 4.43826C21.5178 5.159 21.9922 5.51938 21.9922 6C21.9922 6.48062 21.5178 6.841 20.5691 7.56174L19.9922 8" stroke-linecap="round"></path></svg>';
 var CDM_FIT_ICON_PREVIEW = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true"><path d="M7.96186 14.9697C7.66896 15.2626 7.66896 15.7374 7.96186 16.0303C8.25475 16.3232 8.72962 16.3232 9.02252 16.0303L8.49219 15.5L7.96186 14.9697ZM21.0225 4.03033C21.3154 3.73744 21.3154 3.26256 21.0225 2.96967C20.7296 2.67678 20.2548 2.67678 19.9619 2.96967L20.4922 3.5L21.0225 4.03033ZM8.49219 15.5L9.02252 16.0303L21.0225 4.03033L20.4922 3.5L19.9619 2.96967L7.96186 14.9697L8.49219 15.5Z" fill="currentColor"></path><path d="M21.4915 13.0003C21.4839 16.8201 21.3845 18.8255 20.1009 20.1091C18.7097 21.5003 16.4705 21.5003 11.9922 21.5003C7.51384 21.5003 5.27467 21.5003 3.88343 20.1091C2.49219 18.7178 2.49219 16.4787 2.49219 12.0003C2.49219 7.52199 2.49219 5.28282 3.88343 3.89157C5.16702 2.60798 7.1724 2.50866 10.9922 2.50098" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path><path d="M8.0983 10C8.0983 10 7.71519 14.8976 8.40487 15.5873C9.09454 16.277 13.9922 15.8939 13.9922 15.8939" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21.3861 8.5C21.3861 8.5 21.7692 3.60235 21.0795 2.91266C20.3898 2.22298 15.4922 2.60614 15.4922 2.60614" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+var CDM_FIT_HELP_BTN = '<i class="ph ph-question cdm-fit-help-icon"></i>';
+/* [21.11.2026, задача №30] Подпись убрана с полосы превью — значения показываются
+   в подсказке «?» у рамки. Пишем в оба места одним вызовом. */
+function cdmSetFitValues(leftText, rightText) {
+var html = leftText ? cdmFitBadgeHtml(leftText, rightText) : '';
+var badge = document.getElementById('cdmFitBadge');
+if (badge) badge.innerHTML = html;
+var help = document.getElementById('cdmFitHelpValues');
+if (help) help.innerHTML = html;
+}
 function cdmFitBadgeHtml(leftText, rightText) {
   return '<span class="cdm-fit-badge-part"><span class="cdm-fit-badge-icon">' + CDM_FIT_ICON_BLOCK + '</span><span class="cdm-fit-badge-text">' + leftText + '</span></span>' +
     ' ' + '<span class="cdm-fit-badge-part"><span class="cdm-fit-badge-icon">' + CDM_FIT_ICON_PREVIEW + '</span><span class="cdm-fit-badge-text">' + rightText + '</span></span>';
@@ -2251,7 +2278,7 @@ var lp = document.getElementById('cdmLivePreview');
 var badge = document.getElementById('cdmFitBadge');
 if (!lp || !badge) return;
 var scaler = lp.querySelector('.cdm-preview-scaler');
-if (!scaler) { badge.textContent = '—'; cdmSyncRealSizeBtn(null); return; }
+if (!scaler) { cdmSetFitValues('', ''); cdmSyncRealSizeBtn(null); return; }
 var mock = scaler.querySelector('.desktop-mock');
 var screen = mock ? mock.querySelector('.desktop-screen') : null;
 var targetW = wideWidth || ((typeof desktopWidth === 'number' && desktopWidth > 0) ? desktopWidth : 0);
@@ -2262,7 +2289,7 @@ scaler.style.width = '';
 scaler.style.overflowX = '';
 scaler.style.overflowY = '';
 // Без рамки десктопа (мобильное превью) масштаб не показываем.
-badge.textContent = '—';
+cdmSetFitValues('', '');
 cdmSyncRealSizeBtn(null);
 return;
 }
@@ -2282,7 +2309,7 @@ if (avail < 40) avail = 40;
 var k = Math.min(1, avail / naturalW);
 if (k < 1) screen.style.zoom = k;
 mock.style.height = frameH + 'px';
-badge.innerHTML = cdmFitBadgeHtml('Блок ' + targetW + ' px', 'Превью ' + Math.round(k * 100) + '%');
+cdmSetFitValues('Блок ' + targetW + ' px', 'Превью ' + Math.round(k * 100) + '%');
 cdmSyncRealSizeBtn(k);
 }
 

@@ -1203,11 +1203,21 @@ top: 0;
 left: 0;
 opacity: 0;
 pointer-events: none;
+/* [эксперимент 21.11.2026] анимация через переменные: ползунок «Общее время»
+   меняет только значения, разметка превью не пересобирается. */
+animation-name: cdm-sp-slideanim;
+animation-duration: var(--cdm-pv-animdur, 30s);
+animation-iteration-count: infinite;
+animation-delay: var(--cdm-pv-dl, 0s);
 }
 .cdm-slider-preview .cdm-sp-slide img {
 width: 100%;
 height: 100%;
 object-fit: cover;
+animation-name: cdm-sp-zoom;
+animation-duration: var(--cdm-pv-animdur, 30s);
+animation-iteration-count: infinite;
+animation-delay: var(--cdm-pv-dl, 0s);
 }
 .cdm-slider-preview .cdm-sp-panel {
 position: absolute;
@@ -2011,8 +2021,8 @@ var animDur = totalSec + 's';
 // слайд получает нейтральный фон-заглушку вместо долгого ожидания таймаута.
 var imgSrcP = s.img || '';
 var imgOnerr = 'this.onerror=null;this.style.display="none";this.closest(".cdm-sp-slide").style.background="#ececec";';
-slidesHtml += '<div class="cdm-sp-slide" style="animation: cdm-sp-slideanim ' + animDur + ' infinite; animation-delay: ' + delay + 's;">' +
-'<img src="' + escapeHtml(imgSrcP) + '" alt="" onerror="' + imgOnerr + '" style="animation: cdm-sp-zoom ' + animDur + ' infinite; animation-delay: ' + delay + 's;">' +
+slidesHtml += '<div class="cdm-sp-slide">' +
+'<img src="' + escapeHtml(imgSrcP) + '" alt="" onerror="' + imgOnerr + '">' +
 '<div class="cdm-sp-panel" style="width:auto;">' +
 '<h5>' + escapeHtml(s.title) + '</h5>' +
 '<p>' + escapeHtml(s.text) + '</p>' +
@@ -2110,6 +2120,12 @@ this.style.setProperty('--cdm-pv-pp', panelPT + ' ' + panelPR + ' ' + panelPB + 
 this.style.setProperty('--cdm-pv-tm', txMargin);
 this.style.setProperty('--cdm-pv-ta', tAlign);
 this.style.setProperty('--cdm-pv-txa', txAlign);
+/* [эксперимент 21.11.2026] «Общее время» — переменными, без пересборки превью.
+   Задержка считается по индексу узла: разметка остаётся неизменной. */
+this.style.setProperty('--cdm-pv-animdur', animDur);
+container.find('.cdm-slider-preview .cdm-sp-slide').each(function(idx) {
+this.style.setProperty('--cdm-pv-dl', ((idx * delayStep) - (totalSec * 0.1)) + 's');
+});
 });
 
 if (previewMode === 'desktop') {

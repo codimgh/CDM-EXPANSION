@@ -1441,24 +1441,24 @@ left: 12px;
 top: 12px;
 z-index: 5000;
 padding: 18px 24px;
-border: none;
+border: 1px solid var(--cdm-help-border, #ccccccab);
 border-radius: var(--cdm-help-radius, 14px);
-background: var(--cdm-help-bg, #4db5ff);
-color: var(--cdm-help-fg, #ffffff);
+background: var(--cdm-help-bg, #ffffff);
+color: var(--cdm-help-fg, #333333);
 font-family: 'Inter', sans-serif;
 line-height: 1.6;
 text-wrap: pretty;
 overflow-wrap: break-word;
 overflow: hidden;
 max-width: calc(100vw - 40px);
-box-shadow: var(--cdm-help-shadow, 0 18px 44px -14px rgba(11, 68, 112, 0.55), 0 4px 12px rgba(11, 68, 112, 0.16));
+box-shadow: var(--cdm-help-shadow, 0 16px 40px -14px rgba(17, 24, 39, 0.28), 0 3px 10px rgba(17, 24, 39, 0.10));
 transform-origin: top left;
 will-change: transform, opacity;
 }
 .cdm-help-popup p {
-font-size: 15px !important;
-font-weight: 400 !important;
-line-height: 1.55 !important;
+font-size: 14px !important;
+font-weight: 300 !important;
+line-height: 1.5 !important;
 color: inherit;
 }
 .cdm-help-progress {
@@ -1467,7 +1467,7 @@ left: 0;
 bottom: 0;
 height: 2px;
 width: 100%;
-background: var(--cdm-help-bar, #ffffff);
+background: var(--cdm-help-bar, #4cb5ff);
 transform-origin: 0 50%;
 animation: cdm-help-progress 25s linear forwards;
 }
@@ -1476,7 +1476,10 @@ from { transform: scaleX(1); }
 to { transform: scaleX(0); }
 }
 .cdm-master.dark-theme .cdm-help-popup {
---cdm-help-shadow: 0 20px 48px -14px rgba(0, 0, 0, 0.7), 0 4px 12px rgba(0, 0, 0, 0.35);
+--cdm-help-bg: #1a1a1a;
+--cdm-help-fg: #e0e0e0;
+--cdm-help-border: #555555;
+--cdm-help-shadow: 0 18px 44px -14px rgba(0, 0, 0, 0.75), 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 @media (prefers-reduced-motion: reduce) {
 .cdm-help-popup { transition: none; }
@@ -3247,32 +3250,51 @@ if (cdmHelpAudio.state === 'suspended') cdmHelpAudio.resume();
 } catch (err) { cdmHelpAudio = null; }
 }
 
-// Короткая нота (Web Audio, без файлов): соль+ре, мягкая атака, слышимая громкость.
+// Тон Ding «Info» (их packages/core/src/sound.ts): малет из двух синусов,
+// 466.2 Гц и октава слабо, lowpass 1300 Гц, эхо 0.11 с.
+var cdmHelpSoundVolume = 0.7;
+
+function cdmHelpTone(ctx, out, freq, at, level) {
+var t = ctx.currentTime + at;
+var f = freq * (1 + (Math.random() - 0.5) * 0.008);
+[[1, 0.6, 0.5], [2, 0.06, 0.15]].forEach(function (p) {
+var osc = ctx.createOscillator();
+var g = ctx.createGain();
+osc.frequency.value = f * p[0];
+g.gain.setValueAtTime(0.0001, t);
+g.gain.linearRampToValueAtTime(p[1] * level, t + 0.015);
+g.gain.exponentialRampToValueAtTime(0.0001, t + p[2]);
+osc.connect(g);
+g.connect(out);
+osc.start(t);
+osc.stop(t + p[2] + 0.05);
+});
+}
+
 function cdmHelpSound() {
 if (!cdmHelpSoundOn) return;
 var nowMs = Date.now();
-if (nowMs - cdmHelpSoundLast < 260) return;
+if (nowMs - cdmHelpSoundLast < 120) return;
 cdmHelpSoundLast = nowMs;
 cdmHelpUnlockAudio();
 var ctx = cdmHelpAudio;
-if (!ctx || ctx.state !== 'running') return;
-var t = ctx.currentTime;
+if (!ctx || ctx.state === 'closed') return;
+if (ctx.state === 'suspended') { try { ctx.resume(); } catch (err) {} }
 var master = ctx.createGain();
-master.gain.setValueAtTime(0.0001, t);
-master.gain.exponentialRampToValueAtTime(0.42, t + 0.012);
-master.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
-master.connect(ctx.destination);
-[[784, 'sine', 1], [1175, 'triangle', 0.3]].forEach(function (p) {
-var osc = ctx.createOscillator();
-var g = ctx.createGain();
-osc.type = p[1];
-osc.frequency.setValueAtTime(p[0], t);
-g.gain.value = p[2];
-osc.connect(g);
-g.connect(master);
-osc.start(t);
-osc.stop(t + 0.4);
-});
+master.gain.value = Math.min(1, Math.max(0, cdmHelpSoundVolume)) * 0.45;
+var soften = ctx.createBiquadFilter();
+soften.type = 'lowpass';
+soften.frequency.value = 1300;
+var echo = ctx.createDelay();
+echo.delayTime.value = 0.11;
+var wet = ctx.createGain();
+wet.gain.value = 0.1;
+master.connect(soften);
+soften.connect(ctx.destination);
+soften.connect(echo);
+echo.connect(wet);
+wet.connect(ctx.destination);
+cdmHelpTone(ctx, master, 466.2, 0, 0.9);
 }
 
 function cdmHelpIsOpen($pop) {

@@ -601,15 +601,10 @@ filter: invert(1) brightness(1.5);
 </div>
 </div>
 <div class="cdm-control-group">
-<label class="cdm-label cdm-label-range">Внешний отступ блока сверху <span class="cdm-label-value"><span id="desktopBlockMarginTopVal">0</span>px</span><i class="ph ph-question cdm-margin-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
-<div class="cdm-range-wrapper">
-<input type="range" id="cdmDesktopBlockMarginTop" class="cdm-range" min="0" max="120" value="0" step="1">
-</div>
-</div>
-<div class="cdm-control-group">
-<label class="cdm-label cdm-label-range">Внешний отступ блока снизу <span class="cdm-label-value"><span id="desktopBlockMarginBottomVal">0</span>px</span></label>
-<div class="cdm-range-wrapper">
-<input type="range" id="cdmDesktopBlockMarginBottom" class="cdm-range" min="0" max="120" value="0" step="1">
+<label class="cdm-label">Внешние отступы блока (px) <i class="ph ph-question cdm-margin-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+<div><input type="number" id="cdmDesktopBlockMarginTop" class="cdm-input" value="0" min="0" max="120" style="width:100%;"> <span class="cdm-mini-label">Сверху</span></div>
+<div><input type="number" id="cdmDesktopBlockMarginBottom" class="cdm-input" value="0" min="0" max="120" style="width:100%;"> <span class="cdm-mini-label">Снизу</span></div>
 </div>
 </div>
 </div>
@@ -711,15 +706,10 @@ filter: invert(1) brightness(1.5);
 </div>
 </div>
 <div class="cdm-control-group">
-<label class="cdm-label cdm-label-range">Внешний отступ блока сверху <span class="cdm-label-value"><span id="mobileBlockMarginTopVal">0</span>px</span><i class="ph ph-question cdm-margin-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
-<div class="cdm-range-wrapper">
-<input type="range" id="cdmMobileBlockMarginTop" class="cdm-range" min="0" max="120" value="0" step="1">
-</div>
-</div>
-<div class="cdm-control-group">
-<label class="cdm-label cdm-label-range">Внешний отступ блока снизу <span class="cdm-label-value"><span id="mobileBlockMarginBottomVal">0</span>px</span></label>
-<div class="cdm-range-wrapper">
-<input type="range" id="cdmMobileBlockMarginBottom" class="cdm-range" min="0" max="120" value="0" step="1">
+<label class="cdm-label">Внешние отступы блока (px) <i class="ph ph-question cdm-margin-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></label>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+<div><input type="number" id="cdmMobileBlockMarginTop" class="cdm-input" value="0" min="0" max="120" style="width:100%;"> <span class="cdm-mini-label">Сверху</span></div>
+<div><input type="number" id="cdmMobileBlockMarginBottom" class="cdm-input" value="0" min="0" max="120" style="width:100%;"> <span class="cdm-mini-label">Снизу</span></div>
 </div>
 </div>
 </div>
@@ -1774,9 +1764,7 @@ const desktopPanelBottomVal = $('#desktopPanelBottomVal');
 const desktopPanelRadius = $('#cdmDesktopPanelRadius');
 const desktopPanelRadiusVal = $('#desktopPanelRadiusVal');
 const desktopBlockMarginTop = $('#cdmDesktopBlockMarginTop');
-const desktopBlockMarginTopVal = $('#desktopBlockMarginTopVal');
 const desktopBlockMarginBottom = $('#cdmDesktopBlockMarginBottom');
-const desktopBlockMarginBottomVal = $('#desktopBlockMarginBottomVal');
 
 const mobileHeight = $('#cdmMobileHeight');
 const mobileHeightVal = $('#mobileHeightVal');
@@ -1803,9 +1791,7 @@ const mobilePanelBottomVal = $('#mobilePanelBottomVal');
 const mobilePanelRadius = $('#cdmMobilePanelRadius');
 const mobilePanelRadiusVal = $('#mobilePanelRadiusVal');
 const mobileBlockMarginTop = $('#cdmMobileBlockMarginTop');
-const mobileBlockMarginTopVal = $('#mobileBlockMarginTopVal');
 const mobileBlockMarginBottom = $('#cdmMobileBlockMarginBottom');
-const mobileBlockMarginBottomVal = $('#mobileBlockMarginBottomVal');
 
 let bgColor = '#ffffff';
 let titleColor = '#333333';
@@ -1981,8 +1967,6 @@ desktopBorderWidthVal.text(desktopBorderWidth.val());
 borderOpacityVal.text(borderOpacity.val() + '%');
 desktopPanelBottomVal.text(desktopPanelBottom.val());
 desktopPanelRadiusVal.text(desktopPanelRadius.val());
-desktopBlockMarginTopVal.text(desktopBlockMarginTop.val());
-desktopBlockMarginBottomVal.text(desktopBlockMarginBottom.val());
 mobileHeightVal.text(mobileHeight.val());
 mobileTitleSizeVal.text(mobileTitleSize.val());
 mobileTextSizeVal.text(mobileTextSize.val());
@@ -1992,8 +1976,6 @@ mobileTextMarginVal.text(mobileTextMargin.val());
 mobileBorderWidthVal.text(mobileBorderWidth.val());
 mobilePanelBottomVal.text(mobilePanelBottom.val());
 mobilePanelRadiusVal.text(mobilePanelRadius.val());
-mobileBlockMarginTopVal.text(mobileBlockMarginTop.val());
-mobileBlockMarginBottomVal.text(mobileBlockMarginBottom.val());
 }
 
 function getSlideData() {
@@ -2007,6 +1989,15 @@ if (slidesData[j].id === sid) { obj = slidesData[j]; break; }
 if (obj) slides.push(obj);
 });
 return slides;
+}
+
+/* [21.11.2026] Внешний отступ блока: целое 0…120. Пустое поле или мусор
+   дают 0, чтобы в код не попало «px» без числа. */
+function cdmBlockMarginVal(el) {
+var n = parseInt(el.val(), 10);
+if (isNaN(n) || n < 0) n = 0;
+if (n > 120) n = 120;
+return n;
 }
 
 function updatePreview() {
@@ -2173,8 +2164,8 @@ this.style.setProperty('--cdm-pv-dl', ((idx * delayStep) - (totalSec * 0.1)) + '
 /* [21.11.2026] Внешние отступы блока в превью — только через style, разметку
    не трогаем (пересборки DOM нет). В мобильном режиме повторяем живое правило
    узких экранов: сверху max(8%, выбранное значение). */
-var pvMarginTop = useMobile ? mobileBlockMarginTop.val() : desktopBlockMarginTop.val();
-var pvMarginBottom = useMobile ? mobileBlockMarginBottom.val() : desktopBlockMarginBottom.val();
+var pvMarginTop = cdmBlockMarginVal(useMobile ? mobileBlockMarginTop : desktopBlockMarginTop);
+var pvMarginBottom = cdmBlockMarginVal(useMobile ? mobileBlockMarginBottom : desktopBlockMarginBottom);
 container.find('.cdm-slider-preview').each(function() {
 this.style.marginTop = useMobile ? ('max(8%, ' + pvMarginTop + 'px)') : (pvMarginTop + 'px');
 this.style.marginBottom = pvMarginBottom + 'px';
@@ -2396,8 +2387,8 @@ var deskPanelPB = desktopPanelPaddingBottom.val();
 var deskPanelPL = desktopPanelPaddingLeft.val();
 var deskPanelBottom = desktopPanelBottom.val();
 var deskPanelRadius = desktopPanelRadius.val();
-var deskBlockMT = desktopBlockMarginTop.val();
-var deskBlockMB = desktopBlockMarginBottom.val();
+var deskBlockMT = cdmBlockMarginVal(desktopBlockMarginTop);
+var deskBlockMB = cdmBlockMarginVal(desktopBlockMarginBottom);
 var borderRgba = hexToRgba(borderColor, borderOpacity.val());
 
 var mobH = mobileHeight.val();
@@ -2416,8 +2407,8 @@ var mobPanelPB = mobilePanelPaddingBottom.val();
 var mobPanelPL = mobilePanelPaddingLeft.val();
 var mobPanelBottom = mobilePanelBottom.val();
 var mobPanelRadius = mobilePanelRadius.val();
-var mobBlockMT = mobileBlockMarginTop.val();
-var mobBlockMB = mobileBlockMarginBottom.val();
+var mobBlockMT = cdmBlockMarginVal(mobileBlockMarginTop);
+var mobBlockMB = cdmBlockMarginVal(mobileBlockMarginBottom);
 
 var panelPadding = deskPanelPT + 'px ' + deskPanelPR + 'px ' + deskPanelPB + 'px ' + deskPanelPL + 'px';
 var panelMargin = '0 ' + deskPanelMR + 'px ' + deskPanelMB + 'px ' + deskPanelML + 'px';
@@ -2713,7 +2704,7 @@ panelMarginRight: desktopPanelMarginRight.val(), panelMarginLeft: desktopPanelMa
 panelPaddingTop: desktopPanelPaddingTop.val(), panelPaddingRight: desktopPanelPaddingRight.val(),
 panelPaddingBottom: desktopPanelPaddingBottom.val(), panelPaddingLeft: desktopPanelPaddingLeft.val(),
 panelBottom: desktopPanelBottom.val(), panelRadius: desktopPanelRadius.val(),
-blockMarginTop: desktopBlockMarginTop.val(), blockMarginBottom: desktopBlockMarginBottom.val()
+blockMarginTop: cdmBlockMarginVal(desktopBlockMarginTop), blockMarginBottom: cdmBlockMarginVal(desktopBlockMarginBottom)
 },
 mobile: {
 height: mobileHeight.val(),
@@ -2726,7 +2717,7 @@ panelMarginRight: mobilePanelMarginRight.val(), panelMarginLeft: mobilePanelMarg
 panelPaddingTop: mobilePanelPaddingTop.val(), panelPaddingRight: mobilePanelPaddingRight.val(),
 panelPaddingBottom: mobilePanelPaddingBottom.val(), panelPaddingLeft: mobilePanelPaddingLeft.val(),
 panelBottom: mobilePanelBottom.val(), panelRadius: mobilePanelRadius.val(),
-blockMarginTop: mobileBlockMarginTop.val(), blockMarginBottom: mobileBlockMarginBottom.val()
+blockMarginTop: cdmBlockMarginVal(mobileBlockMarginTop), blockMarginBottom: cdmBlockMarginVal(mobileBlockMarginBottom)
 },
 slides: slides
 };

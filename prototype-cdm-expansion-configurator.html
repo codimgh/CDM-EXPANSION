@@ -1167,12 +1167,14 @@ box-sizing: border-box;
    !important. Разметка и обработчики остаются — скрываем только вид. */
 .cdm-preview-top { display: none !important; }
 /* Иконка «?» в левом верхнем углу рамки превью (рамка — .desktop-mock, position:relative). */
-.desktop-mock > .cdm-fit-help-icon { position: absolute; top: 8px; left: 8px; z-index: 5; font-size: 16px; line-height: 1; color: #c7c7c7; cursor: pointer; transition: color 0.2s; }
+.desktop-mock > .cdm-fit-help-icon { position: absolute; top: 12px; left: 12px; z-index: 5; font-size: 16px; line-height: 1; color: #c7c7c7; cursor: pointer; transition: color 0.2s; }
 .desktop-mock > .cdm-fit-help-icon:hover { color: #4DB5FF; }
 .cdm-master.dark-theme .desktop-mock > .cdm-fit-help-icon { color: #7a7a7a; }
 .cdm-master.dark-theme .desktop-mock > .cdm-fit-help-icon:hover { color: #4DB5FF; }
 /* Живые значения в подсказке (те же иконки и порядок, что были в подписи). */
-.cdm-fit-help-values { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 10px; font-size: 14px; font-weight: 400; letter-spacing: -0.5px; white-space: nowrap; }
+.cdm-fit-help-values { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin: 0 0 10px; font-size: 14px; font-weight: 400; letter-spacing: -0.5px; }
+.cdm-fit-badge-sep { color: #9a9a9a; }
+.cdm-master.dark-theme .cdm-fit-badge-sep { color: #8a8a8a; }
 .cdm-fit-info { display: inline-flex; align-items: center; gap: 2px; }
 /* [20.11.2026, задача №22] Подпись превью: две части «иконка + текст».
    Настройки текста и иконок независимы:
@@ -2243,8 +2245,7 @@ requestAnimationFrame(cdmApplyPreviewScale);
    и превью/масштаб (перед «Превью»). Размер и цвет задаются отдельными
    CSS-переменными (--cdm-fit-badge-icon-size / -color), текст — своими
    (--cdm-fit-badge-text-size / -color), поэтому правки не пересекаются. */
-var CDM_FIT_ICON_BLOCK = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M1.99219 16C1.99219 14.5999 1.99219 13.8998 2.26467 13.365C2.50435 12.8946 2.88681 12.5122 3.35721 12.2725C3.89199 12 4.59206 12 5.99219 12H17.9922C19.3923 12 20.0924 12 20.6272 12.2725C21.0976 12.5122 21.48 12.8946 21.7197 13.365C21.9922 13.8998 21.9922 14.5999 21.9922 16C21.9922 17.4001 21.9922 18.1002 21.7197 18.635C21.48 19.1054 21.0976 19.4878 20.6272 19.7275C20.0924 20 19.3923 20 17.9922 20H5.99219C4.59206 20 3.89199 20 3.35721 19.7275C2.88681 19.4878 2.50435 19.1054 2.26467 18.635C1.99219 18.1002 1.99219 17.4001 1.99219 16Z"></path><path d="M5.99219 12V14" stroke-linecap="round"></path><path d="M9.99219 12V14" stroke-linecap="round"></path><path d="M13.9922 12V14" stroke-linecap="round"></path><path d="M17.9922 12V14" stroke-linecap="round"></path><path d="M2.49219 6H21.4922" stroke-linecap="round"></path><path d="M3.99219 4L3.41529 4.43826C2.46655 5.159 1.99219 5.51938 1.99219 6C1.99219 6.48062 2.46655 6.841 3.41529 7.56174L3.99219 8" stroke-linecap="round"></path><path d="M19.9922 4L20.5691 4.43826C21.5178 5.159 21.9922 5.51938 21.9922 6C21.9922 6.48062 21.5178 6.841 20.5691 7.56174L19.9922 8" stroke-linecap="round"></path></svg>';
-var CDM_FIT_ICON_PREVIEW = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true"><path d="M7.96186 14.9697C7.66896 15.2626 7.66896 15.7374 7.96186 16.0303C8.25475 16.3232 8.72962 16.3232 9.02252 16.0303L8.49219 15.5L7.96186 14.9697ZM21.0225 4.03033C21.3154 3.73744 21.3154 3.26256 21.0225 2.96967C20.7296 2.67678 20.2548 2.67678 19.9619 2.96967L20.4922 3.5L21.0225 4.03033ZM8.49219 15.5L9.02252 16.0303L21.0225 4.03033L20.4922 3.5L19.9619 2.96967L7.96186 14.9697L8.49219 15.5Z" fill="currentColor"></path><path d="M21.4915 13.0003C21.4839 16.8201 21.3845 18.8255 20.1009 20.1091C18.7097 21.5003 16.4705 21.5003 11.9922 21.5003C7.51384 21.5003 5.27467 21.5003 3.88343 20.1091C2.49219 18.7178 2.49219 16.4787 2.49219 12.0003C2.49219 7.52199 2.49219 5.28282 3.88343 3.89157C5.16702 2.60798 7.1724 2.50866 10.9922 2.50098" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path><path d="M8.0983 10C8.0983 10 7.71519 14.8976 8.40487 15.5873C9.09454 16.277 13.9922 15.8939 13.9922 15.8939" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21.3861 8.5C21.3861 8.5 21.7692 3.60235 21.0795 2.91266C20.3898 2.22298 15.4922 2.60614 15.4922 2.60614" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+var CDM_FIT_ICON_BLOCK = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round" aria-hidden="true"><path d="M13.6903 19.4567C13.5 18.9973 13.5 18.4149 13.5 17.25C13.5 16.0851 13.5 15.5027 13.6903 15.0433C13.944 14.4307 14.4307 13.944 15.0433 13.6903C15.5027 13.5 16.0851 13.5 17.25 13.5C18.4149 13.5 18.9973 13.5 19.4567 13.6903C20.0693 13.944 20.556 14.4307 20.8097 15.0433C21 15.5027 21 16.0851 21 17.25C21 18.4149 21 18.9973 20.8097 19.4567C20.556 20.0693 20.0693 20.556 19.4567 20.8097C18.9973 21 18.4149 21 17.25 21C16.0851 21 15.5027 21 15.0433 20.8097C14.4307 20.556 13.944 20.0693 13.6903 19.4567Z"></path><path d="M13.6903 8.95671C13.5 8.49728 13.5 7.91485 13.5 6.75C13.5 5.58515 13.5 5.00272 13.6903 4.54329C13.944 3.93072 14.4307 3.44404 15.0433 3.1903C15.5027 3 16.0851 3 17.25 3C18.4149 3 18.9973 3 19.4567 3.1903C20.0693 3.44404 20.556 3.93072 20.8097 4.54329C21 5.00272 21 5.58515 21 6.75C21 7.91485 21 8.49728 20.8097 8.95671C20.556 9.56928 20.0693 10.056 19.4567 10.3097C18.9973 10.5 18.4149 10.5 17.25 10.5C16.0851 10.5 15.5027 10.5 15.0433 10.3097C14.4307 10.056 13.944 9.56928 13.6903 8.95671Z"></path><path d="M3.1903 19.4567C3 18.9973 3 18.4149 3 17.25C3 16.0851 3 15.5027 3.1903 15.0433C3.44404 14.4307 3.93072 13.944 4.54329 13.6903C5.00272 13.5 5.58515 13.5 6.75 13.5C7.91485 13.5 8.49728 13.5 8.95671 13.6903C9.56928 13.944 10.056 14.4307 10.3097 15.0433C10.5 15.5027 10.5 16.0851 10.5 17.25C10.5 18.4149 10.5 18.9973 10.3097 19.4567C10.056 20.0693 9.56928 20.556 8.95671 20.8097C8.49728 21 7.91485 21 6.75 21C5.58515 21 5.00272 21 4.54329 20.8097C3.93072 20.556 3.44404 20.0693 3.1903 19.4567Z"></path><path d="M3.1903 8.95671C3 8.49728 3 7.91485 3 6.75C3 5.58515 3 5.00272 3.1903 4.54329C3.44404 3.93072 3.93072 3.44404 4.54329 3.1903C5.00272 3 5.58515 3 6.75 3C7.91485 3 8.49728 3 8.95671 3.1903C9.56928 3.44404 10.056 3.93072 10.3097 4.54329C10.5 5.00272 10.5 5.58515 10.5 6.75C10.5 7.91485 10.5 8.49728 10.3097 8.95671C10.056 9.56928 9.56928 10.056 8.95671 10.3097C8.49728 10.5 7.91485 10.5 6.75 10.5C5.58515 10.5 5.00272 10.5 4.54329 10.3097C3.93072 10.056 3.44404 9.56928 3.1903 8.95671Z"></path></svg>';
 var CDM_FIT_HELP_BTN = '<i class="ph ph-question cdm-fit-help-icon"></i>';
 /* [21.11.2026, задача №30] Подпись убрана с полосы превью — значения показываются
    в подсказке «?» у рамки. Пишем в оба места одним вызовом. */
@@ -2257,7 +2258,8 @@ if (help) help.innerHTML = html;
 }
 function cdmFitBadgeHtml(leftText, rightText) {
   return '<span class="cdm-fit-badge-part"><span class="cdm-fit-badge-icon">' + CDM_FIT_ICON_BLOCK + '</span><span class="cdm-fit-badge-text">' + leftText + '</span></span>' +
-    ' ' + '<span class="cdm-fit-badge-part"><span class="cdm-fit-badge-icon">' + CDM_FIT_ICON_PREVIEW + '</span><span class="cdm-fit-badge-text">' + rightText + '</span></span>';
+    '<span class="cdm-fit-badge-sep">↔</span>' +
+    '<span class="cdm-fit-badge-text">' + rightText + '</span>';
 }
 /* [21.11.2026, задача №22] Кнопка «Смотреть в полном размере» показывается
    только в десктопном превью, только для 1440/1600/1920 и только когда блок
@@ -2309,7 +2311,7 @@ if (avail < 40) avail = 40;
 var k = Math.min(1, avail / naturalW);
 if (k < 1) screen.style.zoom = k;
 mock.style.height = frameH + 'px';
-cdmSetFitValues('Блок ' + targetW + ' px', 'Превью ' + Math.round(k * 100) + '%');
+cdmSetFitValues('Ширина блока: ' + targetW + ' px', 'Отображается в превью: ' + Math.round(k * 100) + '%');
 cdmSyncRealSizeBtn(k);
 }
 

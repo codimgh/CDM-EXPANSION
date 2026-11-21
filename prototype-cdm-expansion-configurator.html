@@ -932,7 +932,7 @@ min-width: 0;
 min-height: 0;
 overflow: auto;
 background: transparent;
-padding: 5px 5px 5px 15px;
+padding: 20px 5px 5px 15px;
 border: 0px solid #333;
 border-radius: 1px;
 margin-right: 0;
@@ -1456,8 +1456,8 @@ color: #ddd;
 }
 .cdm-help-popup {
 position: fixed;
-left: 12px;
-top: 12px;
+left: 10px;
+top: 22px;
 z-index: 5000;
 padding: 18px 24px;
 border: 1px solid var(--cdm-help-border, #ccccccab);
@@ -1470,7 +1470,7 @@ text-wrap: pretty;
 overflow-wrap: break-word;
 overflow: hidden;
 max-width: calc(100vw - 40px);
-box-shadow: var(--cdm-help-shadow, 0 16px 40px -14px rgba(17, 24, 39, 0.28), 0 3px 10px rgba(17, 24, 39, 0.10));
+box-shadow: none;
 transform-origin: top left;
 will-change: transform, opacity;
 }
@@ -1498,7 +1498,6 @@ to { transform: scaleX(0); }
 --cdm-help-bg: #1a1a1a;
 --cdm-help-fg: #e0e0e0;
 --cdm-help-border: #555555;
---cdm-help-shadow: 0 18px 44px -14px rgba(0, 0, 0, 0.75), 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 @media (prefers-reduced-motion: reduce) {
 .cdm-help-popup { transition: none; }
@@ -3384,8 +3383,8 @@ function cdmShowHelpPopup($pop) {
 var el = $pop.get(0);
 var vw = window.innerWidth;
 el.style.position = 'fixed';
-el.style.left = Math.min(12, vw - 40) + 'px';
-el.style.top = '12px';
+el.style.left = Math.min(10, vw - 40) + 'px';
+el.style.top = '22px';
 el.style.display = 'block';
 if (cdmHelpCurrent && cdmHelpCurrent !== el) cdmHideHelp($(cdmHelpCurrent), true);
 cdmHelpCurrent = el;

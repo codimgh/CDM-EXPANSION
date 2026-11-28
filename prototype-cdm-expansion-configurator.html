@@ -503,10 +503,13 @@ filter: invert(1) brightness(1.5);
 <div style="margin-bottom:24px;">
 <h3 style="font-size:14px; font-weight:300; margin:0 0 16px; color:#333;"><i class="ph ph-faders" style="font-size:14px; color:#333; margin-right:6px;"></i>Настройки (десктоп)</h3>
 <div class="cdm-control-group">
-<label class="cdm-label cdm-label-range">Высота блока слайдера <span class="cdm-label-value"><span id="desktopHeightVal">600</span>px</span></label>
-<div class="cdm-range-wrapper">
-<input type="range" id="cdmDesktopHeight" class="cdm-range" min="300" max="900" value="600" step="10">
+<label class="cdm-label cdm-label-range">Высота блока слайдера <span class="cdm-label-value"><span id="desktopHeightVal">600</span><span id="desktopHeightUnit">px</span></span></label>
+<div class="cdm-range-wrapper" id="desktopHeightWrap">
+<input type="range" id="cdmDesktopHeight" class="cdm-range" min="300" max="1100" value="600" step="10">
 </div>
+<!-- [28.11.2026] Режим «на всю высоту экрана»: height:100vh вместо фиксированных px.
+     На экранах любой высоты блок занимает ровно высоту окна посетителя. -->
+<label class="cdm-toggle-row" for="cdmDesktopFullHeight"><input type="checkbox" id="cdmDesktopFullHeight" class="cdm-toggle-input"><span class="cdm-toggle-track"><span class="cdm-toggle-thumb"></span></span><span class="cdm-toggle-text">На всю высоту экрана (100vh)</span></label>
 </div>
 <div class="cdm-control-group">
 <label class="cdm-label cdm-label-range">Размер шрифта заголовка <span class="cdm-label-value"><span id="desktopTitleSizeVal">22</span>px</span></label>
@@ -620,10 +623,13 @@ filter: invert(1) brightness(1.5);
 <div class="cdm-control-group">
 </div>
 <div class="cdm-control-group">
-<label class="cdm-label cdm-label-range">Высота блока слайдера <span class="cdm-label-value"><span id="mobileHeightVal">400</span>px</span></label>
-<div class="cdm-range-wrapper">
+<label class="cdm-label cdm-label-range">Высота блока слайдера <span class="cdm-label-value"><span id="mobileHeightVal">400</span><span id="mobileHeightUnit">px</span></span></label>
+<div class="cdm-range-wrapper" id="mobileHeightWrap">
 <input type="range" id="cdmMobileHeight" class="cdm-range" min="250" max="700" value="400" step="10">
 </div>
+<!-- [28.11.2026] Мобильные: 100svh (малая высота окна) + фолбэк 100vh — блок
+     не прыгает при скрытии адресной строки в мобильных браузерах. -->
+<label class="cdm-toggle-row" for="cdmMobileFullHeight"><input type="checkbox" id="cdmMobileFullHeight" class="cdm-toggle-input"><span class="cdm-toggle-track"><span class="cdm-toggle-thumb"></span></span><span class="cdm-toggle-text">На всю высоту экрана (100svh)</span></label>
 </div>
 <div class="cdm-control-group">
 <label class="cdm-label cdm-label-range">Размер шрифта заголовка <span class="cdm-label-value"><span id="mobileTitleSizeVal">16</span>px</span></label>
@@ -1148,6 +1154,22 @@ background: transparent;
 font-weight: 400;
 }
 .cdm-range-wrapper { background: transparent; padding: 4px 0 0; }
+/* [28.11.2026] Переключатель «На всю высоту экрана» у ползунков высоты.
+   Стиль — как у остальных строк настроек (14px/300, letter-spacing -0.5px),
+   активный цвет — фирменный голубой #4DB5FF. */
+.cdm-toggle-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; cursor: pointer; user-select: none; }
+.cdm-toggle-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.cdm-toggle-track { position: relative; display: inline-block; width: 34px; height: 18px; border-radius: 9px; background: #d9d9d9; transition: background 0.2s ease; flex-shrink: 0; }
+.cdm-toggle-thumb { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform 0.2s ease; }
+.cdm-toggle-input:checked + .cdm-toggle-track { background: #4DB5FF; }
+.cdm-toggle-input:checked + .cdm-toggle-track .cdm-toggle-thumb { transform: translateX(16px); }
+.cdm-toggle-input:focus-visible + .cdm-toggle-track { outline: 2px solid #4DB5FF; outline-offset: 2px; }
+.cdm-toggle-text { font-size: 14px; font-weight: 300; letter-spacing: -0.5px; color: #333; }
+/* Ползунок высоты неактивен, когда включён режим «на всю высоту экрана». */
+.cdm-range-wrapper.cdm-range-off { opacity: 0.45; pointer-events: none; }
+.cdm-master.dark-theme .cdm-toggle-track { background: #555; }
+.cdm-master.dark-theme .cdm-toggle-input:checked + .cdm-toggle-track { background: #4DB5FF; }
+.cdm-master.dark-theme .cdm-toggle-text { color: #e0e0e0; }
 .cdm-range { width: 100%; height: 2px; -webkit-appearance: none; appearance: none; background: rgba(16, 17, 20, 0.1) !important; border-radius: 3px; outline: none; margin-top: 3px; }
 .cdm-range::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: #4DB5FF !important; border-radius: 50%; cursor: pointer; border: 2px solid #fff; box-shadow: 0 0 0 1px #4DB5FF; }
 .cdm-range::-moz-range-thumb { width: 12px; height: 12px; background: #4DB5FF !important; border-radius: 50%; cursor: pointer; border: 2px solid #fff; box-shadow: 0 0 0 1px #4DB5FF; }
@@ -1801,6 +1823,7 @@ $('.cdm-width-btn[data-width="' + desktopWidth + '"]').addClass('active');
 }
 })();
 const desktopHeight = $('#cdmDesktopHeight');
+const desktopFullHeight = $('#cdmDesktopFullHeight');
 const desktopHeightVal = $('#desktopHeightVal');
 const desktopTitleSize = $('#cdmDesktopTitleSize');
 const desktopTitleSizeVal = $('#desktopTitleSizeVal');
@@ -1832,6 +1855,7 @@ const desktopBlockMarginTop = $('#cdmDesktopBlockMarginTop');
 const desktopBlockMarginBottom = $('#cdmDesktopBlockMarginBottom');
 
 const mobileHeight = $('#cdmMobileHeight');
+const mobileFullHeight = $('#cdmMobileFullHeight');
 const mobileHeightVal = $('#mobileHeightVal');
 const mobileTitleSize = $('#cdmMobileTitleSize');
 const mobileTitleSizeVal = $('#mobileTitleSizeVal');
@@ -2025,7 +2049,10 @@ totalTimeVal.text(totalTime.val());
 bgOpacityVal.text(bgOpacity.val() + '%');
 titleOpacityVal.text(titleOpacity.val() + '%');
 textOpacityVal.text(textOpacity.val() + '%');
-desktopHeightVal.text(desktopHeight.val());
+desktopHeightVal.text(desktopFullHeight.is(':checked') ? '100' : desktopHeight.val());
+$('#desktopHeightUnit').text(desktopFullHeight.is(':checked') ? 'vh' : 'px');
+$('#desktopHeightWrap').toggleClass('cdm-range-off', desktopFullHeight.is(':checked'));
+desktopHeight.prop('disabled', desktopFullHeight.is(':checked'));
 desktopTitleSizeVal.text(desktopTitleSize.val());
 desktopTextSizeVal.text(desktopTextSize.val());
 desktopTitleLineHeightVal.text(Math.round(parseFloat(desktopTitleLineHeight.val()) * 100) / 100);
@@ -2037,7 +2064,10 @@ desktopBorderWidthVal.text(desktopBorderWidth.val());
 borderOpacityVal.text(borderOpacity.val() + '%');
 desktopPanelBottomVal.text(desktopPanelBottom.val());
 desktopPanelRadiusVal.text(desktopPanelRadius.val());
-mobileHeightVal.text(mobileHeight.val());
+mobileHeightVal.text(mobileFullHeight.is(':checked') ? '100' : mobileHeight.val());
+$('#mobileHeightUnit').text(mobileFullHeight.is(':checked') ? 'svh' : 'px');
+$('#mobileHeightWrap').toggleClass('cdm-range-off', mobileFullHeight.is(':checked'));
+mobileHeight.prop('disabled', mobileFullHeight.is(':checked'));
 mobileTitleSizeVal.text(mobileTitleSize.val());
 mobileTextSizeVal.text(mobileTextSize.val());
 mobileTitleLineHeightVal.text(Math.round(parseFloat(mobileTitleLineHeight.val()) * 100) / 100);
@@ -2082,7 +2112,12 @@ var slideCount = slides.length;
 if (slideCount < 1) slideCount = 1;
 
 var sWidth = useMobile ? '100%' : '100%';
-var sHeight = useMobile ? mobileHeight.val() + 'px' : desktopHeight.val() + 'px';
+/* [28.11.2026] Режим «на всю высоту экрана»: в превью подставляем 100vh/100svh,
+   то есть высоту окна посетителя (внутри конфигуратора — высоту фрейма).
+   Так превью показывает блок таким, каким его увидит посетитель. */
+var sHeight = useMobile
+  ? (mobileFullHeight.is(':checked') ? '100svh' : mobileHeight.val() + 'px')
+  : (desktopFullHeight.is(':checked') ? '100vh' : desktopHeight.val() + 'px');
 var tSize = useMobile ? mobileTitleSize.val() + 'px' : desktopTitleSize.val() + 'px';
 var txSize = useMobile ? mobileTextSize.val() + 'px' : desktopTextSize.val() + 'px';
 /* [28.11.2026] Межстрочный интервал — безразмерный множитель (1.45 = 145 %
@@ -2478,6 +2513,9 @@ var deskW = desktopWidth;
 var wideMax = 0;
 if (wideWidth) { wideMax = wideWidth; }
 var deskH = desktopHeight.val();
+/* [28.11.2026] Режим «на всю высоту экрана»: в код блока уходит 100vh
+   вместо фиксированных пикселей. */
+var deskFullH = desktopFullHeight.is(':checked');
 var deskTSize = desktopTitleSize.val();
 var deskTxSize = desktopTextSize.val();
 var deskTLh = Number(desktopTitleLineHeight.val()).toFixed(2);
@@ -2500,6 +2538,8 @@ var deskBlockMB = cdmBlockMarginVal(desktopBlockMarginBottom);
 var borderRgba = hexToRgba(borderColor, borderOpacity.val());
 
 var mobH = mobileHeight.val();
+/* [28.11.2026] Мобильные «на всю высоту экрана»: 100svh + фолбэк 100vh. */
+var mobFullH = mobileFullHeight.is(':checked');
 var mobTSize = mobileTitleSize.val();
 var mobTxSize = mobileTextSize.val();
 var mobTLh = Number(mobileTitleLineHeight.val()).toFixed(2);
@@ -2544,7 +2584,7 @@ slidesHtml +
 '<style>\n' +
 ':root {\n' +
 '--cdm-' + suffix + '-1: ' + deskW + 'px;\n' +
-'--cdm-' + suffix + '-2: ' + deskH + 'px;\n' +
+'--cdm-' + suffix + '-2: ' + (deskFullH ? '100vh' : deskH + 'px') + ';\n' +
 '--cdm-' + suffix + '-5: ' + deskPanelBottom + 'px;\n' +
 '--cdm-' + suffix + '-6: ' + bgRgba + ';\n' +
 '--cdm-' + suffix + '-7: ' + textRgba + ';\n' +
@@ -2663,7 +2703,13 @@ animDelaysCss +
 'width: 100% !important;\n' +
 'max-width: 100% !important;\n' +
 'margin-left: 0 !important;\n' +
-'height: ' + mobH + 'px !important;\n' +
+(mobFullH
+  ? 'height: 100vh !important;\n' +
+    /* 100svh — «малая» высота окна: стабильна, пока адресная строка
+       мобильного браузера показывается/скрывается. Браузеры без svh
+       берут предыдущее правило (100vh). */
+    'height: 100svh !important;\n'
+  : 'height: ' + mobH + 'px !important;\n') +
 'border-width: ' + mobBW + 'px;\n' +
 'border-color: ' + borderRgba + ';\n' +
 'margin-top: ' + mobBlockMT + 'px;\n' +
@@ -2696,7 +2742,13 @@ animDelaysCss +
 'width: 100% !important;\n' +
 'max-width: 100% !important;\n' +
 'margin-left: 0 !important;\n' +
-'height: ' + mobH + 'px !important;\n' +
+(mobFullH
+  ? 'height: 100vh !important;\n' +
+    /* 100svh — «малая» высота окна: стабильна, пока адресная строка
+       мобильного браузера показывается/скрывается. Браузеры без svh
+       берут предыдущее правило (100vh). */
+    'height: 100svh !important;\n'
+  : 'height: ' + mobH + 'px !important;\n') +
 /* [21.11.2026] Прежний базовый отступ 8% сохранён; выбранный отступ его
    заменяет, только если он больше (max). */
 'margin-top: max(8%, ' + mobBlockMT + 'px);\n' +
@@ -2812,6 +2864,7 @@ selectedFont: selectedFont,
 wideWidth: wideWidth,
 desktop: {
 blockWidthDesktop: desktopWidth, height: desktopHeight.val(),
+fullHeight: desktopFullHeight.is(':checked'),
 titleSize: desktopTitleSize.val(), textSize: desktopTextSize.val(),
 titleLineHeight: desktopTitleLineHeight.val(), textLineHeight: desktopTextLineHeight.val(),
 titleWeight: desktopTitleWeight.val(), textWeight: desktopTextWeight.val(),
@@ -2826,6 +2879,7 @@ blockMarginTop: cdmBlockMarginVal(desktopBlockMarginTop), blockMarginBottom: cdm
 },
 mobile: {
 height: mobileHeight.val(),
+fullHeight: mobileFullHeight.is(':checked'),
 titleSize: mobileTitleSize.val(), textSize: mobileTextSize.val(),
 titleLineHeight: mobileTitleLineHeight.val(), textLineHeight: mobileTextLineHeight.val(),
 titleWeight: mobileTitleWeight.val(), textWeight: mobileTextWeight.val(),
@@ -2881,6 +2935,7 @@ if (d.blockWidthDesktop === undefined) {
   setDesktopWidth(d.blockWidthDesktop);
 }
 if (d.height !== undefined) desktopHeight.val(d.height);
+if (d.fullHeight !== undefined) desktopFullHeight.prop('checked', !!d.fullHeight);
 if (d.titleSize !== undefined) desktopTitleSize.val(d.titleSize);
 if (d.textSize !== undefined) desktopTextSize.val(d.textSize);
 if (d.titleLineHeight !== undefined) desktopTitleLineHeight.val(d.titleLineHeight);
@@ -2890,6 +2945,7 @@ if (d.textWeight !== undefined) desktopTextWeight.val(d.textWeight);
 if (d.textMargin !== undefined) desktopTextMargin.val(d.textMargin);
 if (d.borderWidth !== undefined) desktopBorderWidth.val(d.borderWidth);
 if (m.height !== undefined) mobileHeight.val(m.height);
+if (m.fullHeight !== undefined) mobileFullHeight.prop('checked', !!m.fullHeight);
 if (m.titleSize !== undefined) mobileTitleSize.val(m.titleSize);
 if (m.textSize !== undefined) mobileTextSize.val(m.textSize);
 if (m.titleLineHeight !== undefined) mobileTitleLineHeight.val(m.titleLineHeight);
@@ -3010,6 +3066,7 @@ selectedFont: 'none',
 wideWidth: 0,
 desktopWidth: 820,
 desktopHeight: 600,
+desktopFullHeight: false,
 desktopTitleSize: 22,
 desktopTextSize: 15,
 desktopTitleLineHeight: 1.45,
@@ -3032,6 +3089,7 @@ desktopPanelRadius: 0,
 desktopBlockMarginTop: 0,
 desktopBlockMarginBottom: 0,
 mobileHeight: 400,
+mobileFullHeight: false,
 mobileTitleSize: 16,
 mobileTextSize: 13,
 mobileTitleLineHeight: 1.45,
@@ -3080,6 +3138,7 @@ mobileTextAlign = defaultValues.mobileTextAlign;
 setDesktopWidth(defaultValues.desktopWidth);
 setWideWidth(defaultValues.wideWidth);
 desktopHeight.val(defaultValues.desktopHeight);
+desktopFullHeight.prop('checked', defaultValues.desktopFullHeight);
 desktopTitleSize.val(defaultValues.desktopTitleSize);
 desktopTextSize.val(defaultValues.desktopTextSize);
 desktopTitleLineHeight.val(defaultValues.desktopTitleLineHeight);
@@ -3101,6 +3160,7 @@ desktopBlockMarginTop.val(defaultValues.desktopBlockMarginTop);
 desktopBlockMarginBottom.val(defaultValues.desktopBlockMarginBottom);
 
 mobileHeight.val(defaultValues.mobileHeight);
+mobileFullHeight.prop('checked', defaultValues.mobileFullHeight);
 mobileTitleSize.val(defaultValues.mobileTitleSize);
 mobileTextSize.val(defaultValues.mobileTextSize);
 mobileTitleLineHeight.val(defaultValues.mobileTitleLineHeight);
@@ -3171,6 +3231,10 @@ mobilePanelBottom, mobilePanelRadius,
 mobileBlockMarginTop, mobileBlockMarginBottom
 ];
 allInputs.forEach(function(el) { el.on('input', updateAll); });
+/* [28.11.2026] Переключатели «На всю высоту экрана» — событие change, не input:
+   ползунок высоты блокируется, значение в подписи показывает 100 vh/svh. */
+desktopFullHeight.on('change', updateAll);
+mobileFullHeight.on('change', updateAll);
 
 $('.cdm-slide-title, .cdm-slide-text, .cdm-slide-img').on('input', updateAll);
 

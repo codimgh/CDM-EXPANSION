@@ -521,15 +521,15 @@ filter: invert(1) brightness(1.5);
 </div>
 </div>
 <div class="cdm-control-group">
-<label class="cdm-label cdm-label-range">Межстрочный интервал заголовка <span class="cdm-label-value"><span id="desktopTitleLineHeightVal">145</span>%</span></label>
+<label class="cdm-label cdm-label-range">Межстрочный интервал заголовка <span class="cdm-label-value"><span id="desktopTitleLineHeightVal">1.45</span></span></label>
 <div class="cdm-range-wrapper">
-<input type="range" id="cdmDesktopTitleLineHeight" class="cdm-range" min="100" max="220" value="145" step="5">
+<input type="range" id="cdmDesktopTitleLineHeight" class="cdm-range" min="1" max="3" value="1.45" step="0.05">
 </div>
 </div>
 <div class="cdm-control-group">
-<label class="cdm-label cdm-label-range">Межстрочный интервал текста <span class="cdm-label-value"><span id="desktopTextLineHeightVal">145</span>%</span></label>
+<label class="cdm-label cdm-label-range">Межстрочный интервал текста <span class="cdm-label-value"><span id="desktopTextLineHeightVal">1.45</span></span></label>
 <div class="cdm-range-wrapper">
-<input type="range" id="cdmDesktopTextLineHeight" class="cdm-range" min="100" max="220" value="145" step="5">
+<input type="range" id="cdmDesktopTextLineHeight" class="cdm-range" min="1" max="3" value="1.45" step="0.05">
 </div>
 </div>
 <div class="cdm-control-group">
@@ -638,15 +638,15 @@ filter: invert(1) brightness(1.5);
 </div>
 </div>
 <div class="cdm-control-group">
-<label class="cdm-label cdm-label-range">Межстрочный интервал заголовка <span class="cdm-label-value"><span id="mobileTitleLineHeightVal">145</span>%</span></label>
+<label class="cdm-label cdm-label-range">Межстрочный интервал заголовка <span class="cdm-label-value"><span id="mobileTitleLineHeightVal">1.45</span></span></label>
 <div class="cdm-range-wrapper">
-<input type="range" id="cdmMobileTitleLineHeight" class="cdm-range" min="100" max="220" value="145" step="5">
+<input type="range" id="cdmMobileTitleLineHeight" class="cdm-range" min="1" max="3" value="1.45" step="0.05">
 </div>
 </div>
 <div class="cdm-control-group">
-<label class="cdm-label cdm-label-range">Межстрочный интервал текста <span class="cdm-label-value"><span id="mobileTextLineHeightVal">145</span>%</span></label>
+<label class="cdm-label cdm-label-range">Межстрочный интервал текста <span class="cdm-label-value"><span id="mobileTextLineHeightVal">1.45</span></span></label>
 <div class="cdm-range-wrapper">
-<input type="range" id="cdmMobileTextLineHeight" class="cdm-range" min="100" max="220" value="145" step="5">
+<input type="range" id="cdmMobileTextLineHeight" class="cdm-range" min="1" max="3" value="1.45" step="0.05">
 </div>
 </div>
 </div>
@@ -1314,7 +1314,7 @@ font-weight: var(--cdm-pv-tweight, 700);
 /* [21.11.2026, задача №25] Размер и цвет — тоже переменными: раньше они
    сидели в inline-стилях h5/p, каждое движение ползунка пересобирало превью. */
 font-size: var(--cdm-pv-tsize, 22px);
-line-height: var(--cdm-pv-tlh, 145%);
+line-height: var(--cdm-pv-tlh, 1.45);
 color: var(--cdm-pv-tcolor, #333333);
 margin-bottom: var(--cdm-pv-tm, 10px);
 text-align: var(--cdm-pv-ta, left);
@@ -1322,7 +1322,7 @@ text-align: var(--cdm-pv-ta, left);
 .cdm-slider-preview .cdm-sp-panel p {
 font-weight: var(--cdm-pv-txweight, 300);
 font-size: var(--cdm-pv-txsize, 15px);
-line-height: var(--cdm-pv-txlh, 145%);
+line-height: var(--cdm-pv-txlh, 1.45);
 color: var(--cdm-pv-txcolor, #333333);
 margin: 0;
 text-align: var(--cdm-pv-txa, left);
@@ -2028,8 +2028,8 @@ textOpacityVal.text(textOpacity.val() + '%');
 desktopHeightVal.text(desktopHeight.val());
 desktopTitleSizeVal.text(desktopTitleSize.val());
 desktopTextSizeVal.text(desktopTextSize.val());
-desktopTitleLineHeightVal.text(desktopTitleLineHeight.val() + '%');
-desktopTextLineHeightVal.text(desktopTextLineHeight.val() + '%');
+desktopTitleLineHeightVal.text(Math.round(parseFloat(desktopTitleLineHeight.val()) * 100) / 100);
+desktopTextLineHeightVal.text(Math.round(parseFloat(desktopTextLineHeight.val()) * 100) / 100);
 desktopTitleWeightVal.text(desktopTitleWeight.val());
 desktopTextWeightVal.text(desktopTextWeight.val());
 desktopTextMarginVal.text(desktopTextMargin.val());
@@ -2040,8 +2040,8 @@ desktopPanelRadiusVal.text(desktopPanelRadius.val());
 mobileHeightVal.text(mobileHeight.val());
 mobileTitleSizeVal.text(mobileTitleSize.val());
 mobileTextSizeVal.text(mobileTextSize.val());
-mobileTitleLineHeightVal.text(mobileTitleLineHeight.val() + '%');
-mobileTextLineHeightVal.text(mobileTextLineHeight.val() + '%');
+mobileTitleLineHeightVal.text(Math.round(parseFloat(mobileTitleLineHeight.val()) * 100) / 100);
+mobileTextLineHeightVal.text(Math.round(parseFloat(mobileTextLineHeight.val()) * 100) / 100);
 mobileTitleWeightVal.text(mobileTitleWeight.val());
 mobileTextWeightVal.text(mobileTextWeight.val());
 mobileTextMarginVal.text(mobileTextMargin.val());
@@ -2085,10 +2085,12 @@ var sWidth = useMobile ? '100%' : '100%';
 var sHeight = useMobile ? mobileHeight.val() + 'px' : desktopHeight.val() + 'px';
 var tSize = useMobile ? mobileTitleSize.val() + 'px' : desktopTitleSize.val() + 'px';
 var txSize = useMobile ? mobileTextSize.val() + 'px' : desktopTextSize.val() + 'px';
-/* [28.11.2026] Межстрочный интервал — процент от размера шрифта, поэтому
-   он не «едет» при смене размера и одинаково работает на десктопе и мобильном. */
-var tLh = (useMobile ? mobileTitleLineHeight.val() : desktopTitleLineHeight.val()) + '%';
-var txLh = (useMobile ? mobileTextLineHeight.val() : desktopTextLineHeight.val()) + '%';
+/* [28.11.2026] Межстрочный интервал — безразмерный множитель (1.45 = 145 %
+   от размера шрифта). В CSS line-height без единиц наследуется как множитель,
+   поэтому интервал не «едет» при смене размера и одинаково работает
+   на десктопе и мобильном. */
+var tLh = Number(useMobile ? mobileTitleLineHeight.val() : desktopTitleLineHeight.val()).toFixed(2);
+var txLh = Number(useMobile ? mobileTextLineHeight.val() : desktopTextLineHeight.val()).toFixed(2);
 var tWeight = useMobile ? mobileTitleWeight.val() : desktopTitleWeight.val();
 var txWeight = useMobile ? mobileTextWeight.val() : desktopTextWeight.val();
 var txMargin = useMobile ? mobileTextMargin.val() + 'px' : desktopTextMargin.val() + 'px';
@@ -2478,8 +2480,8 @@ if (wideWidth) { wideMax = wideWidth; }
 var deskH = desktopHeight.val();
 var deskTSize = desktopTitleSize.val();
 var deskTxSize = desktopTextSize.val();
-var deskTLh = desktopTitleLineHeight.val() + '%';
-var deskTxLh = desktopTextLineHeight.val() + '%';
+var deskTLh = Number(desktopTitleLineHeight.val()).toFixed(2);
+var deskTxLh = Number(desktopTextLineHeight.val()).toFixed(2);
 var deskTWeight = desktopTitleWeight.val();
 var deskTxWeight = desktopTextWeight.val();
 var deskTxMargin = desktopTextMargin.val();
@@ -2500,8 +2502,8 @@ var borderRgba = hexToRgba(borderColor, borderOpacity.val());
 var mobH = mobileHeight.val();
 var mobTSize = mobileTitleSize.val();
 var mobTxSize = mobileTextSize.val();
-var mobTLh = mobileTitleLineHeight.val() + '%';
-var mobTxLh = mobileTextLineHeight.val() + '%';
+var mobTLh = Number(mobileTitleLineHeight.val()).toFixed(2);
+var mobTxLh = Number(mobileTextLineHeight.val()).toFixed(2);
 var mobTWeight = mobileTitleWeight.val();
 var mobTxWeight = mobileTextWeight.val();
 var mobTxMargin = mobileTextMargin.val();
@@ -3010,8 +3012,8 @@ desktopWidth: 820,
 desktopHeight: 600,
 desktopTitleSize: 22,
 desktopTextSize: 15,
-desktopTitleLineHeight: 145,
-desktopTextLineHeight: 145,
+desktopTitleLineHeight: 1.45,
+desktopTextLineHeight: 1.45,
 desktopTitleWeight: 700,
 desktopTextWeight: 300,
 desktopTextMargin: 10,
@@ -3032,8 +3034,8 @@ desktopBlockMarginBottom: 0,
 mobileHeight: 400,
 mobileTitleSize: 16,
 mobileTextSize: 13,
-mobileTitleLineHeight: 145,
-mobileTextLineHeight: 145,
+mobileTitleLineHeight: 1.45,
+mobileTextLineHeight: 1.45,
 mobileTitleWeight: 700,
 mobileTextWeight: 300,
 mobileTextMargin: 8,

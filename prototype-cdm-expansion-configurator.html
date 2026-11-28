@@ -239,7 +239,15 @@ filter: invert(1) brightness(1.5);
 </p>
 <div class="cdm-help-progress"></div>
 </div>
-<div class="cdm-preview-tools" id="cdmPreviewTools">
+<!-- [28.11.2026] Подсказка режима «Блок на всю высоту экрана» (окно 450 px).
+     Текст владельца; поправлена только пунктуация: «браузера: без пустого…» →
+     «браузера - без пустого…» и «Если нужно чтобы» → «Если нужно, чтобы». -->
+<div id="cdmHeightHelpPopup" class="cdm-help-popup" style="display:none; width:450px;">
+<p style="font-size:14px; font-weight:300; line-height:1.5; margin:0;">
+Включай настройку, если нужно использовать блок как первый экран сайта. Высота блока подстраивается под окно устройства посетителя сайта: на десктопе - блок займёт всю высоту окна браузера - без пустого места снизу на больших мониторах и без обрезки на невысоких ноутбуках - подбирать пиксели под каждый экран не нужно. На телефоне - блок займёт видимую часть экрана. Пока режим включён, ползунок настройки высоты не действует. Если нужно, чтобы блок был именно первым экраном, поставь «Внешние отступы блока → Сверху» равным 0.
+</p>
+<div class="cdm-help-progress"></div>
+</div>
 <span class="cdm-fit-info"><span class="cdm-fit-badge" id="cdmFitBadge">—</span><i class="ph ph-question cdm-fit-help-icon" id="cdmFitHelpIcon" style="font-size:16px; vertical-align:middle; cursor:pointer; margin-left:6px;"></i></span>
 </div>
 <div id="cdmLivePreviewWrapper" style="display: flex; justify-content: center; min-height: 450px; background: transparent; border-radius: 12px;">
@@ -507,9 +515,9 @@ filter: invert(1) brightness(1.5);
 <div class="cdm-range-wrapper" id="desktopHeightWrap">
 <input type="range" id="cdmDesktopHeight" class="cdm-range" min="300" max="1100" value="600" step="10">
 </div>
-<!-- [28.11.2026] Режим «на всю высоту экрана»: height:100vh вместо фиксированных px.
-     На экранах любой высоты блок занимает ровно высоту окна посетителя. -->
-<label class="cdm-toggle-row" for="cdmDesktopFullHeight"><input type="checkbox" id="cdmDesktopFullHeight" class="cdm-toggle-input"><span class="cdm-toggle-track"><span class="cdm-toggle-thumb"></span></span><span class="cdm-toggle-text">На всю высоту экрана (100vh)</span></label>
+<!-- [28.11.2026] Режим «блок на всю высоту экрана»: height:100vh вместо фиксированных px.
+     Иконка «?» стоит ВНЕ label — иначе клик по ней переключал бы чекбокс. -->
+<div class="cdm-toggle-row"><label class="cdm-toggle-main" for="cdmDesktopFullHeight"><input type="checkbox" id="cdmDesktopFullHeight" class="cdm-toggle-input"><span class="cdm-toggle-track"><span class="cdm-toggle-thumb"></span></span><span class="cdm-toggle-text">Блок на всю высоту экрана</span></label><i class="ph ph-question cdm-height-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></div>
 </div>
 <div class="cdm-control-group">
 <label class="cdm-label cdm-label-range">Размер шрифта заголовка <span class="cdm-label-value"><span id="desktopTitleSizeVal">22</span>px</span></label>
@@ -629,7 +637,7 @@ filter: invert(1) brightness(1.5);
 </div>
 <!-- [28.11.2026] Мобильные: 100svh (малая высота окна) + фолбэк 100vh — блок
      не прыгает при скрытии адресной строки в мобильных браузерах. -->
-<label class="cdm-toggle-row" for="cdmMobileFullHeight"><input type="checkbox" id="cdmMobileFullHeight" class="cdm-toggle-input"><span class="cdm-toggle-track"><span class="cdm-toggle-thumb"></span></span><span class="cdm-toggle-text">На всю высоту экрана (100svh)</span></label>
+<div class="cdm-toggle-row"><label class="cdm-toggle-main" for="cdmMobileFullHeight"><input type="checkbox" id="cdmMobileFullHeight" class="cdm-toggle-input"><span class="cdm-toggle-track"><span class="cdm-toggle-thumb"></span></span><span class="cdm-toggle-text">Блок на всю высоту экрана</span></label><i class="ph ph-question cdm-height-help-icon" style="font-size:14px; vertical-align:middle; cursor:pointer; margin-left:4px;"></i></div>
 </div>
 <div class="cdm-control-group">
 <label class="cdm-label cdm-label-range">Размер шрифта заголовка <span class="cdm-label-value"><span id="mobileTitleSizeVal">16</span>px</span></label>
@@ -1157,7 +1165,8 @@ font-weight: 400;
 /* [28.11.2026] Переключатель «На всю высоту экрана» у ползунков высоты.
    Стиль — как у остальных строк настроек (14px/300, letter-spacing -0.5px),
    активный цвет — фирменный голубой #4DB5FF. */
-.cdm-toggle-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; cursor: pointer; user-select: none; }
+.cdm-toggle-row { display: flex; align-items: center; gap: 4px; margin-top: 10px; }
+.cdm-toggle-main { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
 .cdm-toggle-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .cdm-toggle-track { position: relative; display: inline-block; width: 34px; height: 18px; border-radius: 9px; background: #d9d9d9; transition: background 0.2s ease; flex-shrink: 0; }
 .cdm-toggle-thumb { position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform 0.2s ease; }
@@ -3332,6 +3341,7 @@ var widthHelpPopup = $('#cdmWidthHelpPopup');
 var wideHelpPopup = $('#cdmWideHelpPopup');
 var fitHelpPopup = $('#cdmFitHelpPopup');
 var marginHelpPopup = $('#cdmMarginHelpPopup');
+var heightHelpPopup = $('#cdmHeightHelpPopup');
 
 // [20.10.2026, задача №6] Подсказки открываются в левом верхнем углу окна
 // (left:12px; top:12px) — фиксированная позиция, не по центру (по решению владельца).
@@ -3526,7 +3536,7 @@ cdmHelpSound();
 }
 
 function cdmHideAllHelp(exceptId) {
-$('#cdmFontHelpPopup, #cdmImgHelpPopup, #cdmWidthHelpPopup, #cdmWideHelpPopup, #cdmFitHelpPopup, #cdmMarginHelpPopup').each(function() {
+$('#cdmFontHelpPopup, #cdmImgHelpPopup, #cdmWidthHelpPopup, #cdmWideHelpPopup, #cdmFitHelpPopup, #cdmMarginHelpPopup, #cdmHeightHelpPopup').each(function() {
   if (this.id !== exceptId && this.style.display !== 'none') cdmHideHelp($(this));
 });
 }
@@ -3537,7 +3547,8 @@ var CDM_HELP_MAP = [
 { sel: '.cdm-width-help-icon', popup: '#cdmWidthHelpPopup' },
 { sel: '.cdm-wide-help-icon', popup: '#cdmWideHelpPopup' },
 { sel: '.cdm-fit-help-icon', popup: '#cdmFitHelpPopup' },
-{ sel: '.cdm-margin-help-icon', popup: '#cdmMarginHelpPopup' }
+{ sel: '.cdm-margin-help-icon', popup: '#cdmMarginHelpPopup' },
+{ sel: '.cdm-height-help-icon', popup: '#cdmHeightHelpPopup' }
 ];
 $(document).on('click', CDM_HELP_MAP.map(function (m) { return m.sel; }).join(','), function (e) {
 e.stopPropagation();
@@ -3572,8 +3583,8 @@ function cdmScheduleHelpAutoClose($pop) {
 }
 
 $(document).on('click', function(e) {
-if ($(e.target).closest('#cdmFontHelpPopup').length || $(e.target).closest('#cdmImgHelpPopup').length || $(e.target).closest('#cdmWidthHelpPopup').length || $(e.target).closest('#cdmWideHelpPopup').length || $(e.target).closest('#cdmFitHelpPopup').length || $(e.target).closest('#cdmMarginHelpPopup').length) return;
-if ($(e.target).closest('.cdm-img-help-icon, .cdm-width-help-icon, #cdmFontHelpIcon, .cdm-fit-help-icon, .cdm-margin-help-icon').length) return;
+if ($(e.target).closest('#cdmFontHelpPopup').length || $(e.target).closest('#cdmImgHelpPopup').length || $(e.target).closest('#cdmWidthHelpPopup').length || $(e.target).closest('#cdmWideHelpPopup').length || $(e.target).closest('#cdmFitHelpPopup').length || $(e.target).closest('#cdmMarginHelpPopup').length || $(e.target).closest('#cdmHeightHelpPopup').length) return;
+if ($(e.target).closest('.cdm-img-help-icon, .cdm-width-help-icon, #cdmFontHelpIcon, .cdm-fit-help-icon, .cdm-margin-help-icon, .cdm-height-help-icon').length) return;
 cdmHideAllHelp();
 });
 
